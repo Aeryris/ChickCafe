@@ -38,4 +38,4 @@ $aDBSettings = array();
 $aDBSettings['database'] = 'chickcafe';
 $aDBSettings['user'] = 'root';
 $aDBSettings['password'] = 'testtest';
-$aDBSettings['host']     = 'localhost';
+$aDBSettings['host']     = '127.0.0.1';

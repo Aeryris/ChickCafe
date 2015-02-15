@@ -41,11 +41,14 @@ class Database implements Database_Interface{
         require_once(\System\System::$sConfigPath.'dbConfig.php');
 
         try {
-            self::$oDbConnection = new PDO("mysql:host=".$aDBSettings['host'].";dbname=".$aDBSettings['database'].", ".$aDBSettings['user'].", ".$aDBSettings['password']);
+            self::$oDbConnection = new PDO("mysql:host=".$aDBSettings['host'].";dbname=".$aDBSettings['database'].";", $aDBSettings['user'], $aDBSettings['password']);
+            self::$oDbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch(PDOException $e) {
             echo $e->getMessage();
         }
+
+        return self::$oDbConnection;
     }
 
 
