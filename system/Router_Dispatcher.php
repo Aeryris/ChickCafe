@@ -33,7 +33,7 @@
 
 
 
-class Router_Dispatcher {
+class Router_Dispatcher implements Router_Dispatcher_Interface{
 
     public $sMainIndexMethod = 'index';
 

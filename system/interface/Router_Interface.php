@@ -32,45 +32,11 @@
  */
 
 
-/**
- * Class Router
- * /controller/action/param/value/param/value
- */
 
-//require_once('Router_Dispatcher.php');
+interface Router_Interface {
 
-class Router implements Router_Interface{
+    public function __construct();
+    public function run();
+    public function __toString();
 
-    private $aRequestsParams;
-    private $sScriptName;
-
-    public $oRouterDispatcher;
-
-    public function __construct(){
-        $this->aRequestsParams = array_filter(explode('/', $_SERVER['REQUEST_URI']));
-        $this->sScriptName = array_filter(explode('/',$_SERVER['SCRIPT_NAME']));
-
-
-        //$oRouterDispatcher = new \Router_Dispatcher($this->aRequestsParams[0]);
-        $this->oRouterDispatcher = new \Router_Dispatcher();
-    }
-    public function run(){
-        //$this->oRouterDispatcher->createControllerInstance('Index_Controller', 'e');
-        $arrV = array_filter(explode('/', $_SERVER['REQUEST_URI']));
-        if(empty($arrV))
-            return ;
-            /**
-             * Assume default route
-             */
-
-        $this->oRouterDispatcher->prepareParams(array_values($arrV[0]), $arrV);
-        $this->oRouterDispatcher->dispatch();
-    }
-
-
-
-    public function __toString(){
-        var_dump($this->sScriptName);
-        return $this->aRequestsParams;
-    }
 } 

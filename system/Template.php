@@ -15,7 +15,11 @@
  * @license The MIT License (MIT)
  */
 
-class Template{
+/**
+ * @todo Move parser to separate class
+ */
+
+class Template implements Template_Interface{
 
     public $templateName = array();
 

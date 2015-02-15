@@ -47,7 +47,7 @@ abstract class InputFilter{
 
 class InputException extends Exception{}
 
-class Input {
+class Input implements Input_Interface{
 
     public static function get($sKey, InputFilter $sFilter = NULL){
         if(!isset($_GET[$sKey])) return;
