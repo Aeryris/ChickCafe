@@ -31,16 +31,8 @@
  * @license The MIT License (MIT)
  */
 
-require_once('system/System.php');
 
-$oSystem = \System\System::init(__DIR__);
 
-//new Test_Class_Model();
+class Template_Parser {
 
-$r = new Router();
-//$r->oRouterDispatcher->createControllerInstance('Index_Controller', 'e');
-//$arrV = array_values(array_filter(explode('/', $_SERVER['REQUEST_URI'])));
-//$r->oRouterDispatcher->prepareParams($arrV[0], array_filter(explode('/', $_SERVER['REQUEST_URI'])));
-
-$oTemplate = new Template('name');
-$oTemplate->display();
+} 
