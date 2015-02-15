@@ -35,7 +35,7 @@
 class Index_Controller{
 
     public function index(){
-        echo $_GET['param1'];
+        echo Input::get('name');
     }
 
     public function e(){

@@ -49,26 +49,28 @@ class InputException extends Exception{}
 
 class Input {
 
-    public static function get($sKey, InputFilter $sFilter){
+    public static function get($sKey, InputFilter $sFilter = NULL){
         if(!isset($_GET[$sKey])) return;
 
         $sValue = $_GET[$sKey];
 
-        $sFilterInput = self::filter($sValue, $sFilter);
+        if($sFilter != NULL)
+            $sFilter = self::filter($sValue, $sFilter);
 
-        $_GET[$sKey] = $sFilterInput;
+        $_GET[$sKey] = $sFilter;
 
         return $_GET[$sKey];
     }
 
-    public static function post($sKey, InputFilter $sFilter){
+    public static function post($sKey, InputFilter $sFilter = NULL){
         if(!isset($_POST[$sKey])) return;
 
         $sValue = $_POST[$sKey];
 
-        $sFilterInput = self::filter($sValue, $sFilter);
+        if($sFilter != NULL)
+            $sFilter = self::filter($sValue, $sFilter);
 
-        $_POST[$sKey] = $sFilterInput;
+        $_POST[$sKey] = $sFilter;
 
         return $_POST[$sKey];
     }

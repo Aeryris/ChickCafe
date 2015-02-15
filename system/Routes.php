@@ -31,17 +31,52 @@
  * @license The MIT License (MIT)
  */
 
-require_once('system/System.php');
 
-$oSystem = \System\System::init(__DIR__);
 
-//new Test_Class_Model();
+class Routes {
 
-$oRouter = new Router();
-$oRouter->run();
+    public static  $sRoutesPath;
 
-var_dump(Routes::initWithRoutes());
-var_dump(Routes::$aRoutes);
+    public static $aRoutes;
 
-//$oTemplate = new Template('name');
-//$oTemplate->display();
+    static $oInstance = null;
+
+    public static function loadRoutes($sRoutes){
+        self::$sRoutesPath = \System\System::$sRootPath.DIRECTORY_SEPARATOR.$sRoutes;
+
+        include(self::$sRoutesPath);
+
+        global $aRoutes;
+
+        return $aRoutes;
+    }
+
+    private function __construct($aRoutes){
+        self::$aRoutes = $aRoutes;
+    }
+
+    public static function initWithRoutes($aRoutes){
+
+        if (!(self::$oInstance instanceof self)) {
+            self::$oInstance = new self($aRoutes);
+        }
+        return self::$oInstance;
+    }
+
+    public static function initWithRoutesPath($sRoutesPath){
+
+        if (!(self::$oInstance instanceof self)) {
+            self::$oInstance = new self(array());
+            self::$aRoutes = self::loadRoutes($sRoutesPath);
+        }
+
+        return self::$oInstance;
+    }
+
+    public function __toString(){
+        return self::$aRoutes;
+    }
+
+
+
+} 

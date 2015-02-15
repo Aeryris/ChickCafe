@@ -31,17 +31,8 @@
  * @license The MIT License (MIT)
  */
 
-require_once('system/System.php');
 
-$oSystem = \System\System::init(__DIR__);
 
-//new Test_Class_Model();
+class Database {
 
-$oRouter = new Router();
-$oRouter->run();
-
-var_dump(Routes::initWithRoutes());
-var_dump(Routes::$aRoutes);
-
-//$oTemplate = new Template('name');
-//$oTemplate->display();
+} 

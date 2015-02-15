@@ -31,17 +31,22 @@
  * @license The MIT License (MIT)
  */
 
-require_once('system/System.php');
 
-$oSystem = \System\System::init(__DIR__);
+global $aRoutes;
 
-//new Test_Class_Model();
+$aRoutes = array();
 
-$oRouter = new Router();
-$oRouter->run();
+/**
+ * Default Index page
+ * Index_Controller -> index:Action
+ */
+$aRoutes['default'] = 'index/index';
 
-var_dump(Routes::initWithRoutes());
-var_dump(Routes::$aRoutes);
+/**
+ * Default 404 page
+ * Error_Controller -> notFound
+ */
+$aRoutes['error404'] = 'error/notFound';
 
-//$oTemplate = new Template('name');
-//$oTemplate->display();
+
+ 

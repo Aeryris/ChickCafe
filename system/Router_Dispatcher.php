@@ -99,7 +99,7 @@ class Router_Dispatcher {
             $i++;
         }
 
-
+        var_dump($oObject);
         $this->createControllerInstance($oObject, $this->sAction);
     }
 
@@ -114,13 +114,13 @@ class Router_Dispatcher {
         if (method_exists($oObject, $sMethod)) {
             $reflection = new \ReflectionMethod($oObject, $sMethod);
             if (!$reflection->isPublic()) {
-                @header('Location: /error/notfound');
+                header('Location: /error/notfound');
             }
             //$oObject->$sMethod(self::$param, self::$id);
             $oObject->$sMethod();
 
         } else {
-            @header('Location: /error/notfound');
+            header('Location: /error/notfound');
         }
 
     }

@@ -54,6 +54,18 @@ class Router {
         //$oRouterDispatcher = new \Router_Dispatcher($this->aRequestsParams[0]);
         $this->oRouterDispatcher = new \Router_Dispatcher();
     }
+    public function run(){
+        //$this->oRouterDispatcher->createControllerInstance('Index_Controller', 'e');
+        $arrV = array_filter(explode('/', $_SERVER['REQUEST_URI']));
+        if(empty($arrV))
+            return ;
+            /**
+             * Assume default route
+             */
+
+        $this->oRouterDispatcher->prepareParams(array_values($arrV[0]), $arrV);
+        $this->oRouterDispatcher->dispatch();
+    }
 
 
 

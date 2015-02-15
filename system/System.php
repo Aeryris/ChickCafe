@@ -35,14 +35,20 @@ namespace System;
 
 class System {
 
-    private static $sRootPath;
+    public static $sRootPath;
 
     private static  $sApplicationDir = 'application';
     private static  $sSystemDir = 'system';
     private static  $sModelDir = 'model';
     private static  $sControllerDir = 'controller';
-    public static $sTemplateDir = 'templates';
-    public static  $sTemplatePath;
+    public  static  $sTemplateDir = 'templates';
+    public  static  $sTemplatePath;
+
+    public  static  $sRoutesDir = 'routes';
+
+
+
+    public  static $sDefaultRoutesConfig;
 
     /**
      * Disable from normal instantiation of the object - use init
@@ -61,7 +67,11 @@ class System {
         spl_autoload_extensions(".php");
         spl_autoload_register('\System\System::loader');
 
-        self::$sTemplatePath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sTemplateDir;
+        self::$sTemplatePath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sTemplateDir.DIRECTORY_SEPARATOR;
+
+        self::$sDefaultRoutesConfig = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sRoutesDir.DIRECTORY_SEPARATOR;
+
+        \Routes::initWithRoutesPath(self::$sDefaultRoutesConfig);
     }
 
 
