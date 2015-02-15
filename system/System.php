@@ -37,16 +37,23 @@ class System {
 
     public static $sRootPath;
 
-    private static  $sApplicationDir = 'application';
-    private static  $sSystemDir = 'system';
-    private static  $sModelDir = 'model';
-    private static  $sControllerDir = 'controller';
-    public  static  $sTemplateDir = 'templates';
+    private static  $sApplicationDir       = 'application';
+    private static  $sSystemDir            = 'system';
+    private static  $sModelDir             = 'model';
+    private static  $sControllerDir        = 'controller';
+    public  static  $sTemplateDir          = 'templates';
     public  static  $sTemplatePath;
 
-    public  static  $sRoutesDir = 'routes';
+    public  static  $sInterfaceDir         = 'interface';
 
+    public  static  $sRoutesDir            = 'routes';
+    public  static  $sRoutesPath;
+    public  static  $sRoutesDefault        = 'default_routes.php';
 
+    public  static  $sConfigDir            = 'config';
+    public  static  $sConfigPath;
+
+    public  static  $sConfigDefaultSection = 'chickcafe';
 
     public  static $sDefaultRoutesConfig;
 
@@ -68,9 +75,9 @@ class System {
         spl_autoload_register('\System\System::loader');
 
         self::$sTemplatePath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sTemplateDir.DIRECTORY_SEPARATOR;
-
-        self::$sDefaultRoutesConfig = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sRoutesDir.DIRECTORY_SEPARATOR;
-
+        self::$sConfigPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sConfigDir.DIRECTORY_SEPARATOR;
+        self::$sDefaultRoutesConfig = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sRoutesDir.DIRECTORY_SEPARATOR.self::$sRoutesDefault;
+        self::$sRoutesPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sRoutesDir;
         \Routes::initWithRoutesPath(self::$sDefaultRoutesConfig);
     }
 
@@ -85,27 +92,35 @@ class System {
          * Last parameter of the array will determinate the type of the class (module, system, controller)
          */
         $aNaming = explode('_', $sClassName);
-
+        //var_dump($aNaming);
         /*
          * Determinate the type of required class file for inclusion
          */
         $sType = end($aNaming);
 
-        /**
-         * Remove class type
-         */
-        if(count($aNaming) > 1 || $sType == 'Controller' || $sType == 'Model' || $sType == 'System')
-            $sClassName = rtrim($sClassName, '_'.$sType);
+
+        if(preg_match("/_Interface$|_Controller$|_Model$|_System$|_Interface$/", $sClassName, $output_array)){
+            $aNaming = array_pop($aNaming);
+        }
+
+        if(is_array($aNaming)){
+            $sClassName = implode('-', $aNaming);
+            $sClassName = str_replace('-', '_', $sClassName);
+        }
+
+        var_dump($sClassName);
 
         $sInclusionPath = '';
 
-        if($sType == 'Controller'){
+        if(       $sType == 'Controller'){
             $sInclusionPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sControllerDir.DIRECTORY_SEPARATOR;
-        }elseif($sType == 'Model'){
+        } elseif( $sType == 'Model'){
             $sInclusionPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sModelDir.DIRECTORY_SEPARATOR;
-        }elseif($sType == 'System'){
+        } elseif( $sType == 'System'){
             $sInclusionPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sSystemDir.DIRECTORY_SEPARATOR;
-        }else{ //Assume its a system file
+        } elseif( $sType == 'Interface'){
+            $sInclusionPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sSystemDir.DIRECTORY_SEPARATOR.self::$sInterfaceDir.DIRECTORY_SEPARATOR;
+        } else{ //Assume its a system file
             $sInclusionPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sSystemDir.DIRECTORY_SEPARATOR;
             /**
              * @todo Add check for automatic class detection i.e if class is derrived from Controller etc
@@ -113,6 +128,8 @@ class System {
         }
 
         $sInclusionPath .= $sClassName.'.php';
+
+        //var_dump($sInclusionPath);
         try{
             require_once($sInclusionPath);
         }catch (\Exception $e){

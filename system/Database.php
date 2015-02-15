@@ -32,7 +32,23 @@
  */
 
 
+class Database implements Database_Interface{
 
-class Database {
+    public static $oDbConnection;
+
+    public static function get(){
+        global $aDBSettings;
+        require_once(\System\System::$sConfigPath.'dbConfig.php');
+
+        try {
+            self::$oDbConnection = new PDO("mysql:host=".$aDBSettings['host'].";dbname=".$aDBSettings['database'].", ".$aDBSettings['user'].", ".$aDBSettings['password']);
+        }
+        catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+
 
 } 

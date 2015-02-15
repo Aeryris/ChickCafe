@@ -42,7 +42,7 @@ class Routes {
     static $oInstance = null;
 
     public static function loadRoutes($sRoutes){
-        self::$sRoutesPath = \System\System::$sRootPath.DIRECTORY_SEPARATOR.$sRoutes;
+        self::$sRoutesPath = $sRoutes;
 
         include(self::$sRoutesPath);
 

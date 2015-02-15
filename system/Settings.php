@@ -33,7 +33,42 @@
 
 
 
-class Settings {
+class Settings implements Settings_Interface{
+
+    public static $aSettingsValues;
+
+    public static $oInstance;
+
+    public static function dbSettingWithKey($sKey){
+
+    }
+
+    public static function iniSettingWithKey($sKey){
+
+        if (!(self::$oInstance instanceof self)) {
+            self::$oInstance = new self();
+            self::$aSettingsValues = self::loadDefaultConfigFile();
+        }
+
+        return self::$oInstance;
+    }
+
+    public static function loadFileWithNameWithSection($sName, $sSection){
+
+        /*
+         * @todo Add if file exists check
+         */
+
+        return parse_ini_file(\System\System::$sConfigDir.$sName, $sSection);
+    }
+
+    public static function loadDefaultConfigFile(){
+        /*
+         * @todo Add if file exists check
+         * @todo Add check if section in ini exists
+         */
+        return parse_ini_file(\System\System::$sConfigDir.\System\System::$sConfigDir.DIRECTORY_SEPARATOR.'.ini', \System\System::$sConfigDefaultSection);
+    }
 
 
 

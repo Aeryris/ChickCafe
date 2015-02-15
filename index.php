@@ -40,8 +40,11 @@ $oSystem = \System\System::init(__DIR__);
 $oRouter = new Router();
 $oRouter->run();
 
-var_dump(Routes::initWithRoutes());
+
+
 var_dump(Routes::$aRoutes);
+
+Database::get();
 
 //$oTemplate = new Template('name');
 //$oTemplate->display();
