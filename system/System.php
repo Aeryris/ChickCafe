@@ -57,6 +57,8 @@ class System {
 
     public  static $sDefaultRoutesConfig;
 
+    public  static $sApplicationPath;
+
     /**
      * Disable from normal instantiation of the object - use init
      */
@@ -78,7 +80,9 @@ class System {
         self::$sConfigPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sConfigDir.DIRECTORY_SEPARATOR;
         self::$sDefaultRoutesConfig = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sRoutesDir.DIRECTORY_SEPARATOR.self::$sRoutesDefault;
         self::$sRoutesPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sRoutesDir;
+        self::$sApplicationPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR;
         \Routes::initWithRoutesPath(self::$sDefaultRoutesConfig);
+
     }
 
 
@@ -92,23 +96,31 @@ class System {
          * Last parameter of the array will determinate the type of the class (module, system, controller)
          */
         $aNaming = explode('_', $sClassName);
-        //var_dump($aNaming);
+
+
         /*
          * Determinate the type of required class file for inclusion
          */
         $sType = end($aNaming);
+        //var_dump($sType);
 
-
-        if(preg_match("/_Interface$|_Controller$|_Model$|_System$|_Interface$/", $sClassName, $output_array)){
+        if(preg_match("/_Interface$|._Controller$|_Model$|_System$/", $sClassName, $output_array)){
+            $sType = end($aNaming);
             $aNaming = array_pop($aNaming);
         }
 
+
+
         if(is_array($aNaming)){
-            $sClassName = implode('-', $aNaming);
-            $sClassName = str_replace('-', '_', $sClassName);
+            //$sClassName = implode('_', $aNaming);
+            //$sClassName = str_replace('-', '_', $sClassName);
         }
 
-        var_dump($sClassName);
+        //$sClassName = preg_replace('/_Interface$|_Controller$|_Model$|_System$/', '', $sClassName);
+        //var_dump($sType);
+        if($sClassName == 'Index_Controller') $sClassName = 'Index';
+        if($sClassName == 'Base_Controller') $sClassName = 'Base';
+        if($sClassName == 'Error_Controller') $sClassName = 'Error';
 
         $sInclusionPath = '';
 
@@ -131,7 +143,13 @@ class System {
 
         //var_dump($sInclusionPath);
         try{
-            require_once($sInclusionPath);
+            if(file_exists($sInclusionPath)){
+                include($sInclusionPath);
+            }else{
+                header('Location: error/notfound');
+                exit();
+            }
+
         }catch (\Exception $e){
             throw new \Exception('Cannot Find file');
         }

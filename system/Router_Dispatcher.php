@@ -62,24 +62,27 @@ class Router_Dispatcher implements Router_Dispatcher_Interface{
         /**
          * Get Controller
          */
-        $this->sController = $aUriDetails[0];
+        if(isset($aUriDetails[0])){
+            $this->sController = $aUriDetails[0];
+        }
+
 
         $iParameterStartIndex = 2;
 
         /**
          * Get action if not specified assume $sMainIndexMethod
          */
-        if($oClassReflection->hasMethod($aUriDetails[1])){
+        if(isset($aUriDetails[1]) && $oClassReflection->hasMethod($aUriDetails[1]) ){
             $this->sAction = $aUriDetails[1];
         }else{
-            $this->sAction = $this->sMainIndexMethod;
+            //$this->sAction = $this->sMainIndexMethod;
             $iParameterStartIndex = 1;
             /**
              * Final check if method exists
              */
             if(!$oClassReflection->hasMethod($this->sAction)){
-                //header('Location: /error/notfound');
-                //exit();
+                var_dump('Location: /error/notfound');
+                exit();
             }
         }
 
@@ -99,7 +102,7 @@ class Router_Dispatcher implements Router_Dispatcher_Interface{
             $i++;
         }
 
-        var_dump($oObject);
+        //var_dump($oObject);
         $this->createControllerInstance($oObject, $this->sAction);
     }
 
@@ -109,18 +112,23 @@ class Router_Dispatcher implements Router_Dispatcher_Interface{
 
     public function createControllerInstance($sController, $sMethod){
 
-        $oObject = new $sController;
+        //$oObject = new $sController;
 
-        if (method_exists($oObject, $sMethod)) {
-            $reflection = new \ReflectionMethod($oObject, $sMethod);
+        if (method_exists($sController, $sMethod)) {
+            $reflection = new \ReflectionMethod($sController, $sMethod);
+
             if (!$reflection->isPublic()) {
                 header('Location: /error/notfound');
+                //var_dump('Location: /error/notfound');
+                exit();
             }
             //$oObject->$sMethod(self::$param, self::$id);
-            $oObject->$sMethod();
+            $sController->$sMethod();
 
         } else {
             header('Location: /error/notfound');
+            //var_dump('Method: /error/notfound');
+            exit();
         }
 
     }

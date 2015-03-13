@@ -48,6 +48,7 @@ class Routes {
 
         global $aRoutes;
 
+
         return $aRoutes;
     }
 

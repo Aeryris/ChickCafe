@@ -74,7 +74,7 @@ class Template implements Template_Interface{
         return $this->variables[$sIndex];
     }
 
-    private function _read_file($filename)
+    public function _read_file($filename)
     {
         $res = false;
 
@@ -286,25 +286,25 @@ class Template implements Template_Interface{
 
 
 
-            $orginalTemplate = self::$sRealPath.DIRECTORY_SEPARATOR.  $value. '.php';
-            $temporaryTemplate = self::$sRealPath.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$value.'.php';
-            // var_dump($temporaryTemplate);
+            $orginalTemplate = self::$sRealPath.  $value. '.php';
+            //var_dump($orginalTemplate);
+            $temporaryTemplate = self::$sRealPath.'cache'.DIRECTORY_SEPARATOR.$value.'.php';
+            //var_dump($temporaryTemplate);
             if(!file_exists($temporaryTemplate) || filemtime($temporaryTemplate) < filemtime($orginalTemplate) || $this->refresh == true){
-                //	$this->replace($orginalTemplate, $temporaryTemplate);
                 $this->replace($orginalTemplate, $temporaryTemplate);
             }
 
 
             extract($this->variables, EXTR_SKIP);
 
-            //include $temporaryTemplate;
+            include $temporaryTemplate;
 
         }
-        //var_dump($this->variables);
+
         extract($this->variables, EXTR_SKIP);
 
         try{
-            include(self::$sRealPath.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$this->templateName[0].".php");
+            //include(self::$sRealPath.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$this->templateName[0].".php");
         }catch(Exception $e){
             throw new Exception('Failed to include template');
         }

@@ -42,12 +42,11 @@ $oRouter->run();
 
 
 
-var_dump(Routes::$aRoutes);
 
-$db = Database::get();
+/** $db = Database::get();
 $test = $db->query('SELECT * from customer');
 
 $data = $test->fetchAll(PDO::FETCH_ASSOC);
-var_dump($data);
+var_dump($data); @var  $db */
 //$oTemplate = new Template('name');
 //$oTemplate->display();

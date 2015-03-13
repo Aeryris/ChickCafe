@@ -34,4 +34,30 @@
 
 class Base_Controller {
 
+    public $db;
+    public $input;
+    public $post;
+    public $get;
+    public $auth;
+    public $template;
+    public $view;
+
+    public function __construct(){
+        $this->auth = new Auth();
+        $this->template = new Template('header');
+
+    }
+
+    public function __destruct(){
+        $inc = array();
+        if(isset($this->view)){
+            $inc = array($this->view, 'footer');
+        }else{
+            $inc = array('footer');
+        }
+
+        $this->template->assignTemplates($inc);
+        $this->template->display();
+    }
+
 } 

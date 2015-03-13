@@ -32,14 +32,22 @@
  */
 
 
-class Index_Controller{
+class Index_Controller extends Base_Controller{
+
+
 
     public function index(){
-        echo Input::get('name');
+
+
+
+
+
+
+        $this->view = 'index';
     }
 
     public function e(){
-        echo 'echoecho';
+        $this->view = 'index';
     }
 
 } 
