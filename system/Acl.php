@@ -33,7 +33,7 @@
 
 
 
-class Acl {
+class Acl_Core {
 
     public static function init()
     {

@@ -41,22 +41,28 @@ class Base_Controller {
     public $auth;
     public $template;
     public $view;
+    public $header = 'header';
+    public $footer = 'footer';
 
     public function __construct(){
-        $this->auth = new Auth();
-        $this->template = new Template('header');
-
+        $this->auth = new Auth_Core();
+        $this->template = new Template_Core('');
+        $this->refresh = true;
+        //$this->view ='index';
     }
 
     public function __destruct(){
         $inc = array();
         if(isset($this->view)){
-            $inc = array($this->view, 'footer');
+            $inc = array($this->view, $this->footer);
         }else{
-            $inc = array('footer');
+            $inc = array($this->footer);
         }
 
+        //var_dump($this->view);
+
         $this->template->assignTemplates($inc);
+        //var_dump($this->template);
         $this->template->display();
     }
 

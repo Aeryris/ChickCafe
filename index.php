@@ -30,15 +30,17 @@
  * @version 1.0
  * @license The MIT License (MIT)
  */
-
+error_reporting(E_ALL | E_STRICT);
 require_once('system/System.php');
 
-$oSystem = \System\System::init(__DIR__);
+$oSystem = \System\System_Core::init(__DIR__);
 
 //new Test_Class_Model();
 
-$oRouter = new Router();
+$oRouter = new Router_Core();
 $oRouter->run();
+
+
 
 
 

@@ -39,7 +39,7 @@
 
 //require_once('Router_Dispatcher.php');
 
-class Router extends Router_Dispatcher implements Router_Interface, Router_Dispatcher_Interface{
+class Router_Core extends Router_Dispatcher_Core implements Router_Interface, Router_Dispatcher_Interface{
 
     private $aRequestsParams;
     private $sScriptName;
@@ -51,23 +51,22 @@ class Router extends Router_Dispatcher implements Router_Interface, Router_Dispa
     public function __construct(){
         $this->aRequestsParams = array_filter(explode('/', $_SERVER['REQUEST_URI']));
         $this->sScriptName = array_filter(explode('/',$_SERVER['SCRIPT_NAME']));
-        $this->aRoutes = Routes::$aRoutes;
+        $this->aRoutes = Routes_Core::$aRoutes;
         //$oRouterDispatcher = new \Router_Dispatcher($this->aRequestsParams[0]);
 
     }
     public function run(){
-        //$this->oRouterDispatcher->createControllerInstance('Index_Controller', 'e');
-        $arrV = array_values(array_filter(explode('/', $_SERVER['REQUEST_URI'])));
+        $arrV = array_values($this->aRequestsParams);
 
 
         /**
          * Assume default route
          */
         if(empty($arrV)){
-            $arrV[0] = explode('/', Routes::$aRoutes['default'])[0];
+            $arrV[0] = explode('/', Routes_Core::$aRoutes['default'])[0];
         }
-
-        $this->prepareParams($arrV[0], array_filter(explode('/', $_SERVER['REQUEST_URI'])));
+        //var_dump($arrV);
+        $this->prepareParams($arrV[0], $this->aRequestsParams);
         //$this->dispatch();
     }
 

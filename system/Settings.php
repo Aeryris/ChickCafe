@@ -33,7 +33,7 @@
 
 
 
-class Settings implements Settings_Interface{
+class Settings_Core implements Settings_Interface{
 
     public static $aSettingsValues;
 

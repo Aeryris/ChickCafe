@@ -10,16 +10,16 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/application/assets/css/bootstrap.min.css">
     <style>
         body {
             padding-top: 50px;
             padding-bottom: 20px;
         }
     </style>
-    <link rel="stylesheet" href="application/assets/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/application/assets/css/bootstrap-theme.min.css">
 
 
-    <script co src="application/assets/js/modernizr.min.js"></script>
+    <script src="/application/assets/js/modernizr.min.js"></script>
 </head>
 <body>

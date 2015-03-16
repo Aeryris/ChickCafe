@@ -33,7 +33,7 @@
 namespace System;
 
 
-class System {
+class System_Core {
 
     public static $sRootPath;
 
@@ -74,14 +74,14 @@ class System {
          * Register class and modules autoloder
          */
         spl_autoload_extensions(".php");
-        spl_autoload_register('\System\System::loader');
+        spl_autoload_register('\System\System_Core::loader');
 
         self::$sTemplatePath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sTemplateDir.DIRECTORY_SEPARATOR;
         self::$sConfigPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sConfigDir.DIRECTORY_SEPARATOR;
         self::$sDefaultRoutesConfig = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sRoutesDir.DIRECTORY_SEPARATOR.self::$sRoutesDefault;
         self::$sRoutesPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sRoutesDir;
         self::$sApplicationPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR;
-        \Routes::initWithRoutesPath(self::$sDefaultRoutesConfig);
+        \Routes_Core::initWithRoutesPath(self::$sDefaultRoutesConfig);
 
     }
 
@@ -91,12 +91,12 @@ class System {
      * @param $sClassName
      */
     public static function loader($sClassName){
-
+        //var_dump($sClassName);
         /*
          * Last parameter of the array will determinate the type of the class (module, system, controller)
          */
         $aNaming = explode('_', $sClassName);
-
+        if($sClassName == 'Application_Controller') return;
 
         /*
          * Determinate the type of required class file for inclusion
@@ -104,7 +104,7 @@ class System {
         $sType = end($aNaming);
         //var_dump($sType);
 
-        if(preg_match("/_Interface$|._Controller$|_Model$|_System$/", $sClassName, $output_array)){
+        if(preg_match("/_Interface$|_Controller$|_Model$|_System$|_Core$/", $sClassName, $output_array)){
             $sType = end($aNaming);
             $aNaming = array_pop($aNaming);
         }
@@ -116,7 +116,7 @@ class System {
             //$sClassName = str_replace('-', '_', $sClassName);
         }
 
-        //$sClassName = preg_replace('/_Interface$|_Controller$|_Model$|_System$/', '', $sClassName);
+        $sClassName = preg_replace('/_Controller$|_Model$|_System$|_Core$/', '', $sClassName);
         //var_dump($sType);
         if($sClassName == 'Index_Controller') $sClassName = 'Index';
         if($sClassName == 'Base_Controller') $sClassName = 'Base';
@@ -132,8 +132,9 @@ class System {
             $sInclusionPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sSystemDir.DIRECTORY_SEPARATOR;
         } elseif( $sType == 'Interface'){
             $sInclusionPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sSystemDir.DIRECTORY_SEPARATOR.self::$sInterfaceDir.DIRECTORY_SEPARATOR;
-        } else{ //Assume its a system file
+        } elseif( $sType == 'Core'){ //Assume its a system file
             $sInclusionPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sSystemDir.DIRECTORY_SEPARATOR;
+            //var_dump('Inclu');
             /**
              * @todo Add check for automatic class detection i.e if class is derrived from Controller etc
              */
@@ -146,8 +147,8 @@ class System {
             if(file_exists($sInclusionPath)){
                 include($sInclusionPath);
             }else{
-                header('Location: error/notfound');
-                exit();
+                //var_dump($sInclusionPath);
+                //exit();
             }
 
         }catch (\Exception $e){

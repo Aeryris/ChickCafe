@@ -33,7 +33,7 @@
 
 
 
-class Routes {
+class Routes_Core {
 
     public static  $sRoutesPath;
 

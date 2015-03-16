@@ -19,7 +19,7 @@
  * @todo Move parser to separate class
  */
 
-class Template implements Template_Interface{
+class Template_Core implements Template_Interface{
 
     public $templateName = array();
 
@@ -33,12 +33,12 @@ class Template implements Template_Interface{
 
     public function __construct($sName, $sPath = ''){
         if($sPath == ''){
-            self::$sRealPath = \System\System::$sTemplatePath;
+            self::$sRealPath = \System\System_Core::$sTemplatePath;
         }else{
             self::$sRealPath = $sPath;
         }
-
-        $this->templateName[] = $sName;
+        if(!$sName == null || !$sName == '')
+            $this->templateName[] = $sName;
     }
 
     /**
@@ -173,7 +173,7 @@ class Template implements Template_Interface{
             $includeString = '$1';
         }
 
-        $TemplatePathsSystem = \System\System::$sTemplatePath;
+        $TemplatePathsSystem = \System\System_Core::$sTemplatePath;
 
         $contents = $this->_read_file($sTemporaryTemplate);
         $contentsP = preg_replace(
@@ -260,6 +260,7 @@ class Template implements Template_Interface{
 
             ),
             $contents);
+       // var_dump($contentsP);
         file_put_contents($temporaryTemplate, $contentsP);
 
         //}
@@ -297,14 +298,14 @@ class Template implements Template_Interface{
 
             extract($this->variables, EXTR_SKIP);
 
-            include $temporaryTemplate;
+            //include $temporaryTemplate;
 
         }
 
         extract($this->variables, EXTR_SKIP);
 
         try{
-            //include(self::$sRealPath.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$this->templateName[0].".php");
+            include(self::$sRealPath.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$this->templateName[0].".php");
         }catch(Exception $e){
             throw new Exception('Failed to include template');
         }

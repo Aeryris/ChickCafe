@@ -32,7 +32,7 @@
  */
 
 
-class Database implements Database_Interface{
+class Database_Core implements Database_Interface{
 
     public static $oDbConnection;
 

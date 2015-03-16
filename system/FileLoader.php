@@ -33,7 +33,7 @@
 
 
 
-class FileLoader {
+class FileLoader_Core {
 
 
 

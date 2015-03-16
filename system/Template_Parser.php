@@ -33,6 +33,6 @@
 
 
 
-class Template_Parser {
+class Template_Parser_Core {
 
 } 
