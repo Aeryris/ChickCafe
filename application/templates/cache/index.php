@@ -1,5 +1,8 @@
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
+
+<?php echo $test ?>
+
 <form action="/user/login" method="post">
 
     <label for="username">Username</label>

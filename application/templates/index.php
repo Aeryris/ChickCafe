@@ -1,5 +1,8 @@
 {include file=header.php}
 
+
+{! $test }
+
 <form action="/user/login" method="post">
 
     <label for="username">Username</label>

@@ -32,22 +32,21 @@
  */
 
 
-class Index_Controller extends Base_Controller{
+
+class User_Controller extends Base_Controller{
+
+    public function login(){
+
+        $oLoginForm = new Form_Core('post');
+
+        $sUsername = $oLoginForm->element('username')->required()->validation('rule');
+        $sPassword = $oLoginForm->element('password')->required()->validation('rule');
 
 
+        var_dump($oLoginForm);
 
-    public function index(){
-
-
-        $this->template->test = 'Test var ';
-
-
-
-        $this->view = 'index';
+        var_dump($_POST);
     }
 
-    public function e(){
-        $this->view = 'index';
-    }
 
 } 

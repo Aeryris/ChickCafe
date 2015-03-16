@@ -32,22 +32,25 @@
  */
 
 
-class Index_Controller extends Base_Controller{
 
+class Language_Core {
 
+    public static $sLoc;
+    public static $aLang;
 
-    public function index(){
-
-
-        $this->template->test = 'Test var ';
-
-
-
-        $this->view = 'index';
+    public static function setLocale($sLocale = 'en'){
+        if(empty($sLocale)) $sLocale = 'en';
+        self::$sLoc = $sLocale;
     }
 
-    public function e(){
-        $this->view = 'index';
+    public static function load($sLocale){
+        global $lang;
+        require_once(\System\System_Core::$sApplicationPath.'language'.DIRECTORY_SEPARATOR.$sLocale.'.php');
+        self::$aLang = $lang;
+    }
+
+    public static function lang($sName){
+        return self::$aLang[$sName];
     }
 
 } 

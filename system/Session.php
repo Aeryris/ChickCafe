@@ -32,22 +32,24 @@
  */
 
 
-class Index_Controller extends Base_Controller{
 
+class Session_Core {
 
-
-    public function index(){
-
-
-        $this->template->test = 'Test var ';
-
-
-
-        $this->view = 'index';
+    public function __get($sName){
+        return $_SESSION[$sName];
     }
 
-    public function e(){
-        $this->view = 'index';
+    public function __set($sName, $sValue){
+        $_SESSION[$sName] = $sValue;
     }
+
+    public function __isset($sName){
+        return isset($_SESSION[$sName]);
+    }
+
+    public function __unset($sName){
+
+    }
+
 
 } 

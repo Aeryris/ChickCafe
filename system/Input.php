@@ -135,4 +135,12 @@ class Input_Core implements Input_Interface{
         return $_POST[$sKey] = $sValue;
     }
 
+    public static function getGet(){
+        return $_GET;
+    }
+
+    public static function getPost(){
+        return $_POST;
+    }
+
 } 

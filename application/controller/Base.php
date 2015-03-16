@@ -43,12 +43,23 @@ class Base_Controller {
     public $view;
     public $header = 'header';
     public $footer = 'footer';
+    public $benchmark;
+    public $session;
 
     public function __construct(){
+        if(DEVELOPMENT_MODE){
+            $this->benchmark = new Benchmark_Core();
+            $this->benchmark->start();
+        }
+
+        session_start();
+        $this->session = new Session_Core();
+
+        Language_Core::setLocale($this->session->language);
         $this->auth = new Auth_Core();
         $this->template = new Template_Core('');
-        $this->refresh = true;
-        //$this->view ='index';
+        if(DEVELOPMENT_MODE) $this->refresh = true;
+
     }
 
     public function __destruct(){
@@ -63,6 +74,7 @@ class Base_Controller {
 
         $this->template->assignTemplates($inc);
         //var_dump($this->template);
+        $this->benchmark->end();
         $this->template->display();
     }
 

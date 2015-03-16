@@ -33,6 +33,8 @@
 error_reporting(E_ALL | E_STRICT);
 require_once('system/System.php');
 
+define('DEVELOPMENT_MODE', true);
+
 $oSystem = \System\System_Core::init(__DIR__);
 
 //new Test_Class_Model();

@@ -32,22 +32,41 @@
  */
 
 
-class Index_Controller extends Base_Controller{
 
+class Benchmark_Core {
 
-
-    public function index(){
-
-
-        $this->template->test = 'Test var ';
-
-
-
-        $this->view = 'index';
+    public $startTime;
+    public $endTime;
+    public $startMemory;
+    public $endMemory;
+    public $digits = 0;
+    public function start(){
+        $this->startTime    = explode (' ', microtime());
+        //var_dump($this->startTime);
+        $mem = memory_get_usage();
+        $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1];
+        //var_dump($mem);
+        //var_dump($bt);
     }
 
-    public function e(){
-        $this->view = 'index';
+    public function end(){
+        //var_dump($this->totaltime());
+    }
+
+    public function results(){
+
+    }
+
+    public function totaltime()
+    {
+        $this->endTime         = explode (' ', microtime());
+        if($this->digits == ""){
+            $runtime_float  = $this->endTime[0] - $this->startTime[0];
+        }else{
+            $runtime_float  = round(($this->endTime[0] - $this->startTime[0]), $this->digits);
+        }
+        $runtime = ($this->endTime[1] - $this->startTime[1]) + $runtime_float;
+        return $runtime;
     }
 
 } 
