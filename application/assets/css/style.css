@@ -1,0 +1,83 @@
+body {
+	
+}
+
+.content {
+	width: 90%;
+	margin: 0 auto;
+}
+
+#daily_special {
+	margin-top: 20px;
+}
+
+#nav-options li a {
+	color:white;
+}
+
+.navbar-default {
+	background:#002D4C;
+	border-color:#002D4C;
+}
+
+.navbar {
+	border-radius: 0;
+}
+
+#view_menu {
+	text-align: center;
+	color:white;
+}
+
+#view_menu .btn.btn-default {
+	background: #4BA6E5;
+	color:white;
+	border-color:#4C6678;
+}
+
+#view_menu .btn.btn-default.active,
+#view_menu .btn.btn-default:active {
+	background:#007BCC;
+}
+
+.content .jumbotron {
+	padding-left: 10px;
+	color:white;
+	background: #005E9f;
+	border-radius: 4px;
+}
+
+.content .jumbotron h1 {
+	text-align: center;
+}
+
+.footer {
+	position: absolute;
+  	bottom: 0;
+  	width: 100%;
+  	
+  	/*Fixed footer stuff*/
+  	height: 60px;
+  	background-color: #002D4C;
+  	border-radius: 0;
+}
+
+.footer p {
+	color:white;
+	margin-top:10px;
+}
+
+#login_box input {
+	border-radius: 4px;
+	margin: 10px auto;
+}
+
+#login_box .input-group {
+	margin: 0 auto;
+	clear: both;
+}
+
+#login_box .form-control {
+	width:50%;
+	clear:both;
+}
