@@ -36,16 +36,35 @@
 class User_Controller extends Base_Controller{
 
     public function login(){
-
         $oLoginForm = new Form_Core('post');
 
-        $sUsername = $oLoginForm->element('username')->required()->validation('rule');
-        $sPassword = $oLoginForm->element('password')->required()->validation('rule');
+        if($_POST){
 
 
-        var_dump($oLoginForm);
+            $sUsername = $oLoginForm->element('username')->required()->validation('rule');
+            $sPassword = $oLoginForm->element('password')->required()->validation('rule');
+            var_dump($_POST);
 
-        var_dump($_POST);
+        }
+
+        $this->template->errors = $oLoginForm->sErrors;
+        $this->view = 'login';
+    }
+
+    public function register(){
+        $oLoginForm = new Form_Core('post');
+
+        if($oLoginForm->submit()){
+
+
+            $sUsername = $oLoginForm->element('username')->required()->validation('rule');
+            $sPassword = $oLoginForm->element('password')->required()->validation('rule');
+
+
+        }
+
+        $this->template->errors = $oLoginForm->sErrors;
+        $this->view = 'register';
     }
 
 

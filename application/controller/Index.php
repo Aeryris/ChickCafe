@@ -50,7 +50,7 @@ class Index_Controller extends Base_Controller{
                         ->setPassword('password')
                         ->save();
 
-        var_dump($oUser);
+        //var_dump($oUser);
         $this->view = 'index';
     }
 

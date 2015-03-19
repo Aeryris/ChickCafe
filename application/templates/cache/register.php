@@ -1,4 +1,4 @@
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 <div id="wrap">
     <div id="main" class="container clear-top">
 <div id="register_form">

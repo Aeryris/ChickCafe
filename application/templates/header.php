@@ -11,34 +11,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/application/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/application/assets/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/application/assets/css/style.css">
+    <link rel="stylesheet" href="/application/assets/css/styles.css">
+    <link rel="stylesheet" href="/application/assets/css/main.css">
     <script src="/application/assets/js/modernizr.min.js"></script>
 </head>
 <body>
+<!-- Static navbar -->
 <nav class="navbar navbar-default">
-<div class="container-fluid">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="#">
-      <a href="/index.php"><img alt="Chick Cafe" src="..."></a>
-    </a>
-  </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ChickCafe</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse" id="nav-options">
-    <ul class="nav navbar-nav navbar-right">
-        <!-- If logged in -->
-        <li><a href="#"><i class="fa fa-shopping-cart"></i> Basket</a></li>
-        <!-- If not logged in -->
-        <li><a href="#">Sign-in</a></li>
-        <li><a href="#">Register</a></li>
-    </ul>
-  </div><!-- /.navbar-collapse -->
-</div><!-- /.container-fluid -->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <!-- Only show when user is registered -->
+                <!-- <li class="active"><a href="./">User name <span class="sr-only">(current)</span></a></li> -->
+                <li><a href="/user/login">Login</a></li>
+                <li><a href="/user/register">Register</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
 </nav>

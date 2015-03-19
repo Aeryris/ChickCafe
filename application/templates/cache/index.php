@@ -1,17 +1,31 @@
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
+<div id="wrap">
+    <div id="main" class="container clear-top">
 
-<?php echo $test ?>
+<div class="bg"></div>
+<div class="jumbotron">
+    <h1>Today's Daily Special</h1>
+    <p class="lead">Today's daily special is...</p>
 
-<form action="/user/login" method="post">
+    <div class="center-block" id="view_menu">
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default btn-lg">Breakfast</button>
+            <button type="button" class="btn btn-default btn-lg">Lunch</button>
+            <button type="button" class="btn btn-default btn-lg">Dinner</button>
+            <button type="button" class="btn btn-default btn-lg">Drinks</button>
+        </div>
+        <button type="button" class="btn btn-default btn-lg navbar-btn select">Select</button>
+    </div>
+</div>
 
-    <label for="username">Username</label>
-    <input type="text" name="username" />
+<div class="container">
 
-    <label for="password">Password</label>
-    <input type="password" name="password" />
 
-    <button type="submit" value="Submit">Submit</button>
 
-</form>
 
+
+</div>
+
+    </div>
+</div>

@@ -139,7 +139,7 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
             $oStmt->bindParam(':id', $this->id, PDO::PARAM_INT);
             $oExecute = $oStmt->execute();
 
-            print_r($oExecute);
+           // print_r($oExecute);
 
             $this->db->commit();
         }catch(PDOException $e){
@@ -216,7 +216,7 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
             $oExecute = $oStmt->execute();
 
             $aData  = $oStmt->fetch(PDO::FETCH_ASSOC);
-            var_dump($aData);
+            //var_dump($aData);
         }catch(PDOException $e){
             var_dump($e);
             exit();
@@ -252,11 +252,11 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
             foreach($aAttr as $key => $value){
                 $oStmt->bindValue(":$key", $value);
             }
-            var_dump($oStmt);
+            //var_dump($oStmt);
             $oExecute = $oStmt->execute();
 
             $aData  = $oStmt->fetch(PDO::FETCH_ASSOC);
-            var_dump($oStmt->debugDumpParams());
+            //var_dump($oStmt->debugDumpParams());
 
 
         }catch (PDOException $e){

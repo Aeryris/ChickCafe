@@ -1,4 +1,4 @@
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
@@ -18,7 +18,7 @@
     <p>Haven't got an account yet? <a id="register_link" href="register.php">Click here to register for an account.</a></p>
 </form>
     <div>
-        {! $errors }
+        <?php echo $errors ?>
     </div>
 </div>
 

@@ -65,8 +65,9 @@ class Form_Core {
     }
 
     public function element($sName){
-
-        $this->aFormElements[$sName] = $this->aFormData[$sName];
+        if(isset($this->aFormData[$sName])) {
+            $this->aFormElements[$sName] = $this->aFormData[$sName];
+        }
         $this->aCurrentElement = $sName;
         return $this;
     }
@@ -89,16 +90,16 @@ class Form_Core {
     }
 
     public function submit(){
-
+        return $_POST;
     }
 
     public function required($bRequired = true){
 
         if($bRequired){
-            if(empty($this->aFormElements[$this->aCurrentElement])){
+            if(!isset($this->aFormElements[$this->aCurrentElement]) && empty($this->aFormElements[$this->aCurrentElement])){
                 $this->iError++;
-                $this->sErrors =
-                var_dump('Empty value of '.$this->aCurrentElement);
+                $this->sErrors = 'Empty value of '.$this->aCurrentElement;
+                //var_dump('Empty value of '.$this->aCurrentElement);
             }
         }
 
