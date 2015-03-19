@@ -32,37 +32,45 @@
  */
 
 
-class Database_Core implements Database_Interface{
 
-    public static $oDbConnection;
+interface Menu_Interface{
 
-    public static function get(){
-        global $aDBSettings;
-        require_once(\System\System_Core::$sConfigPath.'dbConfig.php');
 
-        try {
-            self::$oDbConnection = new PDO("mysql:host=".$aDBSettings['host'].";dbname=".$aDBSettings['database'].";", $aDBSettings['user'], $aDBSettings['password']);
-            self::$oDbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    public function add();
+    public function remove();
 
-        }
-        catch(PDOException $e) {
-            echo $e->getMessage();
-        }
+    public function get($iId);
+    public function setName($sName);
+    public function setStartTime($sStartTime);
+    public function setEndTime($sEndTime);
+    public function save();
 
-        return self::$oDbConnection;
+}
+
+class Menu_Model implements Menu_Interface {
+
+    public function add(){
+
+    }
+    public function remove(){
+
     }
 
-    public static function params($string,$data) {
-        $indexed=$data==array_values($data);
-        foreach($data as $k=>$v) {
-            if(is_string($v)) $v="'$v'";
-            if($indexed) $string=preg_replace('/\?/',$v,$string,1);
-            else $string=str_replace(":$k",$v,$string);
-        }
-        return $string;
+    public function get($iId){
+
+    }
+    public function setName($sName){
+
+    }
+    public function setStartTime($sStartTime){
+
+    }
+    public function setEndTime($sEndTime){
+
     }
 
+    public function save(){
 
-
+    }
 
 } 

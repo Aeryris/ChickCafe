@@ -31,38 +31,46 @@
  * @license The MIT License (MIT)
  */
 
+interface Staff_Interface{
+    public function setRole($sRole);
+    public function setSalary($dSalary);
+    public function setPhoneNumber($iPhoneNumber);
+}
 
-class Database_Core implements Database_Interface{
+class Staff_Model extends UserType_Model {
 
-    public static $oDbConnection;
+    private static $instance;
 
-    public static function get(){
-        global $aDBSettings;
-        require_once(\System\System_Core::$sConfigPath.'dbConfig.php');
+    public $role;
+    public $salary;
+    public $phoneNumber;
+    public $type = 's';
 
-        try {
-            self::$oDbConnection = new PDO("mysql:host=".$aDBSettings['host'].";dbname=".$aDBSettings['database'].";", $aDBSettings['user'], $aDBSettings['password']);
-            self::$oDbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+    public static function get()
+    {
+        if (!is_object(self::$instance)) {
+            $c = get_called_class();
+            self::$instance = new $c();
         }
-        catch(PDOException $e) {
-            echo $e->getMessage();
-        }
-
-        return self::$oDbConnection;
+        return self::$instance;
     }
 
-    public static function params($string,$data) {
-        $indexed=$data==array_values($data);
-        foreach($data as $k=>$v) {
-            if(is_string($v)) $v="'$v'";
-            if($indexed) $string=preg_replace('/\?/',$v,$string,1);
-            else $string=str_replace(":$k",$v,$string);
-        }
-        return $string;
+    protected function __construct()
+    {
     }
 
+    public function setRole($sRole){
+        $this->role = $sRole;
+        return $this;
+    }
 
+    public function setSalary($dSalary){
+        $this->salary = $dSalary;
+        return $this;
+    }
 
-
+    public function setPhoneNumber($iPhoneNumber){
+        $this->phoneNumber = $iPhoneNumber;
+        return $this;
+    }
 } 

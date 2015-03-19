@@ -52,13 +52,17 @@ class Base_Controller {
             $this->benchmark->start();
         }
 
-        session_start();
+        //session_start();
         $this->session = new Session_Core();
+
+        $this->session->language = 'en';
 
         Language_Core::setLocale($this->session->language);
         $this->auth = new Auth_Core();
         $this->template = new Template_Core('');
         if(DEVELOPMENT_MODE) $this->refresh = true;
+
+        $this->db = Database_Core::get();
 
     }
 

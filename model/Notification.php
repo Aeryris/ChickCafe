@@ -31,38 +31,11 @@
  * @license The MIT License (MIT)
  */
 
+interface Notification_Interface{
+    public function get($iId);
+    public function getByOrderId($iId);
+}
 
-class Database_Core implements Database_Interface{
-
-    public static $oDbConnection;
-
-    public static function get(){
-        global $aDBSettings;
-        require_once(\System\System_Core::$sConfigPath.'dbConfig.php');
-
-        try {
-            self::$oDbConnection = new PDO("mysql:host=".$aDBSettings['host'].";dbname=".$aDBSettings['database'].";", $aDBSettings['user'], $aDBSettings['password']);
-            self::$oDbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        }
-        catch(PDOException $e) {
-            echo $e->getMessage();
-        }
-
-        return self::$oDbConnection;
-    }
-
-    public static function params($string,$data) {
-        $indexed=$data==array_values($data);
-        foreach($data as $k=>$v) {
-            if(is_string($v)) $v="'$v'";
-            if($indexed) $string=preg_replace('/\?/',$v,$string,1);
-            else $string=str_replace(":$k",$v,$string);
-        }
-        return $string;
-    }
-
-
-
+class Notification_Model {
 
 } 

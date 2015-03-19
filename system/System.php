@@ -118,9 +118,9 @@ class System_Core {
 
         $sClassName = preg_replace('/_Controller$|_Model$|_System$|_Core$/', '', $sClassName);
         //var_dump($sType);
-        if($sClassName == 'Index_Controller') $sClassName = 'Index';
-        if($sClassName == 'Base_Controller') $sClassName = 'Base';
-        if($sClassName == 'Error_Controller') $sClassName = 'Error';
+        //if($sClassName == 'Index_Controller') $sClassName = 'Index';
+        //if($sClassName == 'Base_Controller') $sClassName = 'Base';
+        //if($sClassName == 'Error_Controller') $sClassName = 'Error';
 
         $sInclusionPath = '';
 

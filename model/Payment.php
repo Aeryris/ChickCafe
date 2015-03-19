@@ -31,38 +31,17 @@
  * @license The MIT License (MIT)
  */
 
+interface Payment_Interface{
+    public function make();
+    public function setCustomerId($iCustomerId);
+    public function setTime($sTime);
+    public function setPrice($bPrice);
+    public function setOrderId($iId);
+    public function setType($sType);
+    public function setInfo($sInfo);
 
-class Database_Core implements Database_Interface{
+}
 
-    public static $oDbConnection;
-
-    public static function get(){
-        global $aDBSettings;
-        require_once(\System\System_Core::$sConfigPath.'dbConfig.php');
-
-        try {
-            self::$oDbConnection = new PDO("mysql:host=".$aDBSettings['host'].";dbname=".$aDBSettings['database'].";", $aDBSettings['user'], $aDBSettings['password']);
-            self::$oDbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        }
-        catch(PDOException $e) {
-            echo $e->getMessage();
-        }
-
-        return self::$oDbConnection;
-    }
-
-    public static function params($string,$data) {
-        $indexed=$data==array_values($data);
-        foreach($data as $k=>$v) {
-            if(is_string($v)) $v="'$v'";
-            if($indexed) $string=preg_replace('/\?/',$v,$string,1);
-            else $string=str_replace(":$k",$v,$string);
-        }
-        return $string;
-    }
-
-
-
+class Payment_Model {
 
 } 

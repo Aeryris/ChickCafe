@@ -31,6 +31,11 @@
  * @license The MIT License (MIT)
  */
 error_reporting(E_ALL | E_STRICT);
+
+ini_set('xdebug.var_display_max_depth', 5);
+ini_set('xdebug.var_display_max_children', 256);
+ini_set('xdebug.var_display_max_data', 1024);
+
 require_once('system/System.php');
 
 define('DEVELOPMENT_MODE', true);
