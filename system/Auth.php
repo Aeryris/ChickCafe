@@ -36,16 +36,19 @@
 class Auth_Core extends Acl_Core{
 
     public function isAuth(){
-        //if($_SESSION['a'] == $_SESSION['key'] && )
+        if($_SESSION['ak'] == sha1(md5($_SESSION['user']))){
+            return true;
+        }else{
+            return false;
+        }
     }
 
-    public function login($aParams){
-
+    public function auth($aUserData){
+        $_SESSION['ak'] = sha1(md5($aUserData));
+        $_SESSION['user'] = $aUserData;
     }
 
-    public function register($aParams){
 
-    }
 
 //    /**
 //     * Generates a secure, pseudo-random password with a safe fallback.

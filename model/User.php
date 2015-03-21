@@ -49,7 +49,9 @@ interface User_Model_Interface{
 
     public function check(); //basic id check
 
-    public function checkAttr($aAttr);
+    public function attr($aAttr);
+
+    public function exists();
 
 }
 
@@ -63,6 +65,7 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
     public $id;
     private $isNew;
 
+    public $aData;
 
 
     public function get($iId){
@@ -215,7 +218,7 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
 
             $oExecute = $oStmt->execute();
 
-            $aData  = $oStmt->fetch(PDO::FETCH_ASSOC);
+            $this->aData  = $oStmt->fetch(PDO::FETCH_ASSOC);
             //var_dump($aData);
         }catch(PDOException $e){
             var_dump($e);
@@ -236,27 +239,27 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
      *
      * @todo fix multiple $aAttributes - ->BindValue does not bind the value
      */
-    public function checkAttr($aAttr){
+    public function attr($aAttr){
         try{
 
             $sQuery = "SELECT * FROM user WHERE ";
 
-            foreach($aAttr as $key => &$value){
+            foreach($aAttr as $key => $value){
                 $sQuery .= "user_".$key. " = :". $key. " AND ";
             }
 
             $sQuery = rtrim($sQuery, "AND \t\n ");
-
+            //var_dump($sQuery);
             $oStmt = $this->db->prepare($sQuery);
 
             foreach($aAttr as $key => $value){
                 $oStmt->bindValue(":$key", $value);
             }
-            //var_dump($oStmt);
+            //var_dump($aAttr);
             $oExecute = $oStmt->execute();
 
-            $aData  = $oStmt->fetch(PDO::FETCH_ASSOC);
-            //var_dump($oStmt->debugDumpParams());
+            $this->aData = $oStmt->fetch(PDO::FETCH_ASSOC);
+
 
 
         }catch (PDOException $e){
@@ -265,5 +268,40 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
 
         return $this;
     }
+
+    public function exists(){
+        if(!empty($this->aData)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function passwordSecure($sPassword){
+        return md5(sha1($sPassword));
+    }
+
+    public static function user(){
+        if(Auth_Core::init()->isAuth()){
+            try{
+
+                $sQuery = 'SELECT * FROM user WHERE user_email = :username';
+                $db = Database_Core::get();
+                $oStmt = $db->prepare($sQuery);
+
+                $oStmt->bindParam(':username', $_SESSION['user'], PDO::PARAM_STR);
+
+                $oExecute = $oStmt->execute();
+
+                return $oStmt->fetch(PDO::FETCH_ASSOC);
+                //var_dump($aData);
+            }catch(PDOException $e){
+                var_dump($e);
+                exit();
+            }
+        }
+    }
+
+
 
 } 

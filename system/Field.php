@@ -31,44 +31,73 @@
  * @license The MIT License (MIT)
  */
 
-interface Customer_Interface{
-    public function setRegistrationDate($sDate);
-    public function setSpendingTotal($dSpending);
-    public function addSpendings($dSpendings);
-}
 
-class Customer_Model extends UserType_Model {
 
-    private static $instance;
+class Field {
 
-    public $type = 'c';
-    public $spendings;
-    public $registrationDate;
+    public $sName;
+    public $sMethod;
 
-    public static function get()
-    {
-        if (!is_object(self::$instance)) {
-            $c = get_called_class();
-            self::$instance = new $c();
+    public $sValidationRule = null;
+    public $sRequired;
+    public $sEqualsToFieldName = null;
+
+    public $sData;
+
+    public static $oInstance;
+
+    public static function get($sName){
+
+        try {
+            self::$oInstance = new Field($sName, 'get');
         }
-        return self::$instance;
+        catch(Exception $e) {
+            echo $e->getMessage();
+        }
+
+        return self::$oInstance;
     }
 
-    protected function __construct()
-    {
+    public static function post($sName){
+
+        try {
+            self::$oInstance = new Field($sName, 'post');
+        }
+        catch(Exception $e) {
+            echo $e->getMessage();
+        }
+        return self::$oInstance;
     }
 
-    public function setRegistrationDate($sDate){
-        $this->registrationDate = $sDate;
+    protected function __construct($sName, $sMethod){
+        $this->sName = $sName;
+        $this->sMethod = $sMethod;
+
+        if($this->sMethod == 'post'){
+            $this->sData = trim($_POST[$this->sName]);
+        }else{
+            $this->sData = trim($_GET[$this->sName]);
+        }
         return $this;
     }
-    public function setSpendingTotal($dSpending){
-        $this->spendings = $dSpending;
+
+    public function validation($sValidationRule){
+        $this->sValidationRule = $sValidationRule;
         return $this;
     }
-    public function addSpendings($dSpendings){
-        $this->spendings += $dSpendings;
+
+    public function equalsTo($sFieldName){
+        $this->sEqualsToFieldName = $sFieldName;
         return $this;
+    }
+
+    public function required($bRequired = true){
+        $this->sRequired = $bRequired;
+        return $this;
+    }
+
+    public function value(){
+        return $this->sData;
     }
 
 } 

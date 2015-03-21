@@ -35,6 +35,76 @@ class Form_Exception extends Exception{}
 
 class Form_Core {
 
+    public $sErrors;
+    public $iErrorNo;
+    public $sFieldData;
+
+    public function __construct($aFields){
+        foreach($aFields as $key => $value){
+            $this->sFieldData[$value->sName] = $value;
+        }
+
+    }
+
+    private function validateFields(){
+        $this->checkRequired();
+    }
+
+    public function validate(){
+        $this->validateFields();
+        $this->validateRule();
+        $this->validateEqualsTo();
+
+        if($this->iErrorNo == 0){
+            return true;
+        }else{
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getErrors(){
+
+    }
+
+    private function checkRequired(){
+        foreach($this->sFieldData as $key => $value){
+            if($value->sRequired){
+                if(empty($value->sData) || strlen($value->sData) == 0){
+                    $this->iErrorNo++;
+                    $this->sErrors .= 'Empty value of '.$value->sName.'<br />';
+                }
+            }
+        }
+    }
+
+    private function validateRule(){
+        foreach($this->sFieldData as $key => $value){
+            if($value->sValidationRule != null && !empty($value->sData)){
+                if(!preg_match($value->sValidationRule, $value->sData)){
+                    $this->iErrorNo++;
+                    $this->sErrors .= 'Field does not match the validation rule: '.$value->sName.'<br />';
+                }
+            }
+        }
+    }
+
+    private function validateEqualsTo(){
+        foreach($this->sFieldData as $key => $value){
+            if($value->sEqualsToFieldName != null){
+                if($value->sData != $this->sFieldData[$value->sEqualsToFieldName]->sData){
+                    $this->iErrorNo++;
+                    $this->sErrors .= $value->sName.' does not match '.$this->sFieldData[$value->sEqualsToFieldName]->sName.'<br />';
+                }
+            }
+        }
+    }
+
+
+
+
+/**
     public $iError = 0;
     public $sErrors = '';
 
@@ -106,10 +176,14 @@ class Form_Core {
         return $this;
     }
 
+    public function value($sName){
+        return $this->aFormElements[$sName];
+    }
+
     public function setRequired($sName, $bRequired = true){
 
     }
 
-
+*/
 
 } 

@@ -34,10 +34,22 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
+
+                <?php if(Auth_Core::init()->isAuth()): ?>
+                    <li class="active"><a href="/"><?php echo User_Model::user()['user_firstname'] ?> <?php echo User_Model::user()['user_lastname'] ?><span class="sr-only">(current)</span></a></li>
+                    <li><a href="/basket/view">Basket</a></li>
+                    <li><a href="/user/account">Account</a></li>
+                    <li><a href="/user/logout">Logout</a></li>
+                <?php endif; ?>
+
+                <?php if(!Auth_Core::init()->isAuth()): ?>
+                    <li><a href="/user/login">Login</a></li>
+                    <li><a href="/user/register">Register</a></li>
+                <?php endif; ?>
+
                 <!-- Only show when user is registered -->
                 <!-- <li class="active"><a href="./">User name <span class="sr-only">(current)</span></a></li> -->
-                <li><a href="/user/login">Login</a></li>
-                <li><a href="/user/register">Register</a></li>
+
             </ul>
         </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->

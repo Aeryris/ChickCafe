@@ -6,9 +6,9 @@
 <form class="form-signin" method="post" action="/user/login">
     <h2 class="form-signin-heading">Please sign in</h2>
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <input name="email" type="" id="inputEmail" class="form-control" placeholder="Email address"  autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" >
     <div class="checkbox">
         <label>
             <input type="checkbox" value="remember-me"> Remember me
@@ -18,7 +18,7 @@
     <p>Haven't got an account yet? <a id="register_link" href="register.php">Click here to register for an account.</a></p>
 </form>
     <div>
-        {! $errors }
+       <?php if(isset($errors)) echo $errors ?>
     </div>
 </div>
 

@@ -91,13 +91,13 @@ class Router_Dispatcher_Core implements Router_Dispatcher_Interface{
          * Prepare parameters
          */
         for($i = $iParameterStartIndex; $i < count($aUriDetails); $i++){
-            Input::setGet($aUriDetails[$i], (isset($aUriDetails[$i+1]) ? $aUriDetails[$i+1] : null));
+            Input_Core::setGet($aUriDetails[$i], (isset($aUriDetails[$i+1]) ? $aUriDetails[$i+1] : null));
             $key =  filter_input(INPUT_GET, $aUriDetails[$i], FILTER_SANITIZE_SPECIAL_CHARS);
             $val = (isset($aUriDetails[$i+1]) ? $aUriDetails[$i+1] : null);
 
             $value = (isset($aUriDetails[$i+1]) ? filter_input(INPUT_GET, $aUriDetails[$i+1], FILTER_SANITIZE_SPECIAL_CHARS) : null);
             if($key != '' or $key != null)
-                Input::setGet($key, $value);
+                Input_Core::setGet($key, $value);
             //$_GET[$aUriDetails[$i]] = ;
 
             $i++;

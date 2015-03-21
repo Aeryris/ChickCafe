@@ -36,35 +36,88 @@
 class User_Controller extends Base_Controller{
 
     public function login(){
-        $oLoginForm = new Form_Core('post');
-
-        if($_POST){
 
 
-            $sUsername = $oLoginForm->element('username')->required()->validation('rule');
-            $sPassword = $oLoginForm->element('password')->required()->validation('rule');
-            var_dump($_POST);
+        if(Input_Core::getPost()){
 
+
+
+            $sEmail = Field::post('email')->required()->validation('/@/i');
+            $sPassword = Field::post('password')->required();
+
+            $oLoginForm = new Form_Core(array($sEmail, $sPassword));
+
+
+            if($oLoginForm->validate()){
+                $oUser = new User_Model();
+                $oUser->attr(['email' => $sEmail->value(), 'password' => $oUser->passwordSecure($sPassword->value())]);
+
+                if($oUser->exists()){
+                    Auth_Core::init()->auth($sEmail->value());
+                    header('Location: /');
+                    exit();
+                }
+            }
+            $this->template->errors = $oLoginForm->sErrors;
         }
 
-        $this->template->errors = $oLoginForm->sErrors;
+
         $this->view = 'login';
     }
 
     public function register(){
-        $oLoginForm = new Form_Core('post');
 
-        if($oLoginForm->submit()){
-
-
-            $sUsername = $oLoginForm->element('username')->required()->validation('rule');
-            $sPassword = $oLoginForm->element('password')->required()->validation('rule');
+        if(Input_Core::getPost()){
 
 
+
+            $sEmail = Field::post('email')->required()->validation('/@/i');
+            $sPassword = Field::post('password')->required();
+            $sConfirmPassword = Field::post('passwordconfirm')->required()->equalsTo('password');
+
+            $oLoginForm = new Form_Core(array($sEmail, $sPassword, $sConfirmPassword));
+
+            if($oLoginForm->validate()){
+                $oUser = new User_Model();
+                $oUser->attr(['email' => $sEmail->value(), 'password' => $oUser->passwordSecure($sPassword->value())]);
+                if(!$oUser->exists()){
+                    $oUser->add()
+                          ->setType(Customer_Model::get()->setRegistrationDate(date('Y-m-d H:i:s')))
+                          ->setEmail($sEmail->value())
+                          ->setPassword($oUser->passwordSecure($sPassword->value()))
+                          ->save();
+
+                    header('Location: /user/login');
+                    exit();
+                }else{
+                    $oLoginForm->sErrors .= 'User already exists in our system. <br />';
+                }
+
+            }
+
+            /*** if($oLoginForm->validate()){
+                $oUser = new User_Model();
+                $oUser->attr(['email' => $sEmail->value(), 'password' => $oUser->passwordSecure($sPassword->value())]);
+
+                if($oUser->exists()){
+                    Auth_Core::init()->auth($sEmail->value());
+                }
+            } */
+            $this->template->errors = $oLoginForm->sErrors;
         }
 
-        $this->template->errors = $oLoginForm->sErrors;
         $this->view = 'register';
+    }
+
+    public function logout(){
+
+    }
+
+    public function account(){
+
+
+
+        $this->view = 'account';
     }
 
 

@@ -41,7 +41,7 @@ class Index_Controller extends Base_Controller{
 
         $this->template->test = 'Test var ';
 
-        $oUser = new User_Model();
+        /**$oUser = new User_Model();
         $oUser->add()
                         ->setType(Staff_Model::get()->setRole('Retail')->setPhoneNumber(11111)->setSalary(100))
                         ->setFirstName('Bartek')
@@ -49,6 +49,10 @@ class Index_Controller extends Base_Controller{
                         ->setEmail('email@email.com')
                         ->setPassword('password')
                         ->save();
+         *
+         */
+        //var_dump($_SESSION);
+        //var_dump(User_Model::user());
 
         //var_dump($oUser);
         $this->view = 'index';

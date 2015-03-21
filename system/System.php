@@ -138,6 +138,8 @@ class System_Core {
             /**
              * @todo Add check for automatic class detection i.e if class is derrived from Controller etc
              */
+        }else{
+            $sInclusionPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sSystemDir.DIRECTORY_SEPARATOR;
         }
 
         $sInclusionPath .= $sClassName.'.php';

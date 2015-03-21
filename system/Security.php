@@ -32,55 +32,21 @@
  */
 
 
-class Base_Controller {
 
-    public $db;
-    public $input;
-    public $post;
-    public $get;
-    public $auth;
-    public $template;
-    public $view;
-    public $header = 'header';
-    public $footer = 'footer';
-    public $benchmark;
-    public $session;
+class Security_Core {
 
-    public function __construct(){
-        if(DEVELOPMENT_MODE){
-            $this->benchmark = new Benchmark_Core();
-            $this->benchmark->start();
-        }
+    public $sSalt;
+    public $sHash;
 
-        //
-        $this->session = new Session_Core();
-
-        $this->session->language = 'en';
-
-        Language_Core::setLocale($this->session->language);
-        $this->auth = new Auth_Core();
-        $this->template = new Template_Core('');
-        //$this->template->assignTemplate('header');
-        if(DEVELOPMENT_MODE) $this->refresh = true;
-
-        $this->db = Database_Core::get();
-
+    public function salt(){
+        $this->sSalt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
+        return $this->sSalt;
     }
 
-    public function __destruct(){
-        $inc = array();
-        if(isset($this->view)){
-            $inc = array($this->view, $this->footer);
-        }else{
-            $inc = array($this->footer);
-        }
-
-        //var_dump($this->view);
-
-        $this->template->assignTemplates($inc);
-        //var_dump($this->template);
-        $this->benchmark->end();
-        $this->template->display();
+    public function hash($sString){
+        $this->sHash = hash('sha256', $sString . $this->salt());
     }
+
+
 
 } 

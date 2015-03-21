@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /**
     The MIT License (MIT)
 
