@@ -74,8 +74,10 @@ class User_Controller extends Base_Controller{
             $sEmail = Field::post('email')->required()->validation('/@/i');
             $sPassword = Field::post('password')->required();
             $sConfirmPassword = Field::post('passwordconfirm')->required()->equalsTo('password');
+            $sFirstName = Field::post('firstname');
+            $sLastName = Field::post('lastname');
 
-            $oLoginForm = new Form_Core(array($sEmail, $sPassword, $sConfirmPassword));
+            $oLoginForm = new Form_Core(array($sEmail, $sPassword, $sConfirmPassword, $sFirstName, $sLastName));
 
             if($oLoginForm->validate()){
                 $oUser = new User_Model();
@@ -85,6 +87,8 @@ class User_Controller extends Base_Controller{
                           ->setType(Customer_Model::get()->setRegistrationDate(date('Y-m-d H:i:s')))
                           ->setEmail($sEmail->value())
                           ->setPassword($oUser->passwordSecure($sPassword->value()))
+                          ->setFirstName($sFirstName->value())
+                          ->setLastName($sLastName->value())
                           ->save();
 
                     header('Location: /user/login');
@@ -107,6 +111,10 @@ class User_Controller extends Base_Controller{
         }
 
         $this->view = 'register';
+    }
+
+    public function edit($oUser) {
+
     }
 
     /**
