@@ -31,20 +31,22 @@
  * @license The MIT License (MIT)
  */
 
+?>
 
 
-class Foundation_Model {
+{include file=header.php}
 
-    public $db;
-    public $session;
+<div id="wrap">
+    <div id="main" class="container clear-top">
 
-    public function __construct(){
-        $this->db = Database_Core::get();
-        $this->session = new Session_Core();
-    }
+        <div class="container">
 
-    public function __destruct(){
-        //$this->db->
-    }
 
-} 
+
+        </div>
+
+    </div>
+</div>
+
+
+ 

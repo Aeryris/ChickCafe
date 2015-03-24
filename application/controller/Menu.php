@@ -33,18 +33,22 @@
 
 
 
-class Foundation_Model {
+class Menu_Controller {
 
-    public $db;
-    public $session;
+    public function breakfast(){
 
-    public function __construct(){
-        $this->db = Database_Core::get();
-        $this->session = new Session_Core();
     }
 
-    public function __destruct(){
-        //$this->db->
+    public function lunch(){
+
+    }
+
+    public function dinner(){
+
+    }
+
+    public function drinks(){
+
     }
 
 } 

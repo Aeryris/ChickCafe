@@ -33,18 +33,6 @@
 
 
 
-class Foundation_Model {
-
-    public $db;
-    public $session;
-
-    public function __construct(){
-        $this->db = Database_Core::get();
-        $this->session = new Session_Core();
-    }
-
-    public function __destruct(){
-        //$this->db->
-    }
+class BasketItems_Model {
 
 } 

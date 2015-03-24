@@ -47,7 +47,9 @@ interface Menu_Interface{
 
 }
 
-class Menu_Model implements Menu_Interface {
+class Menu_Model extends Foundation_Model implements Menu_Interface {
+
+
 
     public function add(){
 
@@ -57,6 +59,25 @@ class Menu_Model implements Menu_Interface {
     }
 
     public function get($iId){
+
+        try{
+
+            $sQuery = 'SELECT * FROM menu JOIN WHERE menu_id = :id';
+
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+
+            $oExecute = $oStmt->execute();
+
+            $this->aData  = $oStmt->fetch(PDO::FETCH_ASSOC);
+            //var_dump($aData);
+        }catch(PDOException $e){
+            var_dump($e);
+            exit();
+        }
+
+        return $this;
 
     }
     public function setName($sName){

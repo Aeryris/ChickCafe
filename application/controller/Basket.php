@@ -33,18 +33,17 @@
 
 
 
-class Foundation_Model {
+class Basket_Controller extends Base_Controller{
 
-    public $db;
-    public $session;
+    public function view(){
 
-    public function __construct(){
-        $this->db = Database_Core::get();
-        $this->session = new Session_Core();
-    }
+        Basket_Model::basket()->create();
 
-    public function __destruct(){
-        //$this->db->
+
+        var_dump(Item_Model::get('1')->iItemId);
+        Basket_Model::basket()->addItem(Item_Model::get('1')->iItemId);
+
+        $this->view = 'basket_view';
     }
 
 } 

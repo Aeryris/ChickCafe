@@ -46,6 +46,7 @@ class Auth_Core extends Acl_Core{
     public function auth($aUserData){
         $_SESSION['ak'] = sha1(md5($aUserData));
         $_SESSION['user'] = $aUserData;
+
     }
 
 
