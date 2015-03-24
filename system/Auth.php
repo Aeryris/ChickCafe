@@ -36,13 +36,20 @@
 class Auth_Core extends Acl_Core{
 
     public function isAuth(){
-        if($_SESSION['ak'] == sha1(md5($_SESSION['user']))){
+        if(isset($_SESSION['ak']) && $_SESSION['ak'] == sha1(md5($_SESSION['user']))){
             return true;
         }else{
+            //var_dump(array_filter(explode('/', $_SERVER['REQUEST_URI'])));
+            //header('Location: /');
+            //exit();
             return false;
         }
     }
 
+    /**
+     * @todo Change password encryption: user methods below
+     * @param $aUserData
+     */
     public function auth($aUserData){
         $_SESSION['ak'] = sha1(md5($aUserData));
         $_SESSION['user'] = $aUserData;

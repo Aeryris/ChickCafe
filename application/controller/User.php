@@ -109,8 +109,14 @@ class User_Controller extends Base_Controller{
         $this->view = 'register';
     }
 
+    /**
+     * @todo Move logic to Auth_Core class
+     */
     public function logout(){
-
+        unset($_SESSION);
+        session_destroy();
+        header('Location: /');
+        exit();
     }
 
     public function account(){

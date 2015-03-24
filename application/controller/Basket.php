@@ -40,8 +40,12 @@ class Basket_Controller extends Base_Controller{
         Basket_Model::basket()->create();
 
 
-        var_dump(Item_Model::get('1')->iItemId);
-        Basket_Model::basket()->addItem(Item_Model::get('1')->iItemId);
+        //var_dump(Item_Model::get('1')->iItemId);
+        //Basket_Model::basket()->addItem(Item_Model::get('2')->iItemId);
+
+        $aBasketData = Basket_Model::basket()->view();
+        $this->template->basketItems = $aBasketData;
+
 
         $this->view = 'basket_view';
     }

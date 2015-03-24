@@ -57,7 +57,6 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
         if(!self::$oInstance instanceof self){
             self::$oInstance = new Basket_Model($iId);
-            var_dump('Basket ID: '.$iId);
         }
 
         return self::$oInstance;
@@ -71,7 +70,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
         $oUser = new User_Model();
         $oUser->attr(['email' => $_SESSION['user']]);
         $bBasketExists = $this->findBasketByUserId($oUser->aData['user_id']);
-        var_dump($bBasketExists);
+
         if($iId != null) $this->bCreateBasket = true;
 
         /**
@@ -87,7 +86,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
     }
 
     public function create(){
-        var_dump('Create basket');
+
         $this->bCreateBasket = true;
 
 
@@ -106,7 +105,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
         $bBasketExists = $this->findBasketByUserId($oUser->aData['user_id']);
 
-        var_dump($bBasketExists);
+
 
         try{
 
@@ -139,7 +138,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
     }
 
     public function get(){
-        var_dump('Get basket');
+
 
         $this->bCreateBasket = false;
         return $this;
@@ -151,7 +150,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
          * Item::get($iItemId)
          */
 
-        var_dump('Add item ID: '.$iItemId);
+
 
         $this->isItemInBasket($iItemId);
 
@@ -172,8 +171,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
             $bExecute = $oStmt->execute();
 
             $aBasketItemData = $oStmt->fetch(PDO::FETCH_ASSOC);
-            var_dump('IsItemInBasket');
-            var_dump($aBasketItemData);
+
             /**
              * If item already exists in the basket increase quantity otherwise add as new item
              */
@@ -190,7 +188,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
                 $bExecute = $oStmtUpdate->execute();
             }else{
 
-                var_dump('Insert');
+
                 $sQueryInsert = 'INSERT INTO basket_items(basket_items_id, basket_items_item_id, basket_items_quantity) VALUES(:basket_id, :item_id, :quantity)';
                 $oStmtInsert = $this->db->prepare($sQueryInsert);
 
@@ -200,7 +198,6 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
                 $bExecute = $oStmtInsert->execute();
 
-                var_dump($bExecute);
             }
 
 
@@ -238,17 +235,41 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
     public function findBasketWithItems($iUserId){
 
+        $aBasketData = false;
+
+        try{
+
+            $sQuery = 'SELECT * FROM basket JOIN basket_items ON basket.basket_id = basket_items.basket_items_id JOIN item ON basket_items.basket_items_item_id = item.item_id  WHERE basket_owner_id = :id';
+
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindValue(':id', $iUserId, PDO::PARAM_INT);
+
+            $bExecute = $oStmt->execute();
+
+            $aBasketData = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+
+        }catch(Basket_Exception $e){
+            throw new Basket_Exception($e);
+        }
+
+        return $aBasketData;
+
+
         return $this;
     }
 
     public function view(){
-        var_dump('View basket');
+
 
         $oUser = new User_Model();
         $oUser->attr(['email' => $_SESSION['user']]);
 
-        $this->aBasketData = $this->findBasketWithItems($oUser->aData['user_id']);
-        return $this;
+
+        return $this->findBasketWithItems($oUser->aData['user_id']);
     }
 
 } 

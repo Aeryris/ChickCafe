@@ -41,7 +41,25 @@
 
         <div class="container">
 
+            <?php if($basketItems != false): ?>
 
+            <ul>
+                <?php foreach($basketItems as $key => $value): ?>
+                    <div>
+                        Name: <?php echo $value['item_name'] ?>  <br />
+                        Description: <?php echo $value['item_description'] ?>  <br />
+                        Price: £<?php echo $value['item_price'] ?>  <br />
+                        Preparation time: <?php echo $value['item_preptime'] ?>  <br />
+                        Stock: <?php echo $value['item_available'] ?>/<?php echo $value['item_stock'] ?>  <br />
+                        Update quantity: <input type="text" name="quantity" value="<?php echo $value['basket_items_quantity'] ?> " /> <button>Update</button> <br />
+                        Remove: <button>Remove</button>
+
+                    </div>
+                    <div style="width: 100%; height: 1px; background-color: #000000"></div>
+                <?php endforeach; ?>
+            </ul>
+
+            <?php endif; ?>
 
         </div>
 

@@ -41,7 +41,25 @@
 
         <div class="container">
 
+            {if($basketItems != false)}
 
+            <ul>
+                {foreach($basketItems as $key => $value)}
+                    <div>
+                        Name: {! $value['item_name']}  <br />
+                        Description: {! $value['item_description'] }  <br />
+                        Price: £{! $value['item_price'] }  <br />
+                        Preparation time: {! $value['item_preptime'] }  <br />
+                        Stock: {! $value['item_available'] }/{! $value['item_stock'] }  <br />
+                        Update quantity: <input type="text" name="quantity" value="{! $value['basket_items_quantity'] } " /> <button>Update</button> <br />
+                        Remove: <button>Remove</button>
+
+                    </div>
+                    <div style="width: 100%; height: 1px; background-color: #000000"></div>
+                {/foreach}
+            </ul>
+
+            {/if}
 
         </div>
 
