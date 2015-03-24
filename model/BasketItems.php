@@ -31,8 +31,8 @@
  * @license The MIT License (MIT)
  */
 
+interface BasketItems_Interface{}
 
-
-class BasketItems_Model {
+class BasketItems_Model implements BasketItems_Interface {
 
 } 

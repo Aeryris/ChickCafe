@@ -31,8 +31,8 @@
  * @license The MIT License (MIT)
  */
 
+interface CustomerOrder_Interface{}
 
-
-class CustomerOrder_Model {
+class CustomerOrder_Model implements CustomerOrder_Interface {
 
 } 

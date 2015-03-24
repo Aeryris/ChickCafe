@@ -32,8 +32,11 @@
  */
 
 
+interface Foundation_Interface{
 
-class Foundation_Model {
+}
+
+class Foundation_Model implements Foundation_Interface{
 
     public $db;
     public $session;

@@ -39,6 +39,16 @@ interface OrderItems_Interface{
 }
 
 
-class OrderItems_Model {
+class OrderItems_Model implements  OrderItems_Interface{
+
+    public function get($iItemId, $iOrderId){
+
+    }
+    public function getByItemId($iItemId){
+
+    }
+    public function getByOrderId($iOrderId){
+
+    }
 
 } 

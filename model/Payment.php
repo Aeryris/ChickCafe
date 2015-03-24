@@ -42,6 +42,28 @@ interface Payment_Interface{
 
 }
 
-class Payment_Model {
+class Payment_Model implements  Payment_Interface{
+
+    public function make(){
+
+    }
+    public function setCustomerId($iCustomerId){
+
+    }
+    public function setTime($sTime){
+
+    }
+    public function setPrice($bPrice){
+
+    }
+    public function setOrderId($iId){
+
+    }
+    public function setType($sType){
+
+    }
+    public function setInfo($sInfo){
+
+    }
 
 } 

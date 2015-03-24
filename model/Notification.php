@@ -36,6 +36,13 @@ interface Notification_Interface{
     public function getByOrderId($iId);
 }
 
-class Notification_Model {
+class Notification_Model implements Notification_Interface{
+
+    public function get($iId){
+
+    }
+    public function getByOrderId($iId){
+
+    }
 
 } 

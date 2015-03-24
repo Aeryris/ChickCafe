@@ -33,7 +33,13 @@
 
 class Form_Exception extends Exception{}
 
-class Form_Core {
+interface Form_Interface{
+    public function __construct($aFields);
+    public function validate();
+    public function getErrors();
+}
+
+class Form_Core implements Form_Interface{
 
     public $sErrors;
     public $iErrorNo;

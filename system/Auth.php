@@ -32,8 +32,12 @@
  */
 
 
+interface Auth_Interface{
+    public function isAuth();
+    public function auth($aUserData);
+}
 
-class Auth_Core extends Acl_Core{
+class Auth_Core extends Acl_Core implements Auth_Interface{
 
     public function isAuth(){
         if(isset($_SESSION['ak']) && $_SESSION['ak'] == sha1(md5($_SESSION['user']))){

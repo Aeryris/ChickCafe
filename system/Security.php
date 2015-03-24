@@ -31,9 +31,12 @@
  * @license The MIT License (MIT)
  */
 
+interface Security_Interface{
+    public function salt();
+    public function hash($sString);
+}
 
-
-class Security_Core {
+class Security_Core implements Security_Interface{
 
     public $sSalt;
     public $sHash;

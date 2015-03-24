@@ -43,6 +43,28 @@ interface Order_Interface{
 }
 
 
-class Order_Model {
+class Order_Model implements  Order_Interface{
+
+    public function get($iId){ //Use it while updating order data
+
+    }
+    public function make(){ //Use it while creating order data
+
+    }
+    public function setDate($sDate){
+
+    }
+    public function setPrice($bPrice){
+
+    }
+    public function setPriority($iPriority){
+
+    }
+    public function setType($sType){
+
+    }
+    public function save(){
+
+    }
 
 } 

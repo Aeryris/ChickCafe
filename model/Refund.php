@@ -39,6 +39,22 @@ interface Refund_Interface{
     public function setAmount($bAmount);
 }
 
-class Refund_Model {
+class Refund_Model implements Refund_Interface {
+
+    public function get($iId){
+
+    }
+    public function make(){
+
+    }
+    public function setOrderId($iId){
+
+    }
+    public function setDate($sDate){
+
+    }
+    public function setAmount($bAmount){
+
+    }
 
 } 

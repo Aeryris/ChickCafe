@@ -38,6 +38,16 @@ interface MenuItems_Interface{
     public function get($iMenuId, $iItemId);
 }
 
-class MenuItems_Model {
+class MenuItems_Model implements MenuItems_Interface {
+
+    public function getByMenuId($iId){
+
+    }
+    public function getByItemId($iId){
+
+    }
+    public function get($iMenuId, $iItemId){
+
+    }
 
 } 

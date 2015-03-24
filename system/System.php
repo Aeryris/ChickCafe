@@ -32,8 +32,13 @@
 
 namespace System;
 
+interface System_Interface{
+    public static function init($sPath);
+    public static function loader($sClassName);
+}
 
-class System_Core {
+
+class System_Core implements System_Interface{
 
     public static $sRootPath;
 

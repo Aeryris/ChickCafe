@@ -32,8 +32,13 @@
  */
 
 
+interface Language_Interface{
+    public static function setLocale($sLocale = 'en');
+    public static function load($sLocale);
+    public static function lang($sName);
+}
 
-class Language_Core {
+class Language_Core implements Language_Interface{
 
     public static $sLoc;
     public static $aLang;

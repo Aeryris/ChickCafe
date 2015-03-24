@@ -31,8 +31,10 @@
  * @license The MIT License (MIT)
  */
 
+interface TemplateParser_Interface{
 
+}
 
-class Template_Parser_Core {
+class Template_Parser_Core implements TemplateParser_Interface{
 
 } 

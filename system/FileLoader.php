@@ -31,9 +31,11 @@
  * @license The MIT License (MIT)
  */
 
+interface FileLoader_Interface{
 
+}
 
-class FileLoader_Core {
+class FileLoader_Core implements FileLoader_Interface{
 
 
 

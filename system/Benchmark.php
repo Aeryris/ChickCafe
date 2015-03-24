@@ -31,9 +31,14 @@
  * @license The MIT License (MIT)
  */
 
+interface Benchmark_Interface{
+    public function start();
+    public function end();
+    public function results();
+    public function totaltime();
+}
 
-
-class Benchmark_Core {
+class Benchmark_Core implements Benchmark_Interface{
 
     public $startTime;
     public $endTime;

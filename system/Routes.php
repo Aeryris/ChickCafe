@@ -31,9 +31,13 @@
  * @license The MIT License (MIT)
  */
 
+interface Routes_Interface{
+    public static function loadRoutes($sRoutes);
+    public static function initWithRoutes($aRoutes);
+    public static function initWithRoutesPath($sRoutesPath);
+}
 
-
-class Routes_Core {
+class Routes_Core implements Routes_Interface{
 
     public static  $sRoutesPath;
 

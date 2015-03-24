@@ -42,6 +42,11 @@ interface CustomerVip_Interface{
     public function setVipStatus(CustomerVipStatus $sVipStatus);
 }
 
-class CustomerVip_Model {
+class CustomerVip_Model implements CustomerVip_Interface{
+    public function setType($sType){
 
+    }
+    public function setVipStatus(CustomerVipStatus $sVipStatus){
+
+    }
 } 

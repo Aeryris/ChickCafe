@@ -31,9 +31,16 @@
  * @license The MIT License (MIT)
  */
 
+interface Field_Interface{
+    public static function get($sName);
+    public static function post($sName);
+    public function validation($sValidationRule);
+    public function equalsTo($sFieldName);
+    public function required($bRequired = true);
+    public function value();
+}
 
-
-class Field {
+class Field implements Field_Interface{
 
     public $sName;
     public $sMethod;

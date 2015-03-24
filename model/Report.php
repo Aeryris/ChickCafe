@@ -39,6 +39,22 @@ interface Report_Interface{
     public function setStaffId($iId);
 }
 
-class Report_Model {
+class Report_Model implements Report_Interface {
+
+    public function get($iId){
+
+    }
+    public function make(){
+
+    }
+    public function setTitle($sTitle){
+
+    }
+    public function setDate($sDate){
+
+    }
+    public function setStaffId($iId){
+
+    }
 
 } 

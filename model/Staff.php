@@ -37,7 +37,7 @@ interface Staff_Interface{
     public function setPhoneNumber($iPhoneNumber);
 }
 
-class Staff_Model extends UserType_Model {
+class Staff_Model extends UserType_Model implements Staff_Interface {
 
     private static $instance;
 

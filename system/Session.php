@@ -31,9 +31,14 @@
  * @license The MIT License (MIT)
  */
 
+interface Session_Interface{
+    public function __get($sName);
+    public function __set($sName, $sValue);
+    public function __isset($sName);
+    public function __unset($sName);
+}
 
-
-class Session_Core {
+class Session_Core implements Session_Interface{
 
     public function __get($sName){
         return $_SESSION[$sName];

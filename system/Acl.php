@@ -31,9 +31,12 @@
  * @license The MIT License (MIT)
  */
 
+interface Acl_Interface{
+    public static function init();
+    public function setAccess($aAccess);
+}
 
-
-class Acl_Core {
+class Acl_Core implements Acl_Interface{
 
     public static function init()
     {
