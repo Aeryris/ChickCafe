@@ -1,7 +1,7 @@
 <?php
 
 class Manager_Controller extends Staff_Controller {
-	public function staff() {
+	public function manager() {
 		$this->template->test = "Test var";
 
 		$this->view = "manager";

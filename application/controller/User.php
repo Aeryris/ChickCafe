@@ -113,8 +113,46 @@ class User_Controller extends Base_Controller{
         $this->view = 'register';
     }
 
-    public function edit($oUser) {
+    public function update() {
+        if(Input_Core::getPost()) {
+            $sEmail = Field::post('email');
+            $sFirstName = Field::post('firstname');
+            $sLastName = Field::post('lastname');
 
+            $oUser->attr(['email' => $sEmail->value()]);
+            if($oUser->exists()) {
+                Auth_Core::init()->auth($sEmail->value());
+                $oUser->get()
+                    ->setEmail($sEmail->value());
+                    ->setFirstName($sFirstName->value());
+                    ->setLastName($slastName->value());
+                    ->save();
+                    header('Location: /account');
+                    exit();
+            }
+        }
+        $this->view = 'account';
+    }
+
+    public function update_password() {
+        if(Input_Core::getPost()) {
+            $sPassword = Field::post['password'];
+            $sConfirmPassword = Field::post['passwordconfirm'];
+            if ($sPassword != $sConfirmPassword) {
+                $this->template->errors = 
+            } else {
+                 $oUser->attr(['email' => $sEmail->value(), 'password' => $oUser->passwordSecure($sPassword->value())]);
+
+                if($oUser->exists()){
+                    Auth_Core::init()->auth($sEmail->value());
+                    $oUser->get()
+                        ->setPassword($oUser->passwordSecure($sPassword->value()));
+                        ->save();
+                    header('Location: /account');
+                    exit();
+                }
+            }
+        }
     }
 
     /**
