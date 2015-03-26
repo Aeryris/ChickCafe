@@ -31,58 +31,96 @@
  * @license The MIT License (MIT)
  */
 
+interface Basket_Controller_Interface{
 
+}
 
-class Basket_Controller extends Base_Controller{
+class Basket_Controller extends Base_Controller implements Basket_Controller_Interface{
 
+    /**
+     * VIEWS METHOD -------------------------------------------------------
+     */
+
+    /**
+     * Default route /basket -> /basket/index
+     */
+    public function index(){
+
+        $this->view();
+
+    }
+
+    /**
+     * Controller action
+     * Displays basket data
+     */
     public function view(){
 
         Basket_Model::basket()->create();
 
-
-        //var_dump(Item_Model::get('1')->iItemId);
-        //Basket_Model::basket()->addItem(Item_Model::get('2')->iItemId);
-
         $this->template->basketItems = $aBasketData = Basket_Model::basket()->view();
-
-
         $this->view = 'basket_view';
     }
 
+    /**
+     * PRIVATE METHODS ----------------------------------------------------
+     * Used for ajax
+     */
+
+    /**
+     * Used for handling ajax calls
+     * Method returns baskets data
+     * @return JSON -> basket data
+     */
     public function basketData(){
         $this->isAjaxCall = true;
         $aBasketData = Basket_Model::basket()->view();
         echo json_encode(array('basket' => $aBasketData));
     }
 
+    /**
+     * Used for handling ajax calls
+     * Method handles removing item from the basket
+     * @param in $_POST - Item id
+     * @return JSON -> success
+     */
     public function removeItem(){
         $this->isAjaxCall = true;
-
 
         $aItemId = $_POST['item_id'];
 
         Basket_Model::basket()->removeItem($aItemId);
 
-
         echo json_encode(array('Success' => $aItemId));
         exit();
     }
 
+    /**
+     * Used for handling ajax calls
+     * Method handles updating quantity of the items in the basket
+     * @param in $_POST - Item id
+     * @param in $_POST - Quantity
+     * @return JSON -> success
+     */
     public function updateQuantity(){
         $this->isAjaxCall = true;
-
 
         $aItemId = $_POST['item_id'];
         $iQuantity = $_POST['quantity'];
 
         Basket_Model::basket()->updateQuantity($aItemId, $iQuantity);
 
-
         echo json_encode(array('Success' => $aItemId));
         exit();
     }
 
 
+    /**
+     * Used for handling ajax calls
+     * Method handles adding item to the basket
+     * @param in $_POST - Item id
+     * @return JSON -> success
+     */
     public function addToBasket(){
         $this->isAjaxCall = true;
 

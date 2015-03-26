@@ -37,9 +37,12 @@ class Menu_Controller extends Base_Controller{
 
     public function index(){
 
+        /**
+         * @todo correct current method
+         */
         $oMenu = Menu_Model::menu()->current();
 
-        $this->template->oMenu = $oMenu;
+        $this->template->oMenu = $oMenuItems = MenuItems_Model::menu()->getByMenuId(1);
         $this->view = 'menu';
     }
 

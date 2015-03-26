@@ -32,23 +32,11 @@
  */
 
 
-global $aRoutes;
 
-$aRoutes = array();
+class Error403_Controller extends Base_Controller{
 
-/**
- * Default Index page
- * Index_Controller -> index:Action
- */
-$aRoutes['default'] = 'index/index';
+    public function index(){
+        $this->view = 'error403';
+    }
 
-/**
- * Default 404 page
- * Error_Controller -> notFound
- */
-$aRoutes['error404'] = 'error/notFound';
-
-$aRoutes['error403'] = 'error/forbidden';
-
-
- 
+} 

@@ -31,24 +31,27 @@
  * @license The MIT License (MIT)
  */
 
+?>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>403 Forbidden - CheckCafe</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="application/assets/css/style-error.css">
+</head>
+<body>
 
-global $aRoutes;
+<div class="wrap">
+    <h1>CheckCafe</h1>
+    <div class="banner">
+        <img src="application/assets/images/notfound.png" alt="" />
+    </div>
+    <div class="page">
+        <h2>Dude, you are not allowed in here</h2>
+    </div>
 
-$aRoutes = array();
+</div>
 
-/**
- * Default Index page
- * Index_Controller -> index:Action
- */
-$aRoutes['default'] = 'index/index';
-
-/**
- * Default 404 page
- * Error_Controller -> notFound
- */
-$aRoutes['error404'] = 'error/notFound';
-
-$aRoutes['error403'] = 'error/forbidden';
-
-
- 
+</body>
+</html>

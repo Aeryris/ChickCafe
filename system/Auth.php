@@ -37,7 +37,17 @@ interface Auth_Interface{
     public function auth($aUserData);
 }
 
-class Auth_Core extends Acl_Core implements Auth_Interface{
+class Auth_Core implements Auth_Interface{
+
+    public static function init()
+    {
+        static $instance = null;
+        if (null === $instance) {
+            $instance = new self;
+        }
+
+        return $instance;
+    }
 
     public function isAuth(){
         if(isset($_SESSION['ak']) && $_SESSION['ak'] == sha1(md5($_SESSION['user']))){

@@ -126,7 +126,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
     /*
      * Private database connection reference
      */
-    private $db;
+    public $db;
 
     /**
      * Private
@@ -171,7 +171,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
      */
     public function __construct($iId = null){
 
-        if(self::$oInstance == null) throw new Basket_Exception('Default initializer disabled use: Basket_Model::basket(<id>)');
+        //if(self::$oInstance == null) throw new Basket_Exception('Default initializer disabled use: Basket_Model::basket(<id>)');
 
         /*
          * Store provided basket ID or default null
@@ -531,8 +531,6 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
         return $aBasketData;
 
-
-        return $this;
     }
 
 
@@ -543,10 +541,8 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
      */
     public function view(){
 
-
         $oUser = new User_Model();
         $oUser->attr(['email' => $_SESSION['user']]);
-
 
         return $this->findBasketWithItems($oUser->aData['user_id']);
     }

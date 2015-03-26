@@ -167,6 +167,7 @@ class User_Controller extends Base_Controller{
 
     public function account(){
 
+        $oAcl = new Acl_Core(ACL::ACL_CUSTOMER);
 
 
         $this->view = 'account';

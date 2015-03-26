@@ -31,6 +31,38 @@
  * @license The MIT License (MIT)
  */
 
+abstract class ACL{
+    /**
+     * No restrictions
+     */
+    const ACL_PUBLIC = 0;
+
+    /**
+     * Customer
+     */
+    const ACL_CUSTOMER = 'C';
+
+    /**
+     * Staff
+     */
+    const ACL_STAFF = 'S';
+
+    /**
+     * Admin
+     */
+    const ACL_ADMIN = 'A';
+
+    /**
+     * Manager
+     */
+    const ACL_MANAGER = 'M';
+
+    /**
+     * Owner
+     */
+    const ACL_OWNER = 'O';
+}
+
 interface Acl_Interface{
     public static function init();
     public function setAccess($aAccess);
@@ -42,10 +74,29 @@ class Acl_Core implements Acl_Interface{
     {
         static $instance = null;
         if (null === $instance) {
-            $instance = new static();
+            $instance = new self(null);
         }
 
         return $instance;
+    }
+
+    public function __construct($accessControlList = null){
+        $this->validate($this->usersType(), $accessControlList);
+    }
+
+    private function usersType(){
+        $oUser = new User_Model();
+        $email = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+        $oUser->attr(['email' => $email]);
+
+        return $oUser->aData['user_type'];
+    }
+
+    private function validate($userType, $access){
+        if($userType != $access){
+            header('Location: /error403'); //Forbidden
+            exit();
+        }
     }
 
     public function setAccess($aAccess){
