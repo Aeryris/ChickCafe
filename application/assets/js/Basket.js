@@ -41,7 +41,7 @@ var BasketPrototype = {
                     console.log(msg);
                     BasketPrototype.displayBasket(msg);
                 }).fail(function (msg) {
-                    alert( msg );
+                    console.log( msg );
                 })
                 .always(function () {
                     //alert( "complete" );
@@ -70,7 +70,30 @@ var BasketPrototype = {
 
         });
     },
-    removeItem: function (itemId){},
+    removeItem: function (itemId){
+
+        $(document).ready(function () {
+
+            $.ajax({
+                method: "POST",
+                url: "/basket/removeItem",
+                data: {item_id: itemId}
+            })
+                .done(function (msg) {
+                    console.log("remove item");
+                }).fail(function () {
+                    //alert( "error" );
+                })
+                .always(function () {
+                    //alert( "complete" );
+                    BasketPrototype.getBasket();
+
+                });
+
+        });
+
+
+    },
     displayBasket: function(data){
 
         $(document).ready(function(){
@@ -93,12 +116,91 @@ var BasketPrototype = {
 
             //$('tbody.checkout-items-list')
 
+        });
 
+    },
 
+    updateQuantity: function(itemId, quantity){
+
+        console.log('Item ID: '+itemId);
+        console.log('Quantity: '+quantity);
+
+        $(document).ready(function () {
+
+            $.ajax({
+                method: "POST",
+                url: "/basket/updateQuantity",
+                data: {item_id: itemId, quantity:quantity}
+            })
+                .done(function (msg) {
+                    console.log("update Quantity");
+                }).fail(function () {
+                    //alert( "error" );
+                })
+                .always(function () {
+                    //alert( "complete" );
+                    BasketPrototype.getBasket();
+
+                });
 
         });
 
+    },
+
+    updateBasketViewPage: function(){
+        $(document).ready(function () {
+            $.ajax({
+                method: "POST",
+                url: "/basket/basketData",
+                dataType: "json"
+            })
+                .done(function (data) {
+                    console.log(data);
+                    //BasketPrototype.displayBasket(msg);
+
+
+
+                    var html = [];
+
+                    priceSum = 0;
+                    preparationTime = 0;
+
+
+
+                    for(var item in data.basket){
+                        //console.log(item);
+                        html.push('<tr><td>'+data.basket[item].item_name+'<span>'+data.basket[item].item_description+'</span></td><td>'+data.basket[item].basket_items_quantity+'</td><td>'+data.basket[item].item_preptime+'</td><td>'+data.basket[item].item_price+'</td><td class="quantity-basket-item-value"><input type="text" name="quantity" value="'+data.basket[item].basket_items_quantity+'" /> <button id="'+data.basket[item].item_id+'" class="update-basket-item-quantity btn btn-material-deep-purple">Update</button> </td><td><button id="'+data.basket[item].item_id+'" class="remove-basket-item-quantity btn btn-material-deep-purple">Remove</button></td></tr>');
+
+                        priceWithQuantity = parseFloat(data.basket[item].item_price) * parseFloat(data.basket[item].basket_items_quantity);
+                        priceSum += parseFloat(priceWithQuantity);
+
+                        preparationTimeWithQuantity = parseFloat(data.basket[item].item_preptime) * parseFloat(data.basket[item].basket_items_quantity);
+                        preparationTime += parseFloat(preparationTimeWithQuantity);
+
+
+
+
+                    }
+
+                    $('.checkout-total-sum').text(parseFloat(priceSum).toFixed(2));
+                    $('.checkout-total-preparation').text(preparationTime);
+                    $('.basket-view-summary').html(html);
+                    //$('.checkout__total').text("£"+parseFloat(priceSum).toFixed(2));
+
+
+
+
+
+
+                }).fail(function (msg) {
+                    console.log( msg );
+                })
+                .always(function () {
+                    //alert( "complete" );
+                });
+        });
     }
+
 };
 
 var Basket  = function Basket(){

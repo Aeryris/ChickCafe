@@ -41,25 +41,42 @@
 
         <div class="container">
 
-            {if($basketItems != false)}
+            <h3>Your Basket</h3>
 
-            <ul>
-                {foreach($basketItems as $key => $value)}
-                    <div>
-                        Name: {! $value['item_name']}  <br />
-                        Description: {! $value['item_description'] }  <br />
-                        Price: £{! $value['item_price'] }  <br />
-                        Preparation time: {! $value['item_preptime'] }  <br />
-                        Stock: {! $value['item_available'] }/{! $value['item_stock'] }  <br />
-                        Update quantity: <input type="text" name="quantity" value="{! $value['basket_items_quantity'] } " /> <button class="add_item_to_basket btn btn-material-deep-purple">Update</button> <br />
-                        Remove: <button class="add_item_to_basket btn btn-material-deep-purple">Remove</button>
+            <div class="">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>Quantity</th>
+                        <th>Preparation time</th>
+                        <th>Price</th>
+                        <th>Update</th>
+                    </tr>
+                    </thead>
+                    <tbody class="basket-view-summary">
 
-                    </div>
-                    <div style="width: 100%; height: 1px; background-color: #000000"></div>
-                {/foreach}
-            </ul>
 
-            {/if}
+
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="3">
+                                Total <span style="color: black" class="checkout-total-sum"></span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="4">
+                                Total preparation time <span style="color: black" class="checkout-total-preparation"></span>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+
+
 
         </div>
 

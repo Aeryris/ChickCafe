@@ -65,3 +65,87 @@ $(document).ready(function(){
 
 
 });
+
+
+$(document).ready(function(){
+
+    /**
+     * Ajax Call to basket -> Basket refresh
+     */
+
+    Basket().updateBasketViewPage();
+
+    $(document).on('click', '.remove-basket-item-quantity',  function(){
+
+        console.log($(this).parent('.current-menus'));
+        var menu_name = $(this).parent('.current-menus').closest('.menu-name');
+        var item_id = $(this).attr('id');
+
+
+        (function() {
+            [].slice.call( document.querySelectorAll( '.checkout' ) ).forEach( function( el ) {
+                var openCtrl = el.querySelector( '.checkout__button' ),
+                    closeCtrls = el.querySelectorAll( '.checkout__cancel' );
+
+                classie.add( el, 'checkout--active' );
+
+                [].slice.call( closeCtrls ).forEach( function( ctrl ) {
+                    ctrl.addEventListener( 'click', function() {
+                        classie.remove( el, 'checkout--active' );
+                    } );
+                } );
+            } );
+        })();
+
+
+        Basket().removeItem(item_id);
+        Basket().updateBasketViewPage();
+
+    });
+
+
+
+
+});
+
+
+$(document).ready(function(){
+
+    /**
+     * Ajax Call to basket -> Basket refresh
+     */
+
+    Basket().updateBasketViewPage();
+
+    $(document).on('click', '.update-basket-item-quantity',  function(){
+
+        console.log($(this).parent('.current-menus'));
+        var quantity = $(this).parent().find('input').val();
+
+        var item_id = $(this).attr('id');
+
+
+        /**(function() {
+            [].slice.call( document.querySelectorAll( '.checkout' ) ).forEach( function( el ) {
+                var openCtrl = el.querySelector( '.checkout__button' ),
+                    closeCtrls = el.querySelectorAll( '.checkout__cancel' );
+
+                classie.add( el, 'checkout--active' );
+
+                [].slice.call( closeCtrls ).forEach( function( ctrl ) {
+                    ctrl.addEventListener( 'click', function() {
+                        classie.remove( el, 'checkout--active' );
+                    } );
+                } );
+            } );
+        })(); */
+
+        Basket().updateQuantity(item_id, quantity);
+        Basket().updateBasketViewPage();
+
+    });
+
+
+
+
+});

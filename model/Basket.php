@@ -149,19 +149,13 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
     }
 
     public function addItem($iItemId){
-        /**
-         * Check if item exists
-         * Item::get($iItemId)
-         */
 
-
-
-        $this->isItemInBasket($iItemId);
+        $this->p_addItem($iItemId);
 
         return $this;
     }
 
-    public function isItemInBasket($iItemId){
+    public function p_addItem($iItemId){
 
         try{
 
@@ -212,6 +206,93 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
         return $this;
     }
+
+
+
+
+
+    public function removeItem($iItemId){
+        $this->p_removeItem($iItemId);
+        return $this;
+    }
+
+    public function p_removeItem($iItemId){
+        try{
+
+            $sQuery = 'SELECT * FROM basket_items WHERE basket_items_id = :basket_id AND basket_items_item_id = :item_id';
+
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindValue(':basket_id', $this->aBasketData['basket_id'], PDO::PARAM_INT);
+            $oStmt->bindValue(':item_id', $iItemId, PDO::PARAM_INT);
+
+            $bExecute = $oStmt->execute();
+
+            $aBasketItemData = $oStmt->fetch(PDO::FETCH_ASSOC);
+
+            //var_dump($aBasketItemData);
+
+
+            if($aBasketItemData){
+                $sQueryUpdate = 'DELETE FROM basket_items WHERE basket_items_id = :basket_id AND basket_items_item_id = :item_id';
+
+                $oStmtUpdate = $this->db->prepare($sQueryUpdate);
+
+                $oStmtUpdate->bindValue(':basket_id', $this->aBasketData['basket_id'], PDO::PARAM_INT);
+                $oStmtUpdate->bindValue(':item_id', $iItemId, PDO::PARAM_INT);
+
+                $bExecute = $oStmtUpdate->execute();
+            }
+
+
+        }catch (Basket_Exception $e){
+            throw new Basket_Exception($e);
+        }
+    }
+
+    public function updateQuantity($iItemId, $iQuantity){
+        $this->p_updateQuantity($iItemId, $iQuantity);
+        return $this;
+    }
+
+    public function p_updateQuantity($iItemId, $iQuantity){
+        try{
+
+            $sQuery = 'SELECT * FROM basket_items WHERE basket_items_id = :basket_id AND basket_items_item_id = :item_id';
+
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindValue(':basket_id', $this->aBasketData['basket_id'], PDO::PARAM_INT);
+            $oStmt->bindValue(':item_id', $iItemId, PDO::PARAM_INT);
+
+            $bExecute = $oStmt->execute();
+
+            $aBasketItemData = $oStmt->fetch(PDO::FETCH_ASSOC);
+
+            /**
+             * If item already exists in the basket increase quantity otherwise add as new item
+             */
+            if($aBasketItemData){
+                $iIncrease = $iQuantity;
+                $sQueryUpdate = 'UPDATE basket_items SET basket_items_quantity = :item_quantity WHERE basket_items_id = :basket_id AND basket_items_item_id = :item_id';
+
+                $oStmtUpdate = $this->db->prepare($sQueryUpdate);
+
+                $oStmtUpdate->bindValue(':basket_id', $this->aBasketData['basket_id'], PDO::PARAM_INT);
+                $oStmtUpdate->bindValue(':item_quantity', $iIncrease, PDO::PARAM_INT);
+                $oStmtUpdate->bindValue(':item_id', $iItemId, PDO::PARAM_INT);
+
+                $bExecute = $oStmtUpdate->execute();
+            }
+
+
+        }catch (Basket_Exception $e){
+            throw new Basket_Exception($e);
+        }
+
+        return $this;
+    }
+
 
     public function findBasketByUserId($iUserId){
 

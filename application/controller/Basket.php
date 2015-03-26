@@ -55,6 +55,33 @@ class Basket_Controller extends Base_Controller{
         echo json_encode(array('basket' => $aBasketData));
     }
 
+    public function removeItem(){
+        $this->isAjaxCall = true;
+
+
+        $aItemId = $_POST['item_id'];
+
+        Basket_Model::basket()->removeItem($aItemId);
+
+
+        echo json_encode(array('Success' => $aItemId));
+        exit();
+    }
+
+    public function updateQuantity(){
+        $this->isAjaxCall = true;
+
+
+        $aItemId = $_POST['item_id'];
+        $iQuantity = $_POST['quantity'];
+
+        Basket_Model::basket()->updateQuantity($aItemId, $iQuantity);
+
+
+        echo json_encode(array('Success' => $aItemId));
+        exit();
+    }
+
 
     public function addToBasket(){
         $this->isAjaxCall = true;
