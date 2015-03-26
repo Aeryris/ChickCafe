@@ -34,45 +34,167 @@
 
 interface Basket_Interface{
 
+    /**
+     * Singleton initializer
+     *
+     * If iId (basket_id) parameter is provided and basket is assigned to current user
+     * all basket data is fetched
+     *
+     * @param int $iId - Takes optional basket_id parameter
+     * @return self
+     */
+    public static function basket($iId = null);
+
+    /**
+     * Control method
+     * Informs the class that basket might have to be created
+     * @return $this
+     * @throws Basket_Exception
+     */
+    public function create();
+
+    /**
+     * Control method
+     * Informs the class that basket might have to be fetched
+     * @return $this
+     * @throws Basket_Exception
+     */
+    public function get();
+
+    /**
+     * Interface method for adding item to the basket
+     * @param $iItemId
+     * @return $this
+     * @throws Basket_Exception
+     */
+    public function addItem($iItemId);
+
+    /**
+     * Interface method for removing item to the basket
+     * @param $iItemId
+     * @return $this
+     * @throws Basket_Exception
+     */
+    public function removeItem($iItemId);
+
+    /**
+     * Interface method for updating item from the basket
+     * @param $iItemId
+     * @param $iQuantity
+     * @return $this
+     * @throws Basket_Exception
+     */
+    public function updateQuantity($iItemId, $iQuantity);
+
+    /**
+     * Find basket information (no items) by providing user id
+     * If there is ACTIVE basket connected to the user data is returned otherwise false
+     * @param $iUserId
+     * @return bool|mixed
+     * @throws Basket_Exception
+     */
+    public function findBasketByUserId($iUserId);
+
+    /**
+     * Find all basket with items information by providing user id
+     * If there is ACTIVE basket connected to the user data is returned otherwise false
+     * @param $iUserId
+     * @return bool|mixed
+     * @throws Basket_Exception
+     */
+    public function findBasketWithItems($iUserId);
+
+    /**
+     * Interface for returning basket with items that belongs to currently logged in user
+     * @return bool|mixed
+     * @throws Basket_Exception
+     */
+    public function view();
+
 }
 
 class Basket_Exception extends Exception{}
 
 class Basket_Model extends Foundation_Model implements Basket_Interface{
 
-    public $iOwnerId;
-
-
+    /**
+     * Singleton object reference
+     * @var Object
+     */
     public static $oInstance;
 
-    public $db;
+    /*
+     * Private database connection reference
+     */
+    private $db;
 
-    public $bCreateBasket = false;
+    /**
+     * Private
+     * Control variable to determine whether basket should be created
+     * @var bool
+     */
+    private $bCreateBasket = false;
 
+    /**
+     * Basket ownser id
+     * @var int
+     */
+    public $iOwnerId;
+
+    /**
+     * Fetched basket data
+     * @var null | array
+     */
     public $aBasketData = null;
 
 
-
+    /**
+     * Singleton initializer
+     *
+     * If iId (basket_id) parameter is provided and basket is assigned to current user
+     * all basket data is fetched
+     *
+     * @param int $iId - Takes optional basket_id parameter
+     * @return self (Basket_Model)
+     */
     public static function basket($iId = null){
 
         if(!self::$oInstance instanceof self){
-            self::$oInstance = new Basket_Model($iId);
+            self::$oInstance = new self($iId);
         }
 
         return self::$oInstance;
     }
 
+    /*
+     * Default initializer
+     */
     public function __construct($iId = null){
 
+        if(self::$oInstance == null) throw new Basket_Exception('Default initializer disabled use: Basket_Model::basket(<id>)');
+
+        /*
+         * Store provided basket ID or default null
+         */
         $this->iOwnerId = $iId;
+
+        /**
+         * Get current database connection
+         */
         $this->db = Database_Core::get();
 
+        /**
+         * Check if user has any basket assigned to him
+         */
         $oUser = new User_Model();
         $oUser->attr(['email' => $_SESSION['user']]);
         $bBasketExists = $this->findBasketByUserId($oUser->aData['user_id']);
 
         if($iId != null) $this->bCreateBasket = true;
 
+        /**
+         * Create or fetch basket
+         */
         $this->prepareBasket();
 
         /**
@@ -87,11 +209,15 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
         return $this;
     }
 
+    /**
+     * Control method
+     * Informs the class that basket might have to be created
+     * @return $this
+     * @throws Basket_Exception
+     */
     public function create(){
 
         $this->bCreateBasket = true;
-
-
 
         $this->prepareBasket();
 
@@ -103,11 +229,11 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
         $oUser = new User_Model();
         $oUser->attr(['email' => $_SESSION['user']]);
 
-        //var_dump($oUser);
 
+        /**
+         * Find basket assigned to the user
+         */
         $bBasketExists = $this->findBasketByUserId($oUser->aData['user_id']);
-
-
 
         try{
 
@@ -129,6 +255,9 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
                  */
                 $this->aBasketData = $this->findBasketByUserId($oUser->aData['user_id']);
             }else{
+                /**
+                 * Get old basket if one exists
+                 */
                 $this->aBasketData = $this->findBasketByUserId($oUser->aData['user_id']);
             }
 
@@ -139,6 +268,12 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
         return $this;
     }
 
+    /**
+     * Control method
+     * Informs the class that basket might have to be fetched
+     * @return $this
+     * @throws Basket_Exception
+     */
     public function get(){
 
 
@@ -148,6 +283,13 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
         return $this;
     }
 
+    /**
+     * Interface method for adding item to the basket
+     * @triggers p_addItem($Id)
+     * @param $iItemId
+     * @return $this
+     * @throws Basket_Exception
+     */
     public function addItem($iItemId){
 
         $this->p_addItem($iItemId);
@@ -155,7 +297,16 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
         return $this;
     }
 
-    public function p_addItem($iItemId){
+    /**
+     * Logic for addItem method
+     * Method checks whether requested basket exists, if it does:
+     * method checks whether there is already requested item in the basket: if yes, quantity is updated
+     *                                                                      if not, new item is inserted into the basket
+     * @param $iItemId
+     * @return $this
+     * @throws Basket_Exception
+     */
+    private function p_addItem($iItemId){
 
         try{
 
@@ -210,13 +361,25 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
 
 
-
+    /**
+     * Interface method for removing item from the basket
+     * @triggers p_removeItem($Id)
+     * @param $iItemId
+     * @return $this
+     * @throws Basket_Exception
+     */
     public function removeItem($iItemId){
         $this->p_removeItem($iItemId);
         return $this;
     }
 
-    public function p_removeItem($iItemId){
+    /**
+     * Logic method for removeItem interface
+     * Method checks whether basket exists and contains requested item: if yes item is removed
+     * @param $iItemId
+     * @throws Basket_Exception
+     */
+    private function p_removeItem($iItemId){
         try{
 
             $sQuery = 'SELECT * FROM basket_items WHERE basket_items_id = :basket_id AND basket_items_item_id = :item_id';
@@ -230,9 +393,9 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
             $aBasketItemData = $oStmt->fetch(PDO::FETCH_ASSOC);
 
-            //var_dump($aBasketItemData);
-
-
+            /*
+             * If requested item is in the db and basket, it is removed
+             */
             if($aBasketItemData){
                 $sQueryUpdate = 'DELETE FROM basket_items WHERE basket_items_id = :basket_id AND basket_items_item_id = :item_id';
 
@@ -250,12 +413,28 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
         }
     }
 
+    /**
+     * Interface method for updating item from the basket
+     * @triggers p_updateQuantity($Id)
+     * @param $iItemId
+     * @param $iQuantity
+     * @return $this
+     * @throws Basket_Exception
+     */
     public function updateQuantity($iItemId, $iQuantity){
         $this->p_updateQuantity($iItemId, $iQuantity);
         return $this;
     }
 
-    public function p_updateQuantity($iItemId, $iQuantity){
+    /**
+     * Logic method for updateQuantity interface
+     * Method checks whether basket exists and contains requested item: if yes item quantity is changed
+     * @param $iItemId
+     * @param $iQuantity
+     * @return $this
+     * @throws Basket_Exception
+     */
+    private function p_updateQuantity($iItemId, $iQuantity){
         try{
 
             $sQuery = 'SELECT * FROM basket_items WHERE basket_items_id = :basket_id AND basket_items_item_id = :item_id';
@@ -294,6 +473,13 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
     }
 
 
+    /**
+     * Find basket information (no items) by providing user id
+     * If there is ACTIVE basket connected to the user data is returned otherwise false
+     * @param $iUserId
+     * @return bool|mixed
+     * @throws Basket_Exception
+     */
     public function findBasketByUserId($iUserId){
 
         $aBasketData = false;
@@ -307,10 +493,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
             $oStmt->bindValue(':id', $iUserId, PDO::PARAM_INT);
 
             $bExecute = $oStmt->execute();
-
             $aBasketData = $oStmt->fetch(PDO::FETCH_ASSOC);
-
-
 
         }catch(Basket_Exception $e){
             throw new Basket_Exception($e);
@@ -319,6 +502,13 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
         return $aBasketData;
     }
 
+    /**
+     * Find all basket with items information by providing user id
+     * If there is ACTIVE basket connected to the user data is returned otherwise false
+     * @param $iUserId
+     * @return bool|mixed
+     * @throws Basket_Exception
+     */
     public function findBasketWithItems($iUserId){
 
         $aBasketData = false;
@@ -335,9 +525,6 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
             $aBasketData = $oStmt->fetchAll(PDO::FETCH_ASSOC);
 
-
-
-
         }catch(Basket_Exception $e){
             throw new Basket_Exception($e);
         }
@@ -348,6 +535,12 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
         return $this;
     }
 
+
+    /**
+     * Interface for returning basket with items that belongs to currently logged in user
+     * @return bool|mixed
+     * @throws Basket_Exception
+     */
     public function view(){
 
 
