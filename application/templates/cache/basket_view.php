@@ -51,8 +51,8 @@
                         Price: £<?php echo $value['item_price'] ?>  <br />
                         Preparation time: <?php echo $value['item_preptime'] ?>  <br />
                         Stock: <?php echo $value['item_available'] ?>/<?php echo $value['item_stock'] ?>  <br />
-                        Update quantity: <input type="text" name="quantity" value="<?php echo $value['basket_items_quantity'] ?> " /> <button>Update</button> <br />
-                        Remove: <button>Remove</button>
+                        Update quantity: <input type="text" name="quantity" value="<?php echo $value['basket_items_quantity'] ?> " /> <button class="add_item_to_basket btn btn-material-deep-purple">Update</button> <br />
+                        Remove: <button class="add_item_to_basket btn btn-material-deep-purple">Remove</button>
 
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #000000"></div>
@@ -65,6 +65,8 @@
 
     </div>
 </div>
+
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>
 
 
  

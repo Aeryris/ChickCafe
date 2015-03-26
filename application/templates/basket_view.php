@@ -51,8 +51,8 @@
                         Price: £{! $value['item_price'] }  <br />
                         Preparation time: {! $value['item_preptime'] }  <br />
                         Stock: {! $value['item_available'] }/{! $value['item_stock'] }  <br />
-                        Update quantity: <input type="text" name="quantity" value="{! $value['basket_items_quantity'] } " /> <button>Update</button> <br />
-                        Remove: <button>Remove</button>
+                        Update quantity: <input type="text" name="quantity" value="{! $value['basket_items_quantity'] } " /> <button class="add_item_to_basket btn btn-material-deep-purple">Update</button> <br />
+                        Remove: <button class="add_item_to_basket btn btn-material-deep-purple">Remove</button>
 
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #000000"></div>
@@ -65,6 +65,8 @@
 
     </div>
 </div>
+
+{include file=footer.php}
 
 
  

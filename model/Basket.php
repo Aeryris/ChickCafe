@@ -73,6 +73,8 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
         if($iId != null) $this->bCreateBasket = true;
 
+        $this->prepareBasket();
+
         /**
          * Check if basket will be assigned to the user
          */
@@ -141,6 +143,8 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
 
         $this->bCreateBasket = false;
+
+        $this->prepareBasket();
         return $this;
     }
 
@@ -178,12 +182,13 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
             if($aBasketItemData){
                 $iIncrease = $aBasketItemData['basket_items_quantity'];
                 $iIncrease++;
-                $sQueryUpdate = 'UPDATE basket_items SET basket_items_quantity = :item_quantity WHERE basket_items_id = :basket_id';
+                $sQueryUpdate = 'UPDATE basket_items SET basket_items_quantity = :item_quantity WHERE basket_items_id = :basket_id AND basket_items_item_id = :item_id';
 
                 $oStmtUpdate = $this->db->prepare($sQueryUpdate);
 
                 $oStmtUpdate->bindValue(':basket_id', $this->aBasketData['basket_id'], PDO::PARAM_INT);
                 $oStmtUpdate->bindValue(':item_quantity', $iIncrease, PDO::PARAM_INT);
+                $oStmtUpdate->bindValue(':item_id', $iItemId, PDO::PARAM_INT);
 
                 $bExecute = $oStmtUpdate->execute();
             }else{

@@ -36,11 +36,43 @@ interface MenuItems_Interface{
     public function getByMenuId($iId);
     public function getByItemId($iId);
     public function get($iMenuId, $iItemId);
+    public function getByName($sName);
+    public function getByTime($sStart, $sEnd);
+    public function data();
 }
 
-class MenuItems_Model implements MenuItems_Interface {
+class MenuItems_Model extends Foundation_Model implements MenuItems_Interface {
+
+    public static $oInstance;
+
+    public $data;
+
+    public static function menu(){
+
+        if(!self::$oInstance instanceof self){
+            self::$oInstance = new self;
+        }
+
+        return self::$oInstance;
+    }
 
     public function getByMenuId($iId){
+
+        try{
+
+            $sQuery = 'SELECT * FROM menu as m JOIN menu_items as ms USING(menu_id) JOIN item USING(item_id) WHERE m.menu_id = :id';
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindParam(':id', $iId);
+            $oStmt->execute();
+
+            $this->data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        }catch(Exception $e){
+
+        }
+
+        return $this;
 
     }
     public function getByItemId($iId){
@@ -48,6 +80,18 @@ class MenuItems_Model implements MenuItems_Interface {
     }
     public function get($iMenuId, $iItemId){
 
+    }
+
+    public function getByName($sName){
+
+    }
+    public function getByTime($sStart, $sEnd){
+
+    }
+
+    public function data(){
+
+        return $this->data;
     }
 
 } 

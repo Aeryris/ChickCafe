@@ -37,10 +37,10 @@
 <div id="wrap">
     <div id="main" class="container clear-top">
         <div class="form-block center-block" style="max-width: 40%;">
-            <form class="form-signin" method="post" action="/user/account/update">
+            <form class="form-signin" method="post" action="/user/update">
                 <h2 class="form-signin-heading">Account settings</h2>
                 <label for="inputEmail" class="sr-only">Email address</label>
-                <input name="email" type="" id="inputEmail" class="form-control" placeholder="Email address"  autofocus>
+                <input name="email" type="" id="inputEmail" class="form-control" placeholder="Email address"  value="<?php echo User_Model::user()['user_email'] ?>">
                 <label for="inputFirstname" class="sr-only">First name</label>
                 <input name="firstname" type="text" id="inputFirstname" class="form-control" value="<?php echo User_Model::user()['user_firstname'] ?>">
                 <label for="inputLastname" class="sr-only">Last name</label>
@@ -54,7 +54,7 @@
         </div>
 
         <div class="form-block center-block" style="max-width: 40%;">
-            <form class="form-signin" method="post" action="/user/account/password">
+            <form class="form-signin" method="post" action="/user/update_password">
                 <h2 class="form-signin-heading">Password change</h2>
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" >
@@ -76,4 +76,6 @@
 
     </div>
 </div>
+
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>
  

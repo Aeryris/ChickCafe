@@ -43,11 +43,31 @@ class Basket_Controller extends Base_Controller{
         //var_dump(Item_Model::get('1')->iItemId);
         //Basket_Model::basket()->addItem(Item_Model::get('2')->iItemId);
 
-        $aBasketData = Basket_Model::basket()->view();
-        $this->template->basketItems = $aBasketData;
+        $this->template->basketItems = $aBasketData = Basket_Model::basket()->view();
 
 
         $this->view = 'basket_view';
+    }
+
+    public function basketData(){
+        $this->isAjaxCall = true;
+        $aBasketData = Basket_Model::basket()->view();
+        echo json_encode(array('basket' => $aBasketData));
+    }
+
+
+    public function addToBasket(){
+        $this->isAjaxCall = true;
+
+
+        $aItemId = $_POST['item_id'];
+
+        Basket_Model::basket()->addItem($aItemId);
+
+
+        echo json_encode(array('Success' => $aItemId));
+        exit();
+
     }
 
 } 

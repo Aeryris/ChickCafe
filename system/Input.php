@@ -49,6 +49,8 @@ class InputException extends Exception{}
 
 class Input_Core implements Input_Interface{
 
+    public static $oInstance;
+
     public static function get($sKey, InputFilter $sFilter = NULL){
         if(!isset($_GET[$sKey])) return;
 
@@ -141,6 +143,24 @@ class Input_Core implements Input_Interface{
 
     public static function getPost(){
         return $_POST;
+    }
+
+    public function __construct(){
+
+        if(!self::$oInstance instanceof self){
+            self::$oInstance = new Input_Core();
+        }
+
+        return self::$oInstance;
+    }
+
+
+    public function __get($sKey){
+        return $_GET[$sKey];
+    }
+
+    public function __set($sKey, $sValue){
+        $_GET[$sKey] = $sValue;
     }
 
 } 

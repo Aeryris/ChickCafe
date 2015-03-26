@@ -285,15 +285,22 @@ class Template_Core implements Template_Interface{
 
         foreach($this->templateName as $key => $value){
 
-
+            if($value == '.php') return;
 
             $orginalTemplate = self::$sRealPath.  $value. '.php';
             //var_dump($orginalTemplate);
             $temporaryTemplate = self::$sRealPath.'cache'.DIRECTORY_SEPARATOR.$value.'.php';
             //var_dump($temporaryTemplate);
-            if(!file_exists($temporaryTemplate) || filemtime($temporaryTemplate) < filemtime($orginalTemplate) || $this->refresh == true){
+            //var_dump($temporaryTemplate);
+
+            /**
+             * @todo Check for time
+             * @todo Check for size
+             * @todo Check for checksum
+             */
+            //if(!file_exists($temporaryTemplate) || $this->refresh == true){
                 $this->replace($orginalTemplate, $temporaryTemplate);
-            }
+            //}
 
 
             extract($this->variables, EXTR_SKIP);

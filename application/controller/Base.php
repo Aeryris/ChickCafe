@@ -45,6 +45,7 @@ class Base_Controller {
     public $footer = 'footer';
     public $benchmark;
     public $session;
+    public $isAjaxCall = false;
 
     public function __construct(){
         if(DEVELOPMENT_MODE){
@@ -59,28 +60,46 @@ class Base_Controller {
 
         Language_Core::setLocale($this->session->language);
         $this->auth = new Auth_Core();
-        $this->template = new Template_Core('');
+
+        if(!$this->isAjaxCall)
+            $this->template = new Template_Core('');
         //$this->template->assignTemplate('header');
         if(DEVELOPMENT_MODE) $this->refresh = true;
-
+        //$this->get = new Input_Core();
         $this->db = Database_Core::get();
 
+        //$this->post = Input_Core::getPost();
+
+        //$this->input = Input_Core::
+
     }
 
-    public function __destruct(){
-        $inc = array();
-        if(isset($this->view)){
-            $inc = array($this->view, $this->footer);
-        }else{
-            $inc = array($this->footer);
-        }
 
-        //var_dump($this->view);
 
+    public function __destruct()
+    {
+        /**
+         * if(!$this->isAjaxCall){
+         *
+         * $inc = array();
+         * if(isset($this->view)){
+         * $inc = array($this->view, $this->footer);
+         * }else{
+         * $inc = array($this->footer);
+         * }
+         *
+         * //var_dump($this->view);
+         *
+         * $this->template->assignTemplates($inc);
+         * //var_dump($this->template);
+         * //$this->benchmark->end();
+         * $this->template->display();
+         * }
+         * }
+         *
+         */
+        $inc = array($this->view);
         $this->template->assignTemplates($inc);
-        //var_dump($this->template);
-        $this->benchmark->end();
         $this->template->display();
     }
-
 } 

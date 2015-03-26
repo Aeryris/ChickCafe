@@ -37,7 +37,7 @@ interface Customer_Interface{
     public function addSpendings($dSpendings);
 }
 
-class Customer_Model extends UserType_Model {
+class Customer_Model extends UserType_Model implements Customer_Interface{
 
     private static $instance;
 

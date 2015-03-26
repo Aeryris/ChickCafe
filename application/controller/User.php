@@ -114,7 +114,7 @@ class User_Controller extends Base_Controller{
     }
 
     public function update() {
-        if(Input_Core::getPost()) {
+        /**  if(Input_Core::getPost()) {
             $sEmail = Field::post('email');
             $sFirstName = Field::post('firstname');
             $sLastName = Field::post('lastname');
@@ -131,15 +131,15 @@ class User_Controller extends Base_Controller{
                     exit();
             }
         }
-        $this->view = 'account';
+        $this->view = 'account'; */
     }
 
     public function update_password() {
-        if(Input_Core::getPost()) {
+        /**  if(Input_Core::getPost()) {
             $sPassword = Field::post['password'];
             $sConfirmPassword = Field::post['passwordconfirm'];
             if ($sPassword != $sConfirmPassword) {
-                $this->template->errors = 
+                $this->template->errors =
             } else {
                  $oUser->attr(['email' => $sEmail->value(), 'password' => $oUser->passwordSecure($sPassword->value())]);
 
@@ -152,7 +152,7 @@ class User_Controller extends Base_Controller{
                     exit();
                 }
             }
-        }
+        } */
     }
 
     /**

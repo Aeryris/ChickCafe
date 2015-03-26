@@ -44,25 +44,65 @@ interface Menu_Interface{
     public function setStartTime($sStartTime);
     public function setEndTime($sEndTime);
     public function save();
+    public function data();
 
 }
 
+class Menu_Exception extends  Exception{}
+
 class Menu_Model extends Foundation_Model implements Menu_Interface {
 
+    public $name;
+    public $startTime;
+    public $endTime;
 
+    public $id;
+    public $data;
+
+    public static $oInstance = null;
+
+    public $bIsNew = false;
 
     public function add(){
-
+        $this->bIsNew = true;
     }
     public function remove(){
 
     }
 
+    public static function menu(){
+
+        if(!self::$oInstance instanceof self){
+            self::$oInstance = new self;
+        }
+
+        return self::$oInstance;
+    }
+
+    public function current(){
+        try{
+
+            $sQuery = 'SELECT * FROM Menu WHERE menu_time_start <= NOW() AND menu_time_end >= NOW()';
+
+            $oStmt = $this->db->prepare($sQuery);
+            $bExecute = $oStmt->execute();
+
+            $this->data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        }catch(Exception $e){
+            throw new Menu_Exception($e);
+        }
+
+        return $this;
+    }
+
     public function get($iId){
+
+        $this->bIsNew = false;
 
         try{
 
-            $sQuery = 'SELECT * FROM menu JOIN WHERE menu_id = :id';
+            $sQuery = 'SELECT * FROM menu WHERE menu_id = :id';
 
             $oStmt = $this->db->prepare($sQuery);
 
@@ -70,8 +110,8 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
 
             $oExecute = $oStmt->execute();
 
-            $this->aData  = $oStmt->fetch(PDO::FETCH_ASSOC);
-            //var_dump($aData);
+            $this->data  = $oStmt->fetch(PDO::FETCH_ASSOC);
+
         }catch(PDOException $e){
             var_dump($e);
             exit();
@@ -81,17 +121,83 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
 
     }
     public function setName($sName){
-
+        $this->name = $sName;
+        return $this;
     }
     public function setStartTime($sStartTime){
-
+        $this->startTime = $sStartTime;
+        return $this;
     }
     public function setEndTime($sEndTime){
-
+        $this->endTime = $sEndTime;
     }
 
     public function save(){
 
+        if($this->bIsNew){
+            $this->insert();
+        }else{
+            $this->update();
+        }
+
+
+
+        return $this;
+    }
+
+
+    private function insert(){
+        try{
+
+            $this->db->beginTransaction();
+
+
+            $sQuery = 'INSERT INTO menu VALUES(:name, :start, :end)';
+
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindValue(':name', $this->name, PDO::PARAM_STR);
+            $oStmt->bindValue(':start', $this->startTime, PDO::PARAM_STR);
+            $oStmt->bindValue(':end', $this->endTime, PDO::PARAM_STR);
+
+            $bExecuted = $oStmt->execute();
+
+            $this->db->commit();
+
+        }catch(Exception $e){
+            $this->db->rollBack();
+            throw new Menu_Exception($e);
+        }
+    }
+
+    private function update(){
+        try{
+
+            $this->db->beginTransaction();
+
+
+            $sQuery = 'UPDATE menu SET menu_name = :name, menu_time_start = :start, menu_time_end = :end WHERE menu_id = :id)';
+
+
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindValue(':name', $this->name, PDO::PARAM_STR);
+            $oStmt->bindValue(':start', $this->startTime, PDO::PARAM_STR);
+            $oStmt->bindValue(':end', $this->endTime, PDO::PARAM_STR);
+            $oStmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+
+            $bExecuted = $oStmt->execute();
+
+            $this->db->commit();
+
+        }catch(Exception $e){
+            $this->db->rollBack();
+            throw new Menu_Exception($e);
+        }
+    }
+
+    public function data(){
+        return $this->data;
     }
 
 } 

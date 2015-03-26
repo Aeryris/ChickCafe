@@ -20,5 +20,31 @@
     });
 
 </script>
+
+<script src="/application/assets/js/classie.js"></script>
+<script>
+    (function() {
+        [].slice.call( document.querySelectorAll( '.checkout' ) ).forEach( function( el ) {
+            var openCtrl = el.querySelector( '.checkout__button' ),
+                closeCtrls = el.querySelectorAll( '.checkout__cancel' );
+
+            openCtrl.addEventListener( 'click', function(ev) {
+                ev.preventDefault();
+                classie.add( el, 'checkout--active' );
+            } );
+
+            [].slice.call( closeCtrls ).forEach( function( ctrl ) {
+                ctrl.addEventListener( 'click', function() {
+                    classie.remove( el, 'checkout--active' );
+                } );
+            } );
+        } );
+    })();
+</script>
+<script src="/application/assets/js/Basket.js"></script>
+<script src="/application/assets/js/getBasket.js"></script>
+<script src="/application/assets/js/addToBasket.js"></script>
+
+
 </body>
 </html>

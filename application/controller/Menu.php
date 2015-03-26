@@ -33,7 +33,32 @@
 
 
 
-class Menu_Controller {
+class Menu_Controller extends Base_Controller{
+
+    public function index(){
+
+        $oMenu = Menu_Model::menu()->current();
+
+        $this->template->oMenu = $oMenu;
+        $this->view = 'menu';
+    }
+
+    public function view(){
+        try{
+
+            $oMenuItems = MenuItems_Model::menu()->getByMenuId($_GET['id']);
+
+
+
+            $this->template->menuItems = $oMenuItems;
+
+
+            $this->view = 'menu_view';
+
+        }catch(Exception $e){
+
+        }
+    }
 
     public function breakfast(){
 
