@@ -32,11 +32,11 @@
         .navbar.navbar, .nav-default.navbar{
             background-color: #96bbe5;
         }
-
-        .navbar-nav{
-
+        <?php if(Auth_Core::init()->isAuth()): ?>
+        .navbar-nav.navbar-right {
+            margin-right:30px !important;
         }
-
+        <?php endif; ?>
 
     </style>
 
