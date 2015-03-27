@@ -46,17 +46,18 @@ class Staff_Model extends UserType_Model implements Staff_Interface {
     public $phoneNumber;
     public $type = 's';
 
-    public static function get()
+    public static function get($type = 'c')
     {
         if (!is_object(self::$instance)) {
             $c = get_called_class();
-            self::$instance = new $c();
+            self::$instance = new $c($type);
         }
         return self::$instance;
     }
 
-    protected function __construct()
+    protected function __construct($type)
     {
+        $this->type = $type;
     }
 
     public function setRole($sRole){

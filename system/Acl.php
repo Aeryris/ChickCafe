@@ -70,6 +70,16 @@ interface Acl_Interface{
 
 class Acl_Core implements Acl_Interface{
 
+    public static function allow($aclList){
+
+        $oUser = new User_Model();
+        $email = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+        $oUser->attr(['email' => $email]);
+
+        return in_array($oUser->aData['user_type'], $aclList);
+
+    }
+
     public static function init()
     {
         static $instance = null;

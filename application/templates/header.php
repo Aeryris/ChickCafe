@@ -92,8 +92,15 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
+
+
                 <?php if(Auth_Core::init()->isAuth()): ?>
                     <li class="active"><a href="/"><?php echo User_Model::user()['user_firstname'] ?> <?php echo User_Model::user()['user_lastname'] ?><span class="sr-only">(current)</span></a></li>
+                    <?php
+                    if(Acl_Core::allow([ACL::ACL_MANAGER, ACL::ACL_ADMIN, ACL::ACL_OWNER])){
+                        echo '<li><a href="/user/baskboard">Dashboard</a></li>';
+                    }
+                    ?>
                     <li><a href="/user/account">Account</a></li>
                     <li><a href="/user/logout">Logout</a></li>
                 <?php endif; ?>

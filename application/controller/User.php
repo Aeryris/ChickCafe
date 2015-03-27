@@ -98,15 +98,6 @@ class User_Controller extends Base_Controller{
                 }
 
             }
-
-            /*** if($oLoginForm->validate()){
-                $oUser = new User_Model();
-                $oUser->attr(['email' => $sEmail->value(), 'password' => $oUser->passwordSecure($sPassword->value())]);
-
-                if($oUser->exists()){
-                    Auth_Core::init()->auth($sEmail->value());
-                }
-            } */
             $this->template->errors = $oLoginForm->sErrors;
         }
 
@@ -114,45 +105,70 @@ class User_Controller extends Base_Controller{
     }
 
     public function update() {
-        /**  if(Input_Core::getPost()) {
-            $sEmail = Field::post('email');
-            $sFirstName = Field::post('firstname');
-            $sLastName = Field::post('lastname');
+        if(Input_Core::getPost()) {
 
-            $oUser->attr(['email' => $sEmail->value()]);
-            if($oUser->exists()) {
-                Auth_Core::init()->auth($sEmail->value());
-                $oUser->get()
-                    ->setEmail($sEmail->value());
-                    ->setFirstName($sFirstName->value());
-                    ->setLastName($slastName->value());
-                    ->save();
-                    header('Location: /account');
-                    exit();
+            $sEmail = Field::post('email')->required();
+            $sFirstName = Field::post('firstname')->required();
+            $sLastName = Field::post('lastname')->required();
+
+            $oForm = new Form_Core(array($sEmail, $sFirstName, $sLastName));
+
+            if($oForm->validate()){
+                $oUser = new User_Model();
+
+                $oUser->attr(['email' => $sEmail->value()]);
+                if($oUser->exists()) {
+
+                    $oUser->get($oUser->aData['user_id'])
+                        ->setEmail($sEmail->value())
+                        ->setFirstName($sFirstName->value())
+                        ->setLastName($sLastName->value())
+                        ->save();
+
+
+
+                    $this->template->error = 'Update successful ';
+                }
+            }else{
+                $this->template->errors = $oForm->sErrors;
             }
+
         }
-        $this->view = 'account'; */
+        $this->view = 'account';
     }
 
     public function update_password() {
-        /**  if(Input_Core::getPost()) {
-            $sPassword = Field::post['password'];
-            $sConfirmPassword = Field::post['passwordconfirm'];
-            if ($sPassword != $sConfirmPassword) {
-                $this->template->errors =
-            } else {
-                 $oUser->attr(['email' => $sEmail->value(), 'password' => $oUser->passwordSecure($sPassword->value())]);
 
+
+
+         if(Input_Core::getPost()) {
+            $sPassword = Field::post('password');
+            $sConfirmPassword = Field::post('passwordconfirm')->equalsTo('password');
+
+             $oForm = new Form_Core(array($sPassword, $sConfirmPassword));
+
+             //var_dump($oForm);
+             //var_dump($oForm->validate());
+
+            if($oForm->validate()){
+
+                $oUser = new User_Model();
+
+                $oUser->attr(['email' => $_SESSION['user']]);
+                //var_dump($oUser);
                 if($oUser->exists()){
-                    Auth_Core::init()->auth($sEmail->value());
-                    $oUser->get()
-                        ->setPassword($oUser->passwordSecure($sPassword->value()));
-                        ->save();
-                    header('Location: /account');
-                    exit();
+                    $oUser->get($oUser->aData['user_id'])
+                          ->setPassword($oUser->passwordSecure($sPassword->value()))
+                          ->save();
+                    $this->template->error = 'Password change successful ';
                 }
+
+            }else{
+                $this->template->errors = $oForm->sErrors;
             }
-        } */
+        }
+
+        $this->view = 'account';
     }
 
     /**
@@ -163,6 +179,10 @@ class User_Controller extends Base_Controller{
         session_destroy();
         header('Location: /');
         exit();
+    }
+
+    public function index(){
+        $this->account();
     }
 
     public function account(){

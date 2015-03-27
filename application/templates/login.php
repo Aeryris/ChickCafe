@@ -15,7 +15,7 @@
         </label>
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <p>Haven't got an account yet? <a id="register_link" href="register.php">Click here to register for an account.</a></p>
+    <p>Haven't got an account yet? <a id="register_link" href="/user/register">Click here to register for an account.</a></p>
 </form>
     <div>
        <?php if(isset($errors)) echo $errors ?>

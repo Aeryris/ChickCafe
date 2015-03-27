@@ -118,8 +118,31 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
         }
     }
 
-    public function updateData(){
+    private function fillIn(){
 
+        if($this->type == null){
+            if($this->aData['user_type'] == 'C'){
+                $this->type = Customer_Model::get();
+            }else if($this->aData['user_type'] == 'S'){
+                $this->type = Staff_Model::get();
+            }else if($this->aData['user_type'] == 'O'){
+                $this->type = Staff_Model::get('O');
+            }else if($this->aData['user_type'] == 'M'){
+                $this->type = Staff_Model::get('M');
+            }else if($this->aData['user_type'] == 'A'){
+                $this->type = Staff_Model::get('A');
+            }
+        }
+        if($this->firstName == null) $this->firstName = $this->aData['user_firstname'];
+        if($this->lastName == null) $this->lastName = $this->aData['user_lastname'];
+        if($this->email == null) $this->email = $this->aData['user_email'];
+        if($this->password == null) $this->password = $this->aData['user_password'];
+
+
+    }
+
+    public function updateData(){
+        $this->fillIn();
         try{
 
 
@@ -145,14 +168,17 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
            // print_r($oExecute);
 
             $this->db->commit();
+
+            return true;
         }catch(PDOException $e){
             $this->db->rollBack();
-            var_dump($e);
-            exit();
+            return false;
         }
     }
 
     public function insertData(){
+
+        $this->fillIn();
         try{
             $this->db->beginTransaction();
 
@@ -198,10 +224,10 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
 
 
             $this->db->commit();
+            return true;
         }catch (PDOException $e){
             $this->db->rollBack();
-            var_dump($e);
-            exit();
+            return false;
         }
 
     }
