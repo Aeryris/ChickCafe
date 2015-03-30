@@ -45,8 +45,9 @@ class Staff_Model extends UserType_Model implements Staff_Interface {
     public $salary;
     public $phoneNumber;
     public $type = 's';
+    protected $db;
 
-    public static function get($type = 'c')
+    public static function get($type = 's')
     {
         if (!is_object(self::$instance)) {
             $c = get_called_class();
@@ -55,9 +56,63 @@ class Staff_Model extends UserType_Model implements Staff_Interface {
         return self::$instance;
     }
 
-    protected function __construct($type)
+    public function __construct($type, User_Model $oUser = null)
     {
+        $this->db = Database_Core::get();
         $this->type = $type;
+        if(!is_null($oUser)) {
+            $this->loadAttributes($oUser);
+        }
+    }
+
+    private function loadAttributes(User_Model $oUser)
+    {
+        $staffID = $oUser->aData['user_id'];
+        try {
+            $sQuery = "SELECT * FROM staff WHERE staff_user_id = :staffID AND staff_role = 'Retail';";
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindValue(":staffID", $staffID);
+
+            $oExecute = $oStmt->execute();
+
+            $this->aData = $oStmt->fetch(PDO::FETCH_ASSOC);
+
+            $this->pushAttributesToObject();
+
+        } catch(Exception $ex) {
+            echo("Some bad error occured.");
+            var_dump($ex->getMessage());
+        }
+    }
+
+    private function pushAttributesToObject()
+    {
+        $ignored = [
+            'staff_user_id'
+        ];
+        foreach($this->aData as $key => $value) {
+            if(in_array($key, $ignored)) {
+                continue;
+            }
+            $key = $this->prepareKeyName($key);
+            $this->$key = $value;
+        }
+        return $this;
+    }
+
+    private function prepareKeyName($key) {
+        $key = str_replace('staff_', '', $key);
+        $key = explode('_', $key);
+        $parts = [];
+        foreach($key as $index => $part) {
+            if($index >= 1){
+                $part = ucWords($part);
+            }
+            $parts[] = $part;
+        }
+        $key = implode('', $parts);
+        return $key;
     }
 
     public function setRole($sRole){
