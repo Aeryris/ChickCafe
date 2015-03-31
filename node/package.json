@@ -1,0 +1,20 @@
+{
+  "name": "Chickcafe",
+  "version": "1.0.0",
+  "description": "Chickcafe automated mysql backup system",
+  "main": "app.js",
+  "scripts": {
+  },
+  "dependencies":{
+      "mysql":"*",
+      "is-running":"*",
+      "pm2":"*",
+      "chalk":"*",
+      "querystring":"*",
+      "http":"*",
+      "socket.io":"*",
+      "express":"*"
+  },
+  "author": "Bartlomiej Kliszczyk",
+  "license": "ISC"
+}

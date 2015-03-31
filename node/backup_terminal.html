@@ -1,0 +1,239 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ChickCafe</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://localhost:100/application/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://localhost:100/application/assets/css/material.min.css">
+    <link rel="stylesheet" href="http://localhost:100/application/assets/css/styles.css">
+    <link rel="stylesheet" href="http://localhost:100/application/assets/css/main.css">
+    <script src="http://localhost:100/application/assets/js/modernizr.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:100/application/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:100/application/assets/fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:100/application/assets/css/checkout-cornerflat.css" />
+    <!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+    <style>
+
+        .navbar{
+            min-height: 67px;
+        }
+
+        .navbar.navbar, .nav-default.navbar{
+            background-color: #96bbe5;
+        }
+
+        .navbar-nav{
+
+        }
+
+
+    </style>
+
+</head>
+<body>
+    
+<div id="wrap">
+<div id="main" class="container clear-top">
+
+<div class="container">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+    <link href="https://code.jquery.com/ui/1.11.4/themes/blitzer/jquery-ui.css" type="text/css" />
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    
+    
+    <style>
+        .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+        .ui-timepicker-div dl { text-align: left; }
+        .ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+        .ui-timepicker-div dl dd { margin: 0 10px 10px 45%; }
+        .ui-timepicker-div td { font-size: 90%; }
+        .ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+        .ui-timepicker-rtl{ direction: rtl; }
+        .ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+        .ui-timepicker-rtl dl dt{ float: right; clear: right; }
+        .ui-timepicker-rtl dl dd { margin: 0 45% 10px 10px; }
+    </style>
+    
+<script>
+    
+$(function(){
+var iosocket = io.connect();
+    
+    addZero = function(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+    };
+    
+    $("#log").animate({
+        scrollTop: $("#log").position().top
+    }, 1000);
+    
+    var date = new Date();
+    var time = addZero(date.getDay()) + '-' + addZero(date.getMonth()) + '-' + addZero(date.getFullYear()) + '-' + addZero(date.getHours()) + ':' + addZero(date.getMinutes()) + ':' + addZero(date.getSeconds());
+
+iosocket.on('connect', function () {
+    $('#log-data').append($('<li></li>').text('Connected at: '+time));
+
+    
+    iosocket.on('disconnect', function() {
+        $('#log-data').append($('<li></li>').text('Disconnected at: ' + time));
+    });
+    
+    iosocket.on('clearlist', function(message) {
+        $('#backup-times-data').html('');
+    });
+    
+    iosocket.on('addtime', function(message) {
+        console.log('Client: Add time to log');
+        message.forEach(function(row){
+            $('#backup-times-data').append($('<li class="tim" data-time="'+row.time+'" data-id="'+row.id+'" id="time-id-'+row.id+'">'+row.time+'<a class="delete-time" href="#"> Delete</a></li>'));
+            
+            
+        });
+        
+        
+    });
+    
+    iosocket.on('logdata', function(message) {
+        $('#log-data').append($('<li></li>').text(message));
+    });
+});
+
+    /** $('#outgoingMessage').keypress(function(event) {
+        if(event.which == 13) {
+            event.preventDefault();
+            iosocket.send($('#outgoingMessage').val());
+            $('#incomingMessages').append($('<li></li>').text($('#outgoingMessage').val()));
+            $('#outgoingMessage').val('');
+        }
+    }); */
+    
+    $(document).on('click', '.delete-time', function(){
+        console.log('Delete time with id: ' + $(this).parent('.tim').data('time'));
+        iosocket.emit('removetime', {'id':$(this).parent('.tim').data('id'), 'time': $(this).parent('.tim').data('time')});
+    });
+    
+    $('#clear').on('click', function(){
+        
+        $('#log-data').html($('<li></li>'));
+    
+    });
+    
+    $('#add-backup-time').on('click', function(){
+
+        //iosocket.send($('#time-in').val());
+        
+        if($('#time-in').val() == ''){
+               alert('Time cannot be empty');
+        }else{
+            iosocket.emit('addtime', $('#time-in').val());
+        }
+        
+        
+
+
+    });
+    
+    
+});
+    
+    
+    
+    
+</script>
+
+    <h3 id="title">MySQL Backup:</h3>
+    <div style="100%">
+        <div style="width: 50%; height: 50px; overflow: auto; float:left" id="">
+            <h4>Log</h4>
+        </div>
+        <div style="width: 50%; height: 50px; overflow: auto; float:left" id="">
+            <h4>Backup times</h4>
+        </div>
+    </div>
+<div style="100%">
+    <div style="width: 50%; height: 400px; overflow: auto; float:left" id="log">
+        
+        <ul id="log-data">
+        
+        </ul>
+         
+    </div>
+    
+    <div style="width: 50%; height: 400px; overflow: auto; float:left" id="addtimes">
+        
+        <ul id="backup-times-data">
+
+        </ul>
+     </div>
+    
+</div>   
+<div style="100%">
+    
+    <div style="width: 50%; height: 200px; overflow: auto; float:left" id="">
+        <input class="form-control" placeholder="Add to log" type="text" id="outgoingMessage">
+        <button class="btn btn-lg btn-primary btn-block" id="clear">Clear log</button> 
+    </div>
+    
+    <div style="width: 50%; height: 200px; overflow: auto; float:left" id="">
+        
+        
+        <input class="form-control hasDatepicker" placeholder="Time" id="time-in" type="text" />
+        <button class="btn btn-lg btn-primary btn-block" id="add-backup-time">Add backup time</button>
+    </div>
+</div>
+    
+<ul id="incomingMessages"></ul>
+
+
+
+    
+      
+    
+
+    
+
+
+
+</div>
+
+</div>
+</div>
+    
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted"> Codename Cookie</p>
+        </div>
+    </footer>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="http://localhost:100/application/assets/js/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="http://localhost:100/application/assets/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="http://localhost:100/application/assets/js/bootstrap-clockpicker.min.js"></script>  
+    <link type="text/css" href="http://localhost:100/application/assets/js/bootstrap-clockpicker.min.css"> 
+    
+    <script>
+        $(document).ready(function(){
+            $('#time-in').clockpicker();
+        });
+    </script>
+
+
+</body>
+</html>

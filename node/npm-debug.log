@@ -1,0 +1,544 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 warn package.json Chickcafe@1.0.0 No repository field.
+5 warn package.json Chickcafe@1.0.0 No README data
+6 verbose readDependencies using package.json deps
+7 verbose install where, deps [ '/Users/bartek/Documents/Development/Web/University/ChickCafe/node',
+7 verbose install   [ 'mysql', 'is-running', 'pm2', 'chalk', 'querystring', 'http' ] ]
+8 info preinstall Chickcafe@1.0.0
+9 verbose readDependencies using package.json deps
+10 verbose already installed skipping mysql@* /Users/bartek/Documents/Development/Web/University/ChickCafe/node
+11 verbose cache add [ 'is-running@*', null ]
+12 verbose cache add name=undefined spec="is-running@*" args=["is-running@*",null]
+13 verbose parsed url { protocol: null,
+13 verbose parsed url   slashes: null,
+13 verbose parsed url   auth: null,
+13 verbose parsed url   host: null,
+13 verbose parsed url   port: null,
+13 verbose parsed url   hostname: null,
+13 verbose parsed url   hash: null,
+13 verbose parsed url   search: null,
+13 verbose parsed url   query: null,
+13 verbose parsed url   pathname: 'is-running@*',
+13 verbose parsed url   path: 'is-running@*',
+13 verbose parsed url   href: 'is-running@*' }
+14 verbose cache add [ 'pm2@*', null ]
+15 verbose cache add name=undefined spec="pm2@*" args=["pm2@*",null]
+16 verbose parsed url { protocol: null,
+16 verbose parsed url   slashes: null,
+16 verbose parsed url   auth: null,
+16 verbose parsed url   host: null,
+16 verbose parsed url   port: null,
+16 verbose parsed url   hostname: null,
+16 verbose parsed url   hash: null,
+16 verbose parsed url   search: null,
+16 verbose parsed url   query: null,
+16 verbose parsed url   pathname: 'pm2@*',
+16 verbose parsed url   path: 'pm2@*',
+16 verbose parsed url   href: 'pm2@*' }
+17 verbose cache add name="is-running" spec="*" args=["is-running","*"]
+18 verbose parsed url { protocol: null,
+18 verbose parsed url   slashes: null,
+18 verbose parsed url   auth: null,
+18 verbose parsed url   host: null,
+18 verbose parsed url   port: null,
+18 verbose parsed url   hostname: null,
+18 verbose parsed url   hash: null,
+18 verbose parsed url   search: null,
+18 verbose parsed url   query: null,
+18 verbose parsed url   pathname: '*',
+18 verbose parsed url   path: '*',
+18 verbose parsed url   href: '*' }
+19 verbose addNamed [ 'is-running', '*' ]
+20 verbose addNamed [ null, '*' ]
+21 verbose cache add [ 'chalk@*', null ]
+22 verbose cache add name=undefined spec="chalk@*" args=["chalk@*",null]
+23 verbose parsed url { protocol: null,
+23 verbose parsed url   slashes: null,
+23 verbose parsed url   auth: null,
+23 verbose parsed url   host: null,
+23 verbose parsed url   port: null,
+23 verbose parsed url   hostname: null,
+23 verbose parsed url   hash: null,
+23 verbose parsed url   search: null,
+23 verbose parsed url   query: null,
+23 verbose parsed url   pathname: 'chalk@*',
+23 verbose parsed url   path: 'chalk@*',
+23 verbose parsed url   href: 'chalk@*' }
+24 verbose cache add name="pm2" spec="*" args=["pm2","*"]
+25 verbose parsed url { protocol: null,
+25 verbose parsed url   slashes: null,
+25 verbose parsed url   auth: null,
+25 verbose parsed url   host: null,
+25 verbose parsed url   port: null,
+25 verbose parsed url   hostname: null,
+25 verbose parsed url   hash: null,
+25 verbose parsed url   search: null,
+25 verbose parsed url   query: null,
+25 verbose parsed url   pathname: '*',
+25 verbose parsed url   path: '*',
+25 verbose parsed url   href: '*' }
+26 verbose addNamed [ 'pm2', '*' ]
+27 verbose addNamed [ null, '*' ]
+28 silly lockFile 69e5ee21-is-running is-running@*
+29 verbose lock is-running@* /Users/bartek/.npm/69e5ee21-is-running.lock
+30 silly lockFile 23a68f93-pm2 pm2@*
+31 verbose lock pm2@* /Users/bartek/.npm/23a68f93-pm2.lock
+32 verbose cache add [ 'querystring@*', null ]
+33 verbose cache add name=undefined spec="querystring@*" args=["querystring@*",null]
+34 verbose parsed url { protocol: null,
+34 verbose parsed url   slashes: null,
+34 verbose parsed url   auth: null,
+34 verbose parsed url   host: null,
+34 verbose parsed url   port: null,
+34 verbose parsed url   hostname: null,
+34 verbose parsed url   hash: null,
+34 verbose parsed url   search: null,
+34 verbose parsed url   query: null,
+34 verbose parsed url   pathname: 'querystring@*',
+34 verbose parsed url   path: 'querystring@*',
+34 verbose parsed url   href: 'querystring@*' }
+35 verbose cache add name="chalk" spec="*" args=["chalk","*"]
+36 verbose parsed url { protocol: null,
+36 verbose parsed url   slashes: null,
+36 verbose parsed url   auth: null,
+36 verbose parsed url   host: null,
+36 verbose parsed url   port: null,
+36 verbose parsed url   hostname: null,
+36 verbose parsed url   hash: null,
+36 verbose parsed url   search: null,
+36 verbose parsed url   query: null,
+36 verbose parsed url   pathname: '*',
+36 verbose parsed url   path: '*',
+36 verbose parsed url   href: '*' }
+37 verbose addNamed [ 'chalk', '*' ]
+38 verbose addNamed [ null, '*' ]
+39 silly lockFile c65a916d-chalk chalk@*
+40 verbose lock chalk@* /Users/bartek/.npm/c65a916d-chalk.lock
+41 verbose cache add name="querystring" spec="*" args=["querystring","*"]
+42 verbose parsed url { protocol: null,
+42 verbose parsed url   slashes: null,
+42 verbose parsed url   auth: null,
+42 verbose parsed url   host: null,
+42 verbose parsed url   port: null,
+42 verbose parsed url   hostname: null,
+42 verbose parsed url   hash: null,
+42 verbose parsed url   search: null,
+42 verbose parsed url   query: null,
+42 verbose parsed url   pathname: '*',
+42 verbose parsed url   path: '*',
+42 verbose parsed url   href: '*' }
+43 verbose addNamed [ 'querystring', '*' ]
+44 verbose addNamed [ null, '*' ]
+45 silly lockFile 69751c4d-querystring querystring@*
+46 verbose lock querystring@* /Users/bartek/.npm/69751c4d-querystring.lock
+47 verbose cache add [ 'http@*', null ]
+48 verbose cache add name=undefined spec="http@*" args=["http@*",null]
+49 verbose parsed url { protocol: null,
+49 verbose parsed url   slashes: null,
+49 verbose parsed url   auth: null,
+49 verbose parsed url   host: null,
+49 verbose parsed url   port: null,
+49 verbose parsed url   hostname: null,
+49 verbose parsed url   hash: null,
+49 verbose parsed url   search: null,
+49 verbose parsed url   query: null,
+49 verbose parsed url   pathname: 'http@*',
+49 verbose parsed url   path: 'http@*',
+49 verbose parsed url   href: 'http@*' }
+50 verbose cache add name="http" spec="*" args=["http","*"]
+51 verbose parsed url { protocol: null,
+51 verbose parsed url   slashes: null,
+51 verbose parsed url   auth: null,
+51 verbose parsed url   host: null,
+51 verbose parsed url   port: null,
+51 verbose parsed url   hostname: null,
+51 verbose parsed url   hash: null,
+51 verbose parsed url   search: null,
+51 verbose parsed url   query: null,
+51 verbose parsed url   pathname: '*',
+51 verbose parsed url   path: '*',
+51 verbose parsed url   href: '*' }
+52 verbose addNamed [ 'http', '*' ]
+53 verbose addNamed [ null, '*' ]
+54 silly lockFile 67b29158-http http@*
+55 verbose lock http@* /Users/bartek/.npm/67b29158-http.lock
+56 silly addNameRange { name: 'is-running', range: '*', hasData: false }
+57 silly addNameRange { name: 'pm2', range: '*', hasData: false }
+58 silly addNameRange { name: 'chalk', range: '*', hasData: false }
+59 silly addNameRange { name: 'querystring', range: '*', hasData: false }
+60 verbose request where is /is-running
+61 verbose request registry https://registry.npmjs.org/
+62 verbose request id b42799b45d923877
+63 verbose url raw /is-running
+64 verbose url resolving [ 'https://registry.npmjs.org/', './is-running' ]
+65 verbose url resolved https://registry.npmjs.org/is-running
+66 verbose request where is https://registry.npmjs.org/is-running
+67 info trying registry request attempt 1 at 14:48:06
+68 http GET https://registry.npmjs.org/is-running
+69 verbose request where is /pm2
+70 verbose request registry https://registry.npmjs.org/
+71 verbose url raw /pm2
+72 verbose url resolving [ 'https://registry.npmjs.org/', './pm2' ]
+73 verbose url resolved https://registry.npmjs.org/pm2
+74 verbose request where is https://registry.npmjs.org/pm2
+75 info trying registry request attempt 1 at 14:48:06
+76 http GET https://registry.npmjs.org/pm2
+77 silly addNameRange { name: 'http', range: '*', hasData: false }
+78 verbose request where is /querystring
+79 verbose request registry https://registry.npmjs.org/
+80 verbose url raw /querystring
+81 verbose url resolving [ 'https://registry.npmjs.org/', './querystring' ]
+82 verbose url resolved https://registry.npmjs.org/querystring
+83 verbose request where is https://registry.npmjs.org/querystring
+84 info trying registry request attempt 1 at 14:48:06
+85 http GET https://registry.npmjs.org/querystring
+86 verbose request where is /http
+87 verbose request registry https://registry.npmjs.org/
+88 verbose url raw /http
+89 verbose url resolving [ 'https://registry.npmjs.org/', './http' ]
+90 verbose url resolved https://registry.npmjs.org/http
+91 verbose request where is https://registry.npmjs.org/http
+92 info trying registry request attempt 1 at 14:48:06
+93 http GET https://registry.npmjs.org/http
+94 verbose request where is /chalk
+95 verbose request registry https://registry.npmjs.org/
+96 verbose url raw /chalk
+97 verbose url resolving [ 'https://registry.npmjs.org/', './chalk' ]
+98 verbose url resolved https://registry.npmjs.org/chalk
+99 verbose request where is https://registry.npmjs.org/chalk
+100 info trying registry request attempt 1 at 14:48:09
+101 verbose etag "D09WJ1FG3Y7RTZQFKAF9XHQDA"
+102 http GET https://registry.npmjs.org/chalk
+103 http 200 https://registry.npmjs.org/querystring
+104 silly registry.get cb [ 200,
+104 silly registry.get   { date: 'Mon, 30 Mar 2015 13:48:09 GMT',
+104 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+104 silly registry.get     etag: '"AU3ATFQPZVVXTWD3RX12CMOI1"',
+104 silly registry.get     'content-type': 'application/json',
+104 silly registry.get     'cache-control': 'max-age=60',
+104 silly registry.get     'content-length': '5668',
+104 silly registry.get     'accept-ranges': 'bytes',
+104 silly registry.get     via: '1.1 varnish',
+104 silly registry.get     age: '20',
+104 silly registry.get     'x-served-by': 'cache-ams4124-AMS',
+104 silly registry.get     'x-cache': 'HIT',
+104 silly registry.get     'x-cache-hits': '1',
+104 silly registry.get     'x-timer': 'S1427723289.613601,VS0,VE0',
+104 silly registry.get     vary: 'Accept',
+104 silly registry.get     'keep-alive': 'timeout=10, max=50',
+104 silly registry.get     connection: 'Keep-Alive' } ]
+105 http 200 https://registry.npmjs.org/http
+106 silly registry.get cb [ 200,
+106 silly registry.get   { date: 'Mon, 30 Mar 2015 13:48:09 GMT',
+106 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+106 silly registry.get     etag: '"9ARRJ1G4SWEZRN9FK6352ZEYA"',
+106 silly registry.get     'content-type': 'application/json',
+106 silly registry.get     'cache-control': 'max-age=60',
+106 silly registry.get     'content-length': '950',
+106 silly registry.get     'accept-ranges': 'bytes',
+106 silly registry.get     via: '1.1 varnish',
+106 silly registry.get     age: '41',
+106 silly registry.get     'x-served-by': 'cache-ams4134-AMS',
+106 silly registry.get     'x-cache': 'HIT',
+106 silly registry.get     'x-cache-hits': '1',
+106 silly registry.get     'x-timer': 'S1427723289.619000,VS0,VE0',
+106 silly registry.get     vary: 'Accept',
+106 silly registry.get     'keep-alive': 'timeout=10, max=50',
+106 silly registry.get     connection: 'Keep-Alive' } ]
+107 silly addNameRange number 2 { name: 'querystring', range: '*', hasData: true }
+108 silly addNameRange versions [ 'querystring', [ '0.0.1', '0.0.4', '0.1.0', '0.2.0' ] ]
+109 verbose addNamed [ 'querystring', '0.2.0' ]
+110 verbose addNamed [ '0.2.0', '0.2.0' ]
+111 silly lockFile 3765abce-querystring-0-2-0 querystring@0.2.0
+112 verbose lock querystring@0.2.0 /Users/bartek/.npm/3765abce-querystring-0-2-0.lock
+113 silly addNameRange number 2 { name: 'http', range: '*', hasData: true }
+114 silly addNameRange versions [ 'http', [ '0.0.0' ] ]
+115 verbose addNamed [ 'http', '0.0.0' ]
+116 verbose addNamed [ '0.0.0', '0.0.0' ]
+117 silly lockFile 5c64bf45-http-0-0-0 http@0.0.0
+118 verbose lock http@0.0.0 /Users/bartek/.npm/5c64bf45-http-0-0-0.lock
+119 silly lockFile d7c2e798-uerystring-querystring-0-2-0-tgz https://registry.npmjs.org/querystring/-/querystring-0.2.0.tgz
+120 verbose lock https://registry.npmjs.org/querystring/-/querystring-0.2.0.tgz /Users/bartek/.npm/d7c2e798-uerystring-querystring-0-2-0-tgz.lock
+121 silly lockFile a092f7e2-ry-npmjs-org-http-http-0-0-0-tgz https://registry.npmjs.org/http/-/http-0.0.0.tgz
+122 verbose lock https://registry.npmjs.org/http/-/http-0.0.0.tgz /Users/bartek/.npm/a092f7e2-ry-npmjs-org-http-http-0-0-0-tgz.lock
+123 verbose addRemoteTarball [ 'https://registry.npmjs.org/querystring/-/querystring-0.2.0.tgz',
+123 verbose addRemoteTarball   'b209849203bb25df820da756e747005878521620' ]
+124 verbose addRemoteTarball [ 'https://registry.npmjs.org/http/-/http-0.0.0.tgz',
+124 verbose addRemoteTarball   '86e6326d29c5d039de9fac584a45689f929f4f72' ]
+125 info retry fetch attempt 1 at 14:48:09
+126 verbose fetch to= /var/folders/n3/3033hvtx62s75hplrwpwmkbr0000gn/T/npm-1789-JjvVWeFw/registry.npmjs.org/querystring/-/querystring-0.2.0.tgz
+127 info retry fetch attempt 1 at 14:48:09
+128 verbose fetch to= /var/folders/n3/3033hvtx62s75hplrwpwmkbr0000gn/T/npm-1789-JjvVWeFw/registry.npmjs.org/http/-/http-0.0.0.tgz
+129 http GET https://registry.npmjs.org/querystring/-/querystring-0.2.0.tgz
+130 http GET https://registry.npmjs.org/http/-/http-0.0.0.tgz
+131 http 200 https://registry.npmjs.org/chalk
+132 silly registry.get cb [ 200,
+132 silly registry.get   { date: 'Mon, 30 Mar 2015 13:48:09 GMT',
+132 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+132 silly registry.get     etag: '"7A2K5JJJKQSUXUYIC8V1TNLBW"',
+132 silly registry.get     'content-type': 'application/json',
+132 silly registry.get     'cache-control': 'max-age=60',
+132 silly registry.get     'content-length': '19862',
+132 silly registry.get     'accept-ranges': 'bytes',
+132 silly registry.get     via: '1.1 varnish',
+132 silly registry.get     age: '30',
+132 silly registry.get     'x-served-by': 'cache-ams4142-AMS',
+132 silly registry.get     'x-cache': 'HIT',
+132 silly registry.get     'x-cache-hits': '8',
+132 silly registry.get     'x-timer': 'S1427723289.614874,VS0,VE0',
+132 silly registry.get     vary: 'Accept',
+132 silly registry.get     'keep-alive': 'timeout=10, max=50',
+132 silly registry.get     connection: 'Keep-Alive' } ]
+133 silly addNameRange number 2 { name: 'chalk', range: '*', hasData: true }
+134 silly addNameRange versions [ 'chalk',
+134 silly addNameRange   [ '0.1.0',
+134 silly addNameRange     '0.1.1',
+134 silly addNameRange     '0.2.0',
+134 silly addNameRange     '0.2.1',
+134 silly addNameRange     '0.3.0',
+134 silly addNameRange     '0.4.0',
+134 silly addNameRange     '0.5.0',
+134 silly addNameRange     '0.5.1',
+134 silly addNameRange     '1.0.0' ] ]
+135 verbose addNamed [ 'chalk', '1.0.0' ]
+136 verbose addNamed [ '1.0.0', '1.0.0' ]
+137 silly lockFile 3c08535b-chalk-1-0-0 chalk@1.0.0
+138 verbose lock chalk@1.0.0 /Users/bartek/.npm/3c08535b-chalk-1-0-0.lock
+139 silly lockFile aa502a4f--npmjs-org-chalk-chalk-1-0-0-tgz https://registry.npmjs.org/chalk/-/chalk-1.0.0.tgz
+140 verbose lock https://registry.npmjs.org/chalk/-/chalk-1.0.0.tgz /Users/bartek/.npm/aa502a4f--npmjs-org-chalk-chalk-1-0-0-tgz.lock
+141 verbose addRemoteTarball [ 'https://registry.npmjs.org/chalk/-/chalk-1.0.0.tgz',
+141 verbose addRemoteTarball   'b3cf4ed0ff5397c99c75b8f679db2f52831f96dc' ]
+142 info retry fetch attempt 1 at 14:48:09
+143 verbose fetch to= /var/folders/n3/3033hvtx62s75hplrwpwmkbr0000gn/T/npm-1789-JjvVWeFw/registry.npmjs.org/chalk/-/chalk-1.0.0.tgz
+144 http GET https://registry.npmjs.org/chalk/-/chalk-1.0.0.tgz
+145 http 200 https://registry.npmjs.org/querystring/-/querystring-0.2.0.tgz
+146 http 200 https://registry.npmjs.org/http/-/http-0.0.0.tgz
+147 silly lockFile d7c2e798-uerystring-querystring-0-2-0-tgz https://registry.npmjs.org/querystring/-/querystring-0.2.0.tgz
+148 silly lockFile d7c2e798-uerystring-querystring-0-2-0-tgz https://registry.npmjs.org/querystring/-/querystring-0.2.0.tgz
+149 silly lockFile a092f7e2-ry-npmjs-org-http-http-0-0-0-tgz https://registry.npmjs.org/http/-/http-0.0.0.tgz
+150 silly lockFile a092f7e2-ry-npmjs-org-http-http-0-0-0-tgz https://registry.npmjs.org/http/-/http-0.0.0.tgz
+151 silly lockFile 3765abce-querystring-0-2-0 querystring@0.2.0
+152 silly lockFile 3765abce-querystring-0-2-0 querystring@0.2.0
+153 silly lockFile 5c64bf45-http-0-0-0 http@0.0.0
+154 silly lockFile 5c64bf45-http-0-0-0 http@0.0.0
+155 http 200 https://registry.npmjs.org/chalk/-/chalk-1.0.0.tgz
+156 silly lockFile 69751c4d-querystring querystring@*
+157 silly lockFile 69751c4d-querystring querystring@*
+158 silly lockFile 67b29158-http http@*
+159 silly lockFile 67b29158-http http@*
+160 silly lockFile aa502a4f--npmjs-org-chalk-chalk-1-0-0-tgz https://registry.npmjs.org/chalk/-/chalk-1.0.0.tgz
+161 silly lockFile aa502a4f--npmjs-org-chalk-chalk-1-0-0-tgz https://registry.npmjs.org/chalk/-/chalk-1.0.0.tgz
+162 silly lockFile 3c08535b-chalk-1-0-0 chalk@1.0.0
+163 silly lockFile 3c08535b-chalk-1-0-0 chalk@1.0.0
+164 silly lockFile c65a916d-chalk chalk@*
+165 silly lockFile c65a916d-chalk chalk@*
+166 http 200 https://registry.npmjs.org/pm2
+167 silly registry.get cb [ 200,
+167 silly registry.get   { date: 'Mon, 30 Mar 2015 13:48:09 GMT',
+167 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+167 silly registry.get     etag: '"735I0XZY6J33ZQ5D88F8MBR46"',
+167 silly registry.get     'content-type': 'application/json',
+167 silly registry.get     'cache-control': 'max-age=60',
+167 silly registry.get     'content-length': '282839',
+167 silly registry.get     'accept-ranges': 'bytes',
+167 silly registry.get     via: '1.1 varnish',
+167 silly registry.get     age: '0',
+167 silly registry.get     'x-served-by': 'cache-ams4146-AMS',
+167 silly registry.get     'x-cache': 'HIT',
+167 silly registry.get     'x-cache-hits': '1',
+167 silly registry.get     'x-timer': 'S1427723289.612212,VS0,VE159',
+167 silly registry.get     vary: 'Accept',
+167 silly registry.get     'keep-alive': 'timeout=10, max=50',
+167 silly registry.get     connection: 'Keep-Alive' } ]
+168 silly addNameRange number 2 { name: 'pm2', range: '*', hasData: true }
+169 silly addNameRange versions [ 'pm2',
+169 silly addNameRange   [ '0.4.0',
+169 silly addNameRange     '0.4.1',
+169 silly addNameRange     '0.4.2',
+169 silly addNameRange     '0.4.3',
+169 silly addNameRange     '0.4.4',
+169 silly addNameRange     '0.4.5',
+169 silly addNameRange     '0.4.6',
+169 silly addNameRange     '0.4.7',
+169 silly addNameRange     '0.4.8',
+169 silly addNameRange     '0.4.10',
+169 silly addNameRange     '0.4.11',
+169 silly addNameRange     '0.4.12',
+169 silly addNameRange     '0.4.13',
+169 silly addNameRange     '0.4.14',
+169 silly addNameRange     '0.5.0',
+169 silly addNameRange     '0.5.1',
+169 silly addNameRange     '0.5.2',
+169 silly addNameRange     '0.5.3',
+169 silly addNameRange     '0.5.4',
+169 silly addNameRange     '0.5.5',
+169 silly addNameRange     '0.5.6',
+169 silly addNameRange     '0.5.7',
+169 silly addNameRange     '0.6.2',
+169 silly addNameRange     '0.6.3',
+169 silly addNameRange     '0.6.4',
+169 silly addNameRange     '0.6.5',
+169 silly addNameRange     '0.6.6',
+169 silly addNameRange     '0.6.7',
+169 silly addNameRange     '0.6.8',
+169 silly addNameRange     '0.6.9',
+169 silly addNameRange     '0.6.10',
+169 silly addNameRange     '0.6.11',
+169 silly addNameRange     '0.6.12',
+169 silly addNameRange     '0.6.13',
+169 silly addNameRange     '0.6.14',
+169 silly addNameRange     '0.6.15',
+169 silly addNameRange     '0.7.0',
+169 silly addNameRange     '0.7.1',
+169 silly addNameRange     '0.7.2',
+169 silly addNameRange     '0.7.3',
+169 silly addNameRange     '0.7.4',
+169 silly addNameRange     '0.7.5',
+169 silly addNameRange     '0.7.6',
+169 silly addNameRange     '0.7.7',
+169 silly addNameRange     '0.7.8',
+169 silly addNameRange     '0.8.0',
+169 silly addNameRange     '0.8.1',
+169 silly addNameRange     '0.8.2',
+169 silly addNameRange     '0.8.3',
+169 silly addNameRange     '0.8.4',
+169 silly addNameRange     '0.8.5',
+169 silly addNameRange     '0.8.6',
+169 silly addNameRange     '0.8.7',
+169 silly addNameRange     '0.8.8',
+169 silly addNameRange     '0.8.9',
+169 silly addNameRange     '0.8.10',
+169 silly addNameRange     '0.8.11',
+169 silly addNameRange     '0.8.12',
+169 silly addNameRange     '0.8.13',
+169 silly addNameRange     '0.8.14',
+169 silly addNameRange     '0.8.15',
+169 silly addNameRange     '0.9.0',
+169 silly addNameRange     '0.9.1',
+169 silly addNameRange     '0.9.2',
+169 silly addNameRange     '0.9.3',
+169 silly addNameRange     '0.9.4',
+169 silly addNameRange     '0.9.5',
+169 silly addNameRange     '0.9.6',
+169 silly addNameRange     '0.10.0-beta1',
+169 silly addNameRange     '0.10.0-beta2',
+169 silly addNameRange     '0.10.0-beta4',
+169 silly addNameRange     '0.10.0-beta5',
+169 silly addNameRange     '0.10.0-beta6',
+169 silly addNameRange     '0.10.0-beta7',
+169 silly addNameRange     '0.10.0-beta8',
+169 silly addNameRange     '0.10.0-beta9',
+169 silly addNameRange     '0.10.0-beta10',
+169 silly addNameRange     '0.10.0-beta11',
+169 silly addNameRange     '0.10.0-beta12',
+169 silly addNameRange     '0.10.0-beta13',
+169 silly addNameRange     '0.10.0-beta14',
+169 silly addNameRange     '0.10.0-beta15',
+169 silly addNameRange     '0.10.0-beta16',
+169 silly addNameRange     '0.10.0-beta17',
+169 silly addNameRange     '0.10.0-beta18',
+169 silly addNameRange     '0.10.0-beta19',
+169 silly addNameRange     '0.10.0-beta20',
+169 silly addNameRange     '0.10.0-beta21',
+169 silly addNameRange     '0.10.0-beta22',
+169 silly addNameRange     '0.10.0-beta23',
+169 silly addNameRange     '0.10.0-beta25',
+169 silly addNameRange     '0.10.0',
+169 silly addNameRange     '0.10.1',
+169 silly addNameRange     '0.10.2',
+169 silly addNameRange     '0.10.3',
+169 silly addNameRange     '0.10.4',
+169 silly addNameRange     '0.10.5',
+169 silly addNameRange     '0.10.6',
+169 silly addNameRange     '0.10.7',
+169 silly addNameRange     '0.10.8',
+169 silly addNameRange     '0.11.0-beta1',
+169 silly addNameRange     '0.11.0',
+169 silly addNameRange     '0.11.1',
+169 silly addNameRange     '0.12.0',
+169 silly addNameRange     '0.12.1',
+169 silly addNameRange     '0.12.2',
+169 silly addNameRange     '0.12.3',
+169 silly addNameRange     '0.12.4',
+169 silly addNameRange     '0.12.5',
+169 silly addNameRange     '0.12.6',
+169 silly addNameRange     '0.12.7',
+169 silly addNameRange     '0.12.8',
+169 silly addNameRange     '0.12.9' ] ]
+170 verbose addNamed [ 'pm2', '0.12.9' ]
+171 verbose addNamed [ '0.12.9', '0.12.9' ]
+172 silly lockFile 5f694f44-pm2-0-12-9 pm2@0.12.9
+173 verbose lock pm2@0.12.9 /Users/bartek/.npm/5f694f44-pm2-0-12-9.lock
+174 silly lockFile 7f959010-try-npmjs-org-pm2-pm2-0-12-9-tgz https://registry.npmjs.org/pm2/-/pm2-0.12.9.tgz
+175 verbose lock https://registry.npmjs.org/pm2/-/pm2-0.12.9.tgz /Users/bartek/.npm/7f959010-try-npmjs-org-pm2-pm2-0-12-9-tgz.lock
+176 verbose addRemoteTarball [ 'https://registry.npmjs.org/pm2/-/pm2-0.12.9.tgz',
+176 verbose addRemoteTarball   'eabe270bf85baf6bc05823a23134065f19c60cfb' ]
+177 info retry fetch attempt 1 at 14:48:09
+178 verbose fetch to= /var/folders/n3/3033hvtx62s75hplrwpwmkbr0000gn/T/npm-1789-JjvVWeFw/registry.npmjs.org/pm2/-/pm2-0.12.9.tgz
+179 http GET https://registry.npmjs.org/pm2/-/pm2-0.12.9.tgz
+180 http 200 https://registry.npmjs.org/pm2/-/pm2-0.12.9.tgz
+181 http 200 https://registry.npmjs.org/is-running
+182 silly registry.get cb [ 200,
+182 silly registry.get   { date: 'Mon, 30 Mar 2015 13:48:10 GMT',
+182 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+182 silly registry.get     etag: '"D9LGYDWWMXNMZTCSGOXL5VAKE"',
+182 silly registry.get     'content-type': 'application/json',
+182 silly registry.get     'cache-control': 'max-age=60',
+182 silly registry.get     'content-length': '7475',
+182 silly registry.get     'accept-ranges': 'bytes',
+182 silly registry.get     via: '1.1 varnish',
+182 silly registry.get     age: '0',
+182 silly registry.get     'x-served-by': 'cache-ams4128-AMS',
+182 silly registry.get     'x-cache': 'MISS',
+182 silly registry.get     'x-cache-hits': '0',
+182 silly registry.get     'x-timer': 'S1427723289.611039,VS0,VE389',
+182 silly registry.get     vary: 'Accept',
+182 silly registry.get     'keep-alive': 'timeout=10, max=50',
+182 silly registry.get     connection: 'Keep-Alive' } ]
+183 silly addNameRange number 2 { name: 'is-running', range: '*', hasData: true }
+184 silly addNameRange versions [ 'is-running',
+184 silly addNameRange   [ '1.0.0', '1.0.1', '1.0.2', '1.0.3', '1.0.4', '1.0.5' ] ]
+185 verbose addNamed [ 'is-running', '1.0.5' ]
+186 verbose addNamed [ '1.0.5', '1.0.5' ]
+187 silly lockFile 71d30055-is-running-1-0-5 is-running@1.0.5
+188 verbose lock is-running@1.0.5 /Users/bartek/.npm/71d30055-is-running-1-0-5.lock
+189 silly lockFile 35575178--is-running-is-running-1-0-5-tgz https://registry.npmjs.org/is-running/-/is-running-1.0.5.tgz
+190 verbose lock https://registry.npmjs.org/is-running/-/is-running-1.0.5.tgz /Users/bartek/.npm/35575178--is-running-is-running-1-0-5-tgz.lock
+191 verbose addRemoteTarball [ 'https://registry.npmjs.org/is-running/-/is-running-1.0.5.tgz',
+191 verbose addRemoteTarball   'e088a476788da9b13b913c6c813d5640ad63d228' ]
+192 info retry fetch attempt 1 at 14:48:09
+193 verbose fetch to= /var/folders/n3/3033hvtx62s75hplrwpwmkbr0000gn/T/npm-1789-JjvVWeFw/registry.npmjs.org/is-running/-/is-running-1.0.5.tgz
+194 http GET https://registry.npmjs.org/is-running/-/is-running-1.0.5.tgz
+195 silly lockFile 7f959010-try-npmjs-org-pm2-pm2-0-12-9-tgz https://registry.npmjs.org/pm2/-/pm2-0.12.9.tgz
+196 silly lockFile 7f959010-try-npmjs-org-pm2-pm2-0-12-9-tgz https://registry.npmjs.org/pm2/-/pm2-0.12.9.tgz
+197 silly lockFile 5f694f44-pm2-0-12-9 pm2@0.12.9
+198 silly lockFile 5f694f44-pm2-0-12-9 pm2@0.12.9
+199 silly lockFile 23a68f93-pm2 pm2@*
+200 silly lockFile 23a68f93-pm2 pm2@*
+201 http 200 https://registry.npmjs.org/is-running/-/is-running-1.0.5.tgz
+202 silly lockFile 35575178--is-running-is-running-1-0-5-tgz https://registry.npmjs.org/is-running/-/is-running-1.0.5.tgz
+203 silly lockFile 35575178--is-running-is-running-1-0-5-tgz https://registry.npmjs.org/is-running/-/is-running-1.0.5.tgz
+204 silly lockFile 71d30055-is-running-1-0-5 is-running@1.0.5
+205 silly lockFile 71d30055-is-running-1-0-5 is-running@1.0.5
+206 silly lockFile 69e5ee21-is-running is-running@*
+207 silly lockFile 69e5ee21-is-running is-running@*
+208 error Error: EACCES, mkdir '/Users/bartek/.npm/chalk/1.0.0'
+208 error  { [Error: EACCES, mkdir '/Users/bartek/.npm/chalk/1.0.0']
+208 error   errno: 3,
+208 error   code: 'EACCES',
+208 error   path: '/Users/bartek/.npm/chalk/1.0.0',
+208 error   parent: 'Chickcafe' }
+209 error Please try running this command again as root/Administrator.
+210 error System Darwin 14.3.0
+211 error command "node" "/usr/local/bin/npm" "install"
+212 error cwd /Users/bartek/Documents/Development/Web/University/ChickCafe/node
+213 error node -v v0.10.33
+214 error npm -v 1.4.28
+215 error path /Users/bartek/.npm/chalk/1.0.0
+216 error code EACCES
+217 error errno 3
+218 error stack Error: EACCES, mkdir '/Users/bartek/.npm/chalk/1.0.0'
+219 verbose exit [ 3, true ]
