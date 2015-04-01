@@ -32,6 +32,8 @@
 
 namespace System;
 
+//require_once();
+
 interface System_Interface{
     public static function init($sPath);
     public static function loader($sClassName);
@@ -87,6 +89,11 @@ class System_Core implements System_Interface{
         self::$sRoutesPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR.self::$sRoutesDir;
         self::$sApplicationPath = self::$sRootPath.DIRECTORY_SEPARATOR.self::$sApplicationDir.DIRECTORY_SEPARATOR;
         \Routes_Core::initWithRoutesPath(self::$sDefaultRoutesConfig);
+
+
+
+
+        require_once(self::$sRootPath.DIRECTORY_SEPARATOR.'system'.DIRECTORY_SEPARATOR.'external'.DIRECTORY_SEPARATOR.'GoPayPal.class.php');
 
     }
 

@@ -73,6 +73,15 @@
                         </tr>
                     </tfoot>
                 </table>
+                <div style="float: right">
+                    <?php
+
+                    if(!empty($basketItems)) echo '<a href="/checkout/basket" id="checkout-submit-button" class="btn btn-lg btn-primary btn-block" type="submit">Checkout</a>';
+
+                    ?>
+
+
+                </div>
 
             </div>
 
@@ -84,6 +93,4 @@
 </div>
 
 {include file=footer.php}
-
-
  

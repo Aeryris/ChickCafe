@@ -199,6 +199,44 @@ var BasketPrototype = {
                     //alert( "complete" );
                 });
         });
+    },
+
+    updateCheckoutPage: function(){
+        $(document).ready(function () {
+            $.ajax({
+                method: "POST",
+                url: "/basket/basketData",
+                dataType: "json"
+            })
+                .done(function (data) {
+                    console.log(data);
+                    var html = [];
+
+                    priceSum = 0;
+                    preparationTime = 0;
+
+                    for(var item in data.basket){
+                        //console.log(item);
+                        html.push('<tr><td>'+data.basket[item].item_name+'<span>'+data.basket[item].item_description+'</span></td><td>'+data.basket[item].basket_items_quantity+'</td><td>'+data.basket[item].item_preptime+'</td><td>'+data.basket[item].item_price+'</td></tr>');
+
+                        priceWithQuantity = parseFloat(data.basket[item].item_price) * parseFloat(data.basket[item].basket_items_quantity);
+                        priceSum += parseFloat(priceWithQuantity);
+
+                        preparationTimeWithQuantity = parseFloat(data.basket[item].item_preptime) * parseFloat(data.basket[item].basket_items_quantity);
+                        preparationTime += parseFloat(preparationTimeWithQuantity);
+                    }
+
+                    $('.checkout-total-sum').text(parseFloat(priceSum).toFixed(2));
+                    $('.checkout-total-preparation').text(preparationTime);
+                    $('.checkout-view-summary').html(html);
+
+                }).fail(function (msg) {
+                    console.log( msg );
+                })
+                .always(function () {
+                    //alert( "complete" );
+                });
+        });
     }
 
 };

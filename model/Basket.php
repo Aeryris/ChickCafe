@@ -433,6 +433,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
      * @param $iQuantity
      * @return $this
      * @throws Basket_Exception
+     * @todo check if requested quantity is in stock
      */
     private function p_updateQuantity($iItemId, $iQuantity){
         try{

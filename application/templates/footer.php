@@ -9,6 +9,7 @@
 <script>window.jQuery || document.write('<script src="/application/assets/js/jquery-1.11.2.min.js"><\/script>')</script>
 <script src="/application/assets/js/bootstrap.min.js"></script>
 
+<script src="/application/assets/js/jquery.confirm.min.js"></script>
 <script>
 
     var jumboHeight = $('.jumbotron').outerHeight();
@@ -47,6 +48,27 @@
 <script src="/application/assets/js/getBasket.js"></script>
 <script src="/application/assets/js/addToBasket.js"></script>
 <?php endif; ?>
+
+<script>
+    $(document).ready(function(){
+        $(".confirm").confirm(/** {
+            text: "You will be redirected to the payment page, do you want to proceed?",
+            title: "Confirmation required",
+            confirm: function(button) {
+                //delete();
+            },
+            cancel: function(button) {
+                // nothing to do
+            },
+            confirmButton: "Pay",
+            cancelButton: "Go back",
+            post: true,
+            confirmButtonClass: "btn-danger",
+            cancelButtonClass: "btn-default",
+            dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
+        }*/);
+    });
+</script>
 
 
 

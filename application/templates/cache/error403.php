@@ -48,7 +48,7 @@
         <img src="application/assets/images/notfound.png" alt="" />
     </div>
     <div class="page">
-        <h2>Dude, you are not allowed in here</h2>
+        <h2>Dude, you are not allowed to view this page</h2>
     </div>
 
 </div>

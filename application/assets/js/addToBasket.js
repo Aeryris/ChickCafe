@@ -100,6 +100,7 @@ $(document).ready(function(){
 
         Basket().removeItem(item_id);
         Basket().updateBasketViewPage();
+        Basket().updateCheckoutPage();
 
     });
 
@@ -116,6 +117,7 @@ $(document).ready(function(){
      */
 
     Basket().updateBasketViewPage();
+    Basket().updateCheckoutPage();
 
     $(document).on('click', '.update-basket-item-quantity',  function(){
 
@@ -142,6 +144,7 @@ $(document).ready(function(){
 
         Basket().updateQuantity(item_id, quantity);
         Basket().updateBasketViewPage();
+        Basket().updateCheckoutPage();
 
     });
 
