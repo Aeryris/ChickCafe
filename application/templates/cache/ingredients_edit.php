@@ -50,23 +50,17 @@
                 <span>Available in stock: <?php echo $value['ingredient_available'] ?></span> <br />
             </div>
 
-            <?php endforeach; ?>
+
 
             <form method="post" action="/food/edit/id/<?php echo $_GET['id'] ?>/add/">
 
-                <select name="add">
-                    <?php foreach($allIngredients as $key => $value): ?>
+                <label>Order stock</label>
+                <input type="text" value="<?php echo $value['ingredient_stock'] ?>" />
 
-                    <option value="<?php echo $value['ingredient_id'] ?> "><?php echo $value['ingredient_name'] ?></option>
-
-                    <?php endforeach; ?>
-
-                </select>
-
-                <button type="submit">Add</button>
+                <button type="submit">Order</button>
             </form>
 
-
+            <?php endforeach; ?>
         </div>
 
 

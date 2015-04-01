@@ -50,23 +50,17 @@
                 <span>Available in stock: {! $value['ingredient_available'] }</span> <br />
             </div>
 
-            {/foreach}
+
 
             <form method="post" action="/food/edit/id/{! $_GET['id']}/add/">
 
-                <select name="add">
-                    {foreach($allIngredients as $key => $value)}
+                <label>Order stock</label>
+                <input type="text" value="{! $value['ingredient_stock'] }" />
 
-                    <option value="{! $value['ingredient_id'] } ">{! $value['ingredient_name'] }</option>
-
-                    {/foreach}
-
-                </select>
-
-                <button type="submit">Add</button>
+                <button type="submit">Order</button>
             </form>
 
-
+            {/foreach}
         </div>
 
 
