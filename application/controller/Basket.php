@@ -55,7 +55,7 @@ class Basket_Controller extends Base_Controller implements Basket_Controller_Int
      * Displays basket data
      */
     public function view(){
-
+        Auth_Core::init()->isAuth(true);
         Basket_Model::basket()->create();
 
         $this->template->basketItems = $aBasketData = Basket_Model::basket()->view();
@@ -73,6 +73,7 @@ class Basket_Controller extends Base_Controller implements Basket_Controller_Int
      * @return JSON -> basket data
      */
     public function basketData(){
+        Auth_Core::init()->isAuth(true);
         $this->isAjaxCall = true;
         $aBasketData = Basket_Model::basket()->view();
         echo json_encode(array('basket' => $aBasketData));
@@ -85,6 +86,7 @@ class Basket_Controller extends Base_Controller implements Basket_Controller_Int
      * @return JSON -> success
      */
     public function removeItem(){
+        Auth_Core::init()->isAuth(true);
         $this->isAjaxCall = true;
 
         $aItemId = $_POST['item_id'];
@@ -103,6 +105,7 @@ class Basket_Controller extends Base_Controller implements Basket_Controller_Int
      * @return JSON -> success
      */
     public function updateQuantity(){
+        Auth_Core::init()->isAuth(true);
         $this->isAjaxCall = true;
 
         $aItemId = $_POST['item_id'];
@@ -122,6 +125,7 @@ class Basket_Controller extends Base_Controller implements Basket_Controller_Int
      * @return JSON -> success
      */
     public function addToBasket(){
+        Auth_Core::init()->isAuth(true);
         $this->isAjaxCall = true;
 
 
@@ -134,5 +138,7 @@ class Basket_Controller extends Base_Controller implements Basket_Controller_Int
         exit();
 
     }
+
+
 
 } 

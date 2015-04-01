@@ -240,7 +240,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
             /**
              * If basket does not exist crease one and get the data, otherwise get data of existing and active basket
              */
-            if(!$bBasketExists){
+            if(!$bBasketExists && $oUser->aData['user_id'] != null){
                 $sQuery = 'INSERT INTO basket(basket_owner_id, basket_active) VALUES(:owner_id, :active)';
 
                 $oStmt = $this->db->prepare($sQuery);
@@ -546,6 +546,30 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
         $oUser->attr(['email' => $_SESSION['user']]);
 
         return $this->findBasketWithItems($oUser->aData['user_id']);
+    }
+
+    public function clear(){
+
+        try{
+            $this->db->beginTransaction();
+            $aBasketData = Basket_Model::basket()->view();
+
+            $sQuery = 'DELETE FROM basket_items WHERE basket_items_id = :basket_id';
+
+            $oBasketItems = $this->db->prepare($sQuery);
+            $oBasketItems->bindValue(':basket_id',$aBasketData[0]['basket_id']);
+            $oBasketItems->execute();
+
+            $sBasket = 'DELETE FROM basket WHERE basket_id = :basket_id';
+            $oBasket = $this->db->prepare($sBasket);
+            $oBasket->bindValue(':basket_id',$aBasketData[0]['basket_id']);
+            $oBasketItems->execute();
+
+            $this->db->commit();
+        }catch(Exception $e){
+            $this->db->rollBack();
+        }
+
     }
 
 } 

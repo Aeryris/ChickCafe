@@ -36,7 +36,7 @@
 class Checkout_Controller extends Base_Controller{
 
     public function basket(){
-
+        Auth_Core::init()->isAuth(true);
         $paypal = new GoPayPal(THIRD_PARTY_CART);
         $paypal->sandbox = true;
         $paypal->openInNewWindow = true;
@@ -48,11 +48,10 @@ class Checkout_Controller extends Base_Controller{
         $paypal->set('notify_url', 'http://localhost:100/checkout/process'); # rm must be 2, need to be hosted online
         $paypal->set('rm', 2); # return by POST
         $paypal->set('no_note', 0);
-        $paypal->set('custom', md5(time()));
+        $paypal->set('custom', '1-2');//userid-basketid
         $paypal->set('tax','0.99');
         $paypal->set('shipping','5.00');
         $paypal->set('cbt', 'Return to our site to validate your payment!'); # caption override for "Return to Merchant" button
-
 
         $aData = Basket_Model::basket()->view();
 
@@ -83,26 +82,26 @@ class Checkout_Controller extends Base_Controller{
     public function process()
     {
 
+        Auth_Core::init()->isAuth(true);
+        $custom = explode('-', $_POST['custom']);
 
-        /**
-         * @todo move the basket to the orders
-         */
+        $aPaymentData = [
+            'mc_gross' => $_POST['mc_gross'],
+            'address_status' => $_POST['address_status'],
+            'payer_email' => $_POST['payer_email'],
+            'payer_status' => $_POST['payer_status'],
+            'payment_status' => $_POST['payment_status'],
+            'payment_date' => $_POST['payment_date'],
+            'protection_eligibility' => $_POST['protection_eligibility']
+        ];
 
+
+        $userId = $custom[0];
+        $basketId = $custom[1];
+        $oCheckout = new Checkout_Model();
+        $this->checkout_status = $oCheckout->checkout($userId, $basketId, $aPaymentData);
 
         $this->view = 'checkout_processing';
-
-        /**  if(sizeof($_POST)){
-            echo '<h3>POST</h3>';
-            echo '<pre>'; print_r($_POST); echo '</pre>';
-        }
-        if(sizeof($_GET)){
-            echo '<h3>GET</h3>';
-            echo '<pre>'; print_r($_GET); echo '</pre>';
-        }
-
-        $sQuery = 'INSERT INTO orders(order_price) VALUES(100.0)';
-        $stm = $this->db->prepare($sQuery);
-        $stm->execute(); */
     }
 
 

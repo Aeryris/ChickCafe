@@ -105,6 +105,7 @@ class User_Controller extends Base_Controller{
     }
 
     public function update() {
+        Auth_Core::init()->isAuth(true);
         if(Input_Core::getPost()) {
 
             $sEmail = Field::post('email')->required();
@@ -138,7 +139,7 @@ class User_Controller extends Base_Controller{
     }
 
     public function update_password() {
-
+        Auth_Core::init()->isAuth(true);
 
 
          if(Input_Core::getPost()) {
@@ -186,7 +187,7 @@ class User_Controller extends Base_Controller{
     }
 
     public function account(){
-
+        Auth_Core::init()->isAuth(true);
         $oAcl = new Acl_Core(ACL::ACL_CUSTOMER);
 
 

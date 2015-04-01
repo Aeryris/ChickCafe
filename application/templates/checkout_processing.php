@@ -44,6 +44,7 @@
             <div>
 
                 <ul>
+                    <?php var_dump($_POST) ?>
                     <li>Payment status: {! $_POST['payment_status'] }</li>
                     <li>Paid: {! $_POST['mc_gross'] }</li>
                 </ul>

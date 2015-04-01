@@ -35,7 +35,78 @@ SOFTWARE.
 
 class Checkout_Model extends Foundation_Model{
 
-    public static function checkout($iBasketId){
+    public static $oInstance = null;
+
+    public static function menu(){
+
+        if(!self::$oInstance instanceof self){
+            self::$oInstance = new self;
+        }
+
+        return self::$oInstance;
+    }
+
+    public function checkout($iUserId, $iBasketId, $aPaymentData){
+
+        //var_dump('UserId: '.$iUserId);
+        //var_dump('iBasketId: '.$iBasketId);
+        //var_dump($aPaymentData);
+
+        try{
+            $this->db->beginTransaction();
+
+
+
+            $sQuery = 'INSERT INTO orders(order_datetime, order_price) VALUES(:odate, :price)';
+
+            $oStmt = $this->db->prepare($sQuery);
+            $oStmt->bindValue(':odate', $aPaymentData['payment_date']);
+            $oStmt->bindValue(':price', $aPaymentData['mc_gross']);
+            $oStmt->execute();
+            $iOrderId = $this->db->lastInsertId();
+
+            $sOrderItemsQuery = 'INSERT INTO order_items(item_id, order_id) VALUES(:itemid, :orderid)';
+            $aBasketData = Basket_Model::basket()->view();
+            foreach($aBasketData as $key => $value){
+                $oOrderItemsStmt = $this->db->prepare($sOrderItemsQuery);
+                $oOrderItemsStmt->bindValue(':itemid', $value['item_id']);
+                $oOrderItemsStmt->bindValue(':orderid', $iOrderId);
+
+                $oOrderItemsStmt->execute();
+            }
+
+
+            /**
+             * Link order and customer
+             */
+
+            $sCustomerOrder = 'INSERT INTO customer_order(customer_id, order_id) VALUES(:cust_id, :orderid)';
+
+            $oCustomerLink = $this->db->prepare($sCustomerOrder);
+            $oCustomerLink->bindValue(':cust_id', $iUserId);
+            $oCustomerLink->bindValue(':orderid', $iOrderId);
+            $oCustomerLink->execute();
+
+            Basket_Model::basket()->clear();
+
+
+
+            //var_dump($aBasketData);
+
+
+
+
+
+            $this->db->commit();
+        }catch(Exception $e){
+            $this->db->rollBack();
+            var_dump($e);
+        }
+
+
+    }
+
+    public static function process($iBasketId){
 
     }
 

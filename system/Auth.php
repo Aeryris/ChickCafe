@@ -49,13 +49,19 @@ class Auth_Core implements Auth_Interface{
         return $instance;
     }
 
-    public function isAuth(){
+    public function isAuth($redirect = false){
         if(isset($_SESSION['ak']) && $_SESSION['ak'] == sha1(md5($_SESSION['user']))){
             return true;
         }else{
             //var_dump(array_filter(explode('/', $_SERVER['REQUEST_URI'])));
-            //header('Location: /');
-            //exit();
+            $req = array_filter(explode('/', $_SERVER['REQUEST_URI']));
+            if(!empty($req)){
+                if($redirect) {
+                    header('Location: /');
+                    exit();
+                }
+            }
+
             return false;
         }
     }
