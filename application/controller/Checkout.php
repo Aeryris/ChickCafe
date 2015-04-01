@@ -48,12 +48,21 @@ class Checkout_Controller extends Base_Controller{
         $paypal->set('notify_url', 'http://localhost:100/checkout/process'); # rm must be 2, need to be hosted online
         $paypal->set('rm', 2); # return by POST
         $paypal->set('no_note', 0);
-        $paypal->set('custom', '1-2');//userid-basketid
+
+
+        $aData = Basket_Model::basket()->view();
+        $oUser = new User_Model();
+        $oUser->attr(['email' => $_SESSION['user']]);
+
+
+
+
+        $paypal->set('custom', $oUser->aData['user_id'].'-'.$aData[0]['basket_id']);//userid-basketid
         $paypal->set('tax','0.99');
         $paypal->set('shipping','5.00');
         $paypal->set('cbt', 'Return to our site to validate your payment!'); # caption override for "Return to Merchant" button
 
-        $aData = Basket_Model::basket()->view();
+
 
         foreach($aData as $key => $value){
             $item = new GoPayPalCartItem();

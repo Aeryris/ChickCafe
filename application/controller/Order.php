@@ -37,6 +37,20 @@ class Order_Controller extends Base_Controller{
 
     public function view(){
 
+
+        $oOrders = new Order_Model();
+        $this->template->order = $oOrders;
+        $this->template->oOrdersData = $oOrders->all()->data;
+
+
+        $this->view = 'order_view';
+    }
+
+    public function refund(){
+
+        $iOrderId = Input_Core::get('id');
+
+
     }
 
 } 

@@ -30,6 +30,7 @@
  * @version 1.0
  * @license The MIT License (MIT)
  */
+
 ?>
 
 
@@ -40,17 +41,30 @@
 
         <div class="container">
 
-            <h3>Thanks for your order</h3>
-            <div>
+            <h3>Your Basket</h3>
 
-                <ul>
-                    <li>Payment status: {! $_POST['payment_status'] }</li>
-                    <li>Paid: {! $_POST['mc_gross'] }</li>
-                </ul>
+            <div class="">
 
-                <a class="btn btn-lg btn-primary btn-block"  href="/order/view">See your orders</a>
+
+                    {foreach($oOrdersData as $key => $value)}
+                    <div>
+                        <span>Order no: {! $value['order_id'] }</span>
+                        <ul>
+                            {foreach($order->details($value['order_id']) as $k => $v)}
+
+                                <li>{! $v['item_name'] }</li>
+
+                            {/foreach}
+                        </ul>
+
+                    </div>
+                    <div style="width: 100%; height: 1px; background-color: #000000"></div>
+
+                    {/foreach}
+
 
             </div>
+
 
 
         </div>
@@ -59,4 +73,3 @@
 </div>
 
 {include file=footer.php}
- 

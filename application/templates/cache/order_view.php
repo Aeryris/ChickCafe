@@ -30,27 +30,41 @@
  * @version 1.0
  * @license The MIT License (MIT)
  */
+
 ?>
 
 
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
 
         <div class="container">
 
-            <h3>Thanks for your order</h3>
-            <div>
+            <h3>Your Basket</h3>
 
-                <ul>
-                    <li>Payment status: {! $_POST['payment_status'] }</li>
-                    <li>Paid: {! $_POST['mc_gross'] }</li>
-                </ul>
+            <div class="">
 
-                <a class="btn btn-lg btn-primary btn-block"  href="/order/view">See your orders</a>
+
+                    <?php foreach($oOrdersData as $key => $value): ?>
+                    <div>
+                        <span>Order no: <?php echo $value['order_id'] ?></span>
+                        <ul>
+                            <?php foreach($order->details($value['order_id']) as $k => $v): ?>
+
+                                <li><?php echo $v['item_name'] ?></li>
+
+                            <?php endforeach; ?>
+                        </ul>
+
+                    </div>
+                    <div style="width: 100%; height: 1px; background-color: #000000"></div>
+
+                    <?php endforeach; ?>
+
 
             </div>
+
 
 
         </div>
@@ -58,5 +72,4 @@
     </div>
 </div>
 
-{include file=footer.php}
- 
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>

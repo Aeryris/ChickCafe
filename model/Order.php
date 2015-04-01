@@ -43,9 +43,65 @@ interface Order_Interface{
 }
 
 
-class Order_Model implements  Order_Interface{
+class Order_Model extends Foundation_Model implements  Order_Interface{
+
+    public $data;
+
+    public function all($iUserId = null){
+        try{
+
+           // $sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id JOIN order_items AS oi ON o.order_id = oi.order_id JOIN item AS i ON oi.item_id = i.item_id  WHERE co.customer_id = :cust_id';
+
+            $sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id WHERE co.customer_id = :cust_id';
+
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oUser = new User_Model();
+            $oUser->attr(['email' => $_SESSION['user']]);
+
+
+            $oStmt->bindValue(':cust_id', $oUser->aData['user_id']);
+
+            $oStmt->execute();
+
+            $this->data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+        }catch(Exception $e){
+
+        }
+
+        return $this;
+    }
+
+    public function details($iOrderId){
+        try{
+
+            $sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id JOIN order_items AS oi ON o.order_id = oi.order_id JOIN item AS i ON oi.item_id = i.item_id  WHERE co.order_id = :cust_id';
+
+            //$sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id WHERE co.customer_id = :cust_id';
+
+            $oStmt = $this->db->prepare($sQuery);
+
+
+
+            $oStmt->bindValue(':cust_id', $iOrderId);
+
+            $oStmt->execute();
+
+            return $oStmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+        }catch(Exception $e){
+
+        }
+    }
+
+
 
     public function get($iId){ //Use it while updating order data
+
+
 
     }
     public function make(){ //Use it while creating order data
