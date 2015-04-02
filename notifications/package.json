@@ -10,8 +10,8 @@
     "express":"*",
     "socket.io":"*",
     "http":"*",
-    "underscore": "*"
-    
+    "underscore": "*",
+    "mysql": "*"
 },
   "author": "Bartlomiej Kliszczyk",
   "license": "ISC"

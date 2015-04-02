@@ -47,9 +47,23 @@
 <script src="/application/assets/js/Basket.js"></script>
 <script src="/application/assets/js/getBasket.js"></script>
 <script src="/application/assets/js/addToBasket.js"></script>
+    <script src="/application/assets/js/Notifications.js"></script>
 <?php endif; ?>
 
 <script>
+    <?php
+        $oUser = new User_Model();
+        $oUser->attr(['email' => $_SESSION['user']]);
+
+        $iUserId = $oUser->aData['user_id'];
+        $sUserType = $oUser->aData['user_type'];
+
+        if($sUserType == 'C'){
+            echo 'getUserNotifications();';
+        }else{
+            echo 'getStaffNotifications();';
+        }
+    ?>
     $(document).ready(function(){
         $(".confirm").confirm(/** {
             text: "You will be redirected to the payment page, do you want to proceed?",
@@ -78,6 +92,7 @@
         {
             $("#notificationContainer").fadeToggle(300);
             $("#notification_count").fadeOut("slow");
+            displayNotificationsList();
             return false;
         });
 

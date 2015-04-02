@@ -93,6 +93,7 @@
         {
             padding: 33px 0px 0px 0px !important;
             min-height:300px;
+            color: black;
         }
         #notificationFooter
         {

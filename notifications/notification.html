@@ -1,0 +1,103 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ChickCafe</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://localhost:100/application/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://localhost:100/application/assets/css/material.min.css">
+    <link rel="stylesheet" href="http://localhost:100/application/assets/css/styles.css">
+    <link rel="stylesheet" href="http://localhost:100/application/assets/css/main.css">
+    <script src="http://localhost:100/application/assets/js/modernizr.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:100/application/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:100/application/assets/fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:100/application/assets/css/checkout-cornerflat.css" />
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <style>
+
+        .navbar{
+            min-height: 67px;
+        }
+
+        .navbar.navbar, .nav-default.navbar{
+            background-color: #96bbe5;
+        }
+
+        .navbar-nav{
+
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+<div id="wrap">
+    <div id="main" class="container clear-top">
+
+        <div class="container">
+            <script src="http://localhost:100/application/assets/js/jquery.min.js"></script>
+            <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+
+            <script>
+
+
+
+                $(function() {
+                    var notifications = {};
+                    var iosocket = io.connect();
+
+                    console.log('Front start');
+
+
+                    iosocket.on('connect', function () {
+
+                        iosocket.emit('userid', {'user_id': 1});
+
+                        iosocket.on('refresh', function (data) {
+                            console.log('Front on refresh data: ' + data);
+
+                            if(notifications != data.notifications){
+                                console.log('Change notifications');
+                                notifications = data.notifications;
+                            }
+
+                            //iosocket.emit('fetch', {'user_id': 1, 'notifications':notifications});
+                        });
+
+                        iosocket.on('disconnect', function () {
+                        });
+                    });
+
+                });
+            </script>
+
+        </div>
+
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted"> Codename Cookie</p>
+    </div>
+</footer>
+
+
+<script src="http://localhost:100/application/assets/js/jquery.min.js"></script>
+<script src="http://localhost:100/application/assets/js/bootstrap.min.js"></script>
+
+
+
+</body>
+</html>

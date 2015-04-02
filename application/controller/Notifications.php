@@ -41,4 +41,35 @@ class Notifications_Controller extends Foundation_Model implements Foundation_In
 
     }
 
+    public function fetchAll(){
+
+        $oUser = new User_Model();
+        $oUser->attr(['email' => $_SESSION['user']]);
+
+        $iUserId = $oUser->aData['user_id'];
+        $sUserType = $oUser->aData['user_type'];
+
+
+        $oNotifications = new Notification_Model();
+        $aNotificationsList = array();
+        $aNotificationsList['user'] = $oNotifications->getById($iUserId);
+        $aNotificationsList['type'] = $oNotifications->getByType($sUserType);
+
+        echo json_encode(array('result' => $aNotificationsList));
+
+    }
+
+    public function fetchUser(){
+        $oUser = new User_Model();
+        $oUser->attr(['email' => $_SESSION['user']]);
+
+        $iUserId = $oUser->aData['user_id'];
+
+        $oNotifications = new Notification_Model();
+        $aNotificationsList = array();
+        $aNotificationsList['user'] = $oNotifications->getById($iUserId);
+
+        echo json_encode(array('result' => $aNotificationsList));
+    }
+
 } 

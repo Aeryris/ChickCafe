@@ -38,7 +38,53 @@ interface Notification_Interface{
 
 class Notification_Model extends Foundation_Model implements Notification_Interface{
 
-    public function account($iUserId){
+
+    public function sendMsgToUserType($sUserType, $sMsg, $sNotificationType = 'N'){
+
+        try{
+
+
+            $sQuery = 'INSERT INTO notification(notification_date, notification_type, notification_msg, notification_user_id, notification_user_type)
+                        VALUES(NOW(), :ntype, :nmsg, NULL, :utype)';
+
+            $oStmt = $this->db->prepare($sQuery);
+            $oStmt->bindValue(':ntype', $sNotificationType);
+            $oStmt->bindValue(':nmsg', $sMsg);
+            $oStmt->bindValue(':utype', $sUserType);
+
+            $oStmt->execute();
+
+
+
+        }catch(Exception $e){
+
+        }
+
+    }
+
+    public function setMsgToUserId($iUserId, $sMsg, $sNotificationType = 'N'){
+
+        try{
+
+
+            $sQuery = 'INSERT INTO notification(notification_date, notification_type, notification_msg, notification_user_id, notification_user_type)
+                        VALUES(NOW(), :ntype, :nmsg, :iid, NULL)';
+
+            $oStmt = $this->db->prepare($sQuery);
+            $oStmt->bindValue(':ntype', $sNotificationType);
+            $oStmt->bindValue(':nmsg', $sMsg);
+            $oStmt->bindValue(':iid', $iUserId);
+
+            $oStmt->execute();
+
+
+
+        }catch(Exception $e){
+
+        }
+    }
+
+    public function getById($iUserId){
 
         $sQuery = 'SELECT * FROM notification WHERE notification_user_id = :usr_id';
         $oStmt = $this->db->prepare($sQuery);
@@ -49,6 +95,16 @@ class Notification_Model extends Foundation_Model implements Notification_Interf
         return $oStmt->fetchAll(PDO::FETCH_ASSOC);
 
 
+    }
+
+    public function getByType($sType){
+        $sQuery = 'SELECT * FROM notification WHERE notification_user_type = :usr_type';
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->bindValue(':usr_type', $sType);
+
+        $sExecute = $oStmt->execute();
+
+        return $oStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function get($iId){
