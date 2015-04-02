@@ -35,6 +35,7 @@ interface Staff_Interface{
     public function setRole($sRole);
     public function setSalary($dSalary);
     public function setPhoneNumber($iPhoneNumber);
+    public function add();
 }
 
 class Staff_Model extends UserType_Model implements Staff_Interface {
@@ -114,7 +115,12 @@ class Staff_Model extends UserType_Model implements Staff_Interface {
         $key = implode('', $parts);
         return $key;
     }
-
+    
+    public function add(){
+        $this->isNew = true;
+        return $this;
+    }
+    
     public function setRole($sRole){
         $this->role = $sRole;
         return $this;
@@ -127,6 +133,36 @@ class Staff_Model extends UserType_Model implements Staff_Interface {
 
     public function setPhoneNumber($iPhoneNumber){
         $this->phoneNumber = $iPhoneNumber;
+        return $this;
+    }
+
+    public function attr($aAttr){
+        try{
+
+            $sQuery = "SELECT * FROM user WHERE ";
+
+            foreach($aAttr as $key => $value){
+                $sQuery .= "user_".$key. " = :". $key. " AND ";
+            }
+
+            $sQuery = rtrim($sQuery, "AND \t\n ");
+            //var_dump($sQuery);
+            $oStmt = $this->db->prepare($sQuery);
+
+            foreach($aAttr as $key => $value){
+                $oStmt->bindValue(":$key", $value);
+            }
+            //var_dump($aAttr);
+            $oExecute = $oStmt->execute();
+
+            $this->aData = $oStmt->fetch(PDO::FETCH_ASSOC);
+
+
+
+        }catch (PDOException $e){
+
+        }
+
         return $this;
     }
 } 

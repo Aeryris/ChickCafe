@@ -41,6 +41,10 @@ interface User_Model_Interface{
     public function setEmail($sEmail);
     public function setPassword($sPassword);
 
+    public function setRole($value);
+    public function setSalary($value);
+    public function setPhoneNumber($value);
+
     public function save($fCompletion);
 
     public function updateData();
@@ -109,13 +113,31 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
         return $this;
     }
 
+    public function setRole($value)
+    {
+        $this->type->role = $value;
+        return $this;
+    }
+    
+    public function setSalary($value)
+    {
+        $this->type->salary = $value;
+        return $this;
+    }
+
+    public function setPhoneNumber($value)
+    {
+        $this->type->phoneNumber = $value;
+        return $this;
+    }
+
     public function save($fCompletion = ''){
         if($this->isNew){
             $this->insertData();
         }else{
             $this->updateData();
-
         }
+        $this->isNew = false;
     }
 
     private function fillIn(){
@@ -144,8 +166,6 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
     public function updateData(){
         $this->fillIn();
         try{
-
-
 
             $this->db->beginTransaction();
             $sQuery = 'UPDATE user SET user_type = :usertype,
@@ -177,7 +197,7 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
     }
 
     public function insertData(){
-
+        echo("<pre>");
         $this->fillIn();
         try{
             $this->db->beginTransaction();
@@ -203,30 +223,39 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
 
             $oExecute = $oStmt->execute();
 
+            $lastId = $this->db->lastInsertId();
+
+            $this->id = $lastId;
+            $this->isNew = false;
+            $this->db->commit();
+
             if(!empty($this->type) || $this->type != null){
 
-                $lastId = $this->db->lastInsertId();
+                $this->db->beginTransaction();
 
-                $sQuery = 'UPDATE staff SET staff_role = :role,
-                                        staff_salary = :salary,
-                                        staff_phone_number = :number
-                                         WHERE staff_user_id = :id';
+                $lastId = $this->id;
+
+                $sQuery = "UPDATE staff SET 
+                            staff_role  = :role, 
+                            staff_salary = :salary,
+                            staff_phone_number = :phone
+                        WHERE staff_user_id = :id;";
 
                 $oStmt = $this->db->prepare($sQuery);
+
+                $oStmt->bindParam(':id', $lastId, PDO::PARAM_INT);
                 $oStmt->bindParam(':role', $this->type->role, PDO::PARAM_STR);
                 $oStmt->bindParam(':salary', $this->type->salary, PDO::PARAM_STR);
-                $oStmt->bindParam(':number', $this->type->phoneNumber, PDO::PARAM_STR);
-                $oStmt->bindParam(':id', $lastId, PDO::PARAM_INT);
+                $oStmt->bindParam(':phone', $this->type->phoneNumber, PDO::PARAM_STR);
 
                 $oExecute = $oStmt->execute();
+                $this->db->commit();
             }
 
-
-
-            $this->db->commit();
             return true;
         }catch (PDOException $e){
             $this->db->rollBack();
+            echo($e->getMessage());
             return false;
         }
 
