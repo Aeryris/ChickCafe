@@ -38,6 +38,87 @@
         }
         <?php endif; ?>
 
+        #nav{list-style:none;margin: 0px;padding: 0px;}
+        #nav li {
+            float: left;
+            margin-right: 20px;
+            font-size: 14px;
+            font-weight:bold;
+        }
+        #nav li a{color:#333333;text-decoration:none}
+        #nav li a:hover{color:#006699;text-decoration:none}
+
+        #notification_li
+        {
+            position:relative
+        }
+        #notificationContainer
+        {
+            background-color: #fff;
+            border: 1px solid rgba(100, 100, 100, .4);
+            -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+            overflow: visible;
+            position: absolute;
+            top: 50px;
+            margin-left: -180px;
+            width: 400px;
+            z-index: 0;
+            display: none;
+        }
+
+           #notificationContainer:before {
+               content: '';
+               display: block;
+               position: absolute;
+               width: 0;
+               height: 0;
+               color: transparent;
+               border: 10px solid black;
+               border-color: transparent transparent white;
+               margin-top: -20px;
+               margin-left: 188px;
+           }
+        #notificationTitle
+        {
+            font-weight: bold;
+            padding: 8px;
+            font-size: 13px;
+            background-color: #ffffff;
+            position: fixed;
+            z-index: 1000;
+            width: 384px;
+            border-bottom: 1px solid #dddddd;
+        }
+        #notificationsBody
+        {
+            padding: 33px 0px 0px 0px !important;
+            min-height:300px;
+        }
+        #notificationFooter
+        {
+            background-color: #e9eaed;
+            text-align: center;
+            font-weight: bold;
+            padding: 8px;
+            font-size: 12px;
+            border-top: 1px solid #dddddd;
+        }
+
+        #notification_count
+        {
+            padding: 3px 7px 3px 7px;
+            background: #cc0000;
+            color: #ffffff;
+            font-weight: bold;
+            margin-top: 20px;
+            /** margin-left: 77px; */
+            border-radius: 9px;
+            -moz-border-radius: 9px;
+            -webkit-border-radius: 9px;
+            position: absolute;
+            font-size: 11px;
+        }
+
     </style>
 
 </head>
@@ -92,6 +173,17 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
+                <li id="notification_li">
+                    <span id="notification_count">3</span>
+                    <a href="#" id="notificationLink">+</a>
+
+                    <div id="notificationContainer">
+                        <div id="notificationTitle">Notifications</div>
+                        <div id="notificationsBody" class="notifications"></div>
+                        <div id="notificationFooter"><a href="#">See All</a></div>
+                    </div>
+
+                </li>
 
 
                 <?php if(Auth_Core::init()->isAuth()): ?>
@@ -101,6 +193,7 @@
                         echo '<li><a href="/user/baskboard">Dashboard</a></li>';
                     }
                     ?>
+
                     <li><a href="/user/account">Account</a></li>
                     <li><a href="/user/logout">Logout</a></li>
                 <?php endif; ?>
@@ -113,9 +206,15 @@
                 <!-- Only show when user is registered -->
                 <!-- <li class="active"><a href="./">User name <span class="sr-only">(current)</span></a></li> -->
 
+
             </ul>
 
 
+
+
+
         </div><!--/.nav-collapse -->
+
     </div><!--/.container-fluid -->
+
 </nav>

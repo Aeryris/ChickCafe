@@ -36,7 +36,20 @@ interface Notification_Interface{
     public function getByOrderId($iId);
 }
 
-class Notification_Model implements Notification_Interface{
+class Notification_Model extends Foundation_Model implements Notification_Interface{
+
+    public function account($iUserId){
+
+        $sQuery = 'SELECT * FROM notification WHERE notification_user_id = :usr_id';
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->bindValue(':usr_id', $iUserId);
+
+        $sExecute = $oStmt->execute();
+
+        return $oStmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+    }
 
     public function get($iId){
 
