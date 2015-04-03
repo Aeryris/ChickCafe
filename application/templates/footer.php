@@ -93,6 +93,7 @@
             $("#notificationContainer").fadeToggle(300);
             $("#notification_count").fadeOut("slow");
             displayNotificationsList();
+            setNotificationsRead();
             return false;
         });
 
@@ -107,7 +108,9 @@
         {
             return false;
         });
+        setInterval(displayNotificationsList, 1000);
 
+       // $('#notification_count').addClass('pulseAnimation');
     });
 </script>
 

@@ -84,9 +84,15 @@ class Notification_Model extends Foundation_Model implements Notification_Interf
         }
     }
 
-    public function getById($iUserId){
+    public function getById($iUserId, $sUserType = 'C'){
 
-        $sQuery = 'SELECT * FROM notification WHERE notification_user_id = :usr_id';
+        $withUserType = '';
+
+        if($sUserType != 'C'){
+            $withUserType = ' OR notification_user_type = "'.$sUserType.'" ';
+        }
+
+        $sQuery = 'SELECT * FROM notification WHERE notification_user_id = :usr_id '.$withUserType.' ORDER BY notification_id DESC';
         $oStmt = $this->db->prepare($sQuery);
         $oStmt->bindValue(':usr_id', $iUserId);
 
@@ -98,7 +104,7 @@ class Notification_Model extends Foundation_Model implements Notification_Interf
     }
 
     public function getByType($sType){
-        $sQuery = 'SELECT * FROM notification WHERE notification_user_type = :usr_type';
+        $sQuery = 'SELECT * FROM notification WHERE notification_user_type = :usr_type ORDER BY notification_id DESC';
         $oStmt = $this->db->prepare($sQuery);
         $oStmt->bindValue(':usr_type', $sType);
 
@@ -112,6 +118,14 @@ class Notification_Model extends Foundation_Model implements Notification_Interf
     }
     public function getByOrderId($iId){
 
+    }
+
+    public function markAsRead($iNotificationId){
+        $sQuery = 'UPDATE notification SET notification_read = 1 WHERE notification_id = :notification_id';
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->bindValue(':notification_id', $iNotificationId);
+
+        $sExecute = $oStmt->execute();
     }
 
 } 

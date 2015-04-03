@@ -50,7 +50,9 @@
 
         #notification_li
         {
-            position:relative
+            position:relative;
+            height: 50px;
+            width: 50px;
         }
         #notificationContainer
         {
@@ -60,7 +62,7 @@
             overflow: visible;
             position: absolute;
             top: 50px;
-            margin-left: -180px;
+            margin-left: -174px;
             width: 400px;
             z-index: 0;
             display: none;
@@ -105,20 +107,74 @@
             border-top: 1px solid #dddddd;
         }
 
+        #notification-body-list{
+            padding-left: 0px;
+            margin-left: 5px;
+        }
+
+        #notification-body-list li{
+            list-style: none;
+            border-bottom: solid 1px #dcdcdc;
+        }
+
         #notification_count
         {
-            padding: 3px 7px 3px 7px;
+            padding: 2px 7px 2px 7px;
             background: #cc0000;
             color: #ffffff;
             font-weight: bold;
-            margin-top: 20px;
-            /** margin-left: 77px; */
+            margin-top: 13px;
+            margin-left: 28px;
             border-radius: 9px;
             -moz-border-radius: 9px;
             -webkit-border-radius: 9px;
             position: absolute;
             font-size: 11px;
+
+            z-index: 10;
+
         }
+        .pusleAnimation{
+
+            -webkit-animation: pulse 0.2s linear infinite;
+            animation: pulse 0.2s linear infinite;
+
+        }
+
+        .pulseAnimationdEnd{
+            -webkit-animation: none;
+            animation: none;
+        }
+
+
+
+
+
+        @-webkit-keyframes pulse {
+            0% {
+                -webkit-transform: scale(1, 1);
+            }
+            50% {
+                -webkit-transform: scale(1.4, 1.4);
+            }
+            100% {
+                -webkit-transform: scale(1, 1);
+            };
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1, 1);
+            }
+            50% {
+                transform: scale(1.4, 1.4);
+            }
+            100% {
+                transform: scale(1, 1);
+            };
+        }
+
+
 
     </style>
 
@@ -174,9 +230,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
+                <?php if(Auth_Core::init()->isAuth()): ?>
                 <li id="notification_li">
-                    <span id="notification_count">3</span>
-                    <a href="#" id="notificationLink">+</a>
+                    <span id="notification_count"></span>
+                    <a href="#" style=""><img id="notificationLink" style="width: 100%; " src="http://iconizer.net/files/Facebook/orig/notifications.png"></a>
 
                     <div id="notificationContainer">
                         <div id="notificationTitle">Notifications</div>
@@ -186,8 +243,6 @@
 
                 </li>
 
-
-                <?php if(Auth_Core::init()->isAuth()): ?>
                     <li class="active"><a href="/"><?php echo User_Model::user()['user_firstname'] ?> <?php echo User_Model::user()['user_lastname'] ?><span class="sr-only">(current)</span></a></li>
                     <?php
                     if(Acl_Core::allow([ACL::ACL_MANAGER, ACL::ACL_ADMIN, ACL::ACL_OWNER])){
