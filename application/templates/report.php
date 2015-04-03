@@ -21,22 +21,50 @@
 
   <!-- Tab panes -->
 		<div class="tab-content">
-		    <div role="tabpanel" class="tab-pane active" id="stock">
-		    	Orders processed
-		    	<table>
-		    		<thead>
-		    			
-		    		</thead>
-		    		<tbody>
-		    			
-		    		</tbody>
+		    <div role="tabpanel" class="tab-pane active" id="orders">
+		    	<h2>Orders processed in the last 3 months</h2>
+		    	<table class="table">
+		    		<tr>
+		    			<th>Order ID</th>
+		    			<th>Customer Name</th>
+		    			<th>Customer ID</th>
+		    			<th>Order Price</th>
+		    			<th>Order Date</th>
+		    			<th>Order Items</th>
+		    		</tr>
+		    		<tr class="info">
+						
+		    		</tr>
 		    	</table>
 		    </div>
-		    <div role="tabpanel" class="tab-pane" id="orders">
-		    	Customer Spending
+		    <div role="tabpanel" class="tab-pane" id="spending">
+		    	<h2>Customer spending table</h2>
+		    	<table class="table">
+		    		<tr>
+			    		<th>Customer ID</th>
+			    		<th>Customer Name</th>
+		    			<th>Total Spent by Customer</th>
+		    			<th>Orders made</th>
+		    		</tr>
+		    		<tr>
+		    			
+		    		</tr>
+	    		</table>
 		    </div>
-		    <div role="tabpanel" class="tab-pane" id="profile">
-		    	Refunds processed
+		    <div role="tabpanel" class="tab-pane" id="refunds">
+		    	<h2>Refunds processed (and by which Manager)</h2>
+		    	<table class="table">
+		    		<tr>
+		    			<th>Order ID</th>
+		    			<th>Refund ID</th>
+		    			<th>Order Date</th>
+		    			<th>Refund Date</th>
+		    			<th>Order/Refund Amount</th>
+		    			<th>Customer ID</th>
+		    			<th>Customer Name</th>
+		    			<th>Staff Name</th>
+		    		</tr>
+		    	</table>
 		    </div>
 		</div>
 
