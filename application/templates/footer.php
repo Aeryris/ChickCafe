@@ -111,7 +111,24 @@
     });
 </script>
 
+<script type="text/javascript">
+    $('#staff_tab a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
+    })
 
+    $('#staff_id').change(function (e) {
+        var staff_id = $(this).val();
+        $.post('/staff/get_single_staff', {staff_id:staff_id}, function (original_data) {
+            var data = jQuery.parseJSON(original_data);
+            data = data[0];
+            $('#role').val(data.staff_role);
+            $('#salary').val(data.staff_salary);
+            $('#phone').val(data.staff_phone_number);
+        })
+    })
+
+</script>
 
 </body>
 </html>
