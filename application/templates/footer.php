@@ -10,6 +10,8 @@
 <script src="/application/assets/js/bootstrap.min.js"></script>
 
 <script src="/application/assets/js/jquery.confirm.min.js"></script>
+
+
 <script>
 
     var jumboHeight = $('.jumbotron').outerHeight();
@@ -147,6 +149,8 @@
                               '/about',
                               '/contact'];
 
+        var split = window.location.pathname.split('/');
+
         console.log(ignorePathname);
         console.log('Check');
         console.log(isInArray(window.location.pathname, ignorePathname));
@@ -155,9 +159,81 @@
         }
     }
     checkAuth();
-   // setInterval(checkAuth, 300);
+    setInterval(checkAuth, 1000);
 
 </script>
 
+<script>
+    window.FileAPI = {
+        debug: true // debug mode
+        , staticPath: '/application/assets/js/FileAPI/' // path to *.swf
+    };
+</script>
+<script src="/application/assets/js/FileAPI/FileAPI.min.js"></script>
+<script src="/application/assets/js/FileAPI/FileAPI.exif.js"></script>
+<script src="/application/assets/js/jquery.fileapi.min.js"></script>
+<script src="/application/assets/js/jcrop/jquery.Jcrop.min.js"></script>
+<link type="text/css" href="/application/assets/js/jcrop/jquery.Jcrop.min.css" />
+<script>
+    jQuery(function ($){
+        $('#uploader').fileapi({
+            url: '/menu/imageUpload',
+            accept: 'image/*',
+            imageSize: { minWidth: 200, minHeight: 200 },
+            elements: {
+                active: { show: '.js-upload', hide: '.js-browse' },
+                preview: {
+                    el: '.js-preview',
+                    width: 200,
+                    height: 200
+                },
+                progress: '.js-progress'
+            },
+            onSelect: function (evt, ui){
+                var file = ui.files[0];
+                if( !FileAPI.support.transform ) {
+                    alert('Your browser does not support Flash :(');
+                }
+                else if( file ){
+                    $('#popup').modal({
+                        closeOnEsc: true,
+                        closeOnOverlayClick: false,
+                        onOpen: function (overlay){
+                            $(overlay).on('click', '.js-upload', function (){
+                                $.modal().close();
+                                $('#userpic').fileapi('upload');
+                            });
+                            $('.js-img', overlay).cropper({
+                                file: file,
+                                bgColor: '#fff',
+                                maxSize: [$(window).width()-100, $(window).height()-100],
+                                minSize: [200, 200],
+                                selection: '90%',
+                                onSelect: function (coords){
+                                    $('#userpic').fileapi('crop', file, coords);
+                                }
+                            });
+                        }
+                    }).open();
+                }
+            }
+        });
+    });
+</script>
+<script src="/application/assets/js/jquery.timepicker.js"></script>
+<link type="text/css" href="/application/assets/css/jquery.timepicker.css" />
+<script>
+
+
+
+
+</script>
+
+
+<script>
+
+
+
+</script>
 </body>
 </html>

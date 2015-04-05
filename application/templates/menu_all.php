@@ -32,31 +32,29 @@
  */
 ?>
 
-
-<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
+{include file=header.php}
 
 <div id="wrap">
     <div id="main" class="container clear-top">
 
+
         <div class="container">
 
-            <h3>Thanks for your order</h3>
-            <div>
+            <h3>Menus</h3>
+            <a href="/menu/add" class="btn btn-lg btn-primary btn-block">Add</a>
 
-                <ul>
-                    <li>Payment status: <?php echo $_POST['payment_status'] ?></li>
-                    <li>Paid: <?php echo $_POST['mc_gross'] ?></li>
-                </ul>
-
-                <a class="btn btn-lg btn-primary btn-block"  href="orders/view">See your orders</a>
-
+            <div class="current-menus">
+                {foreach($all as $key => $value)}
+                <span><a href="menu/view/id/{! $value['menu_id'] }"><b>Name:</b> {! $value['menu_name'] }</a></span> <br />
+                <span><b>Start time:</b> {! $value['menu_time_start'] }</span> <br />
+                <span><b>End time:</b> {! $value['menu_time_end'] }</span> <br />
+                <div style="width: 100%; height: 1px; background-color: #000000"></div>
+                {/foreach}
             </div>
-
-
         </div>
 
     </div>
 </div>
 
-<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>
+{include file=footer.php}
  

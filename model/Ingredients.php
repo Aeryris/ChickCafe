@@ -79,6 +79,34 @@ class Ingredients_Model extends Foundation_Model{
         }
     }
 
+    public function order($ingredientId, $iQuantity){
+        try{
+            $sQuery = 'SELECT * FROM ingredient AS i WHERE ingredient_id = :iid';
+
+            $oStmt = $this->db->prepare($sQuery);
+            $oStmt->bindValue(':iid', $ingredientId);
+            $oStmt->execute();
+
+            $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $stock = $data[0]['ingredient_available'] + $iQuantity;
+
+            if($stock <= $data[0]['ingredient_stock']){
+                $sUpdate = 'UPDATE ingredient SET ingredient_available = ingredient_available + :quantity';
+                $oStmtUpdate  = $this->db->prepare($sUpdate);
+                $oStmtUpdate ->bindValue(':quantity', $iQuantity);
+                $oStmtUpdate ->execute();
+                return 'Order made';
+            }else{
+                return 'The maximum stock is '.$data[0]['ingredient_stock'].' by ordering more you will end up with '.$stock ;
+            }
+
+
+        }catch(Exception $e){
+            var_dump($e);
+        }
+    }
+
 
 
 

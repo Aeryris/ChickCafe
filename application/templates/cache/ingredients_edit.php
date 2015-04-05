@@ -52,15 +52,20 @@
 
 
 
-            <form method="post" action="/food/edit/id/<?php echo $_GET['id'] ?>/add/">
+            <form method="post" action="/ingredients/order/id/<?php echo $_GET['id'] ?>/">
 
                 <label>Order stock</label>
-                <input type="text" value="<?php echo $value['ingredient_stock'] ?>" />
+                <input type="text" name="order" value="<?php echo $value['ingredient_stock'] ?>" />
 
                 <button type="submit">Order</button>
             </form>
 
             <?php endforeach; ?>
+
+            <?php
+
+                if(isset($error)) echo $error;
+            ?>
         </div>
 
 

@@ -59,12 +59,15 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
     public $id;
     public $data;
 
+    public $type;
+
     public static $oInstance = null;
 
     public $bIsNew = false;
 
     public function add(){
         $this->bIsNew = true;
+        return $this;
     }
     public function remove(){
 
@@ -77,6 +80,26 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
         }
 
         return self::$oInstance;
+    }
+
+    public function all(){
+        $sQuery = 'SELECT * FROM menu JOIN menu_items USING(menu_id)';
+
+        $oStmt = $this->db->prepare($sQuery);
+
+        $oStmt->execute();
+
+        return $oStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function menuTypes(){
+        $sQuery = 'SELECT * FROM menu_type';
+
+        $oStmt = $this->db->prepare($sQuery);
+
+        $oStmt->execute();
+
+        return $oStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function current(){
@@ -130,6 +153,7 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
     }
     public function setEndTime($sEndTime){
         $this->endTime = $sEndTime;
+        return $this;
     }
 
     public function save(){
@@ -152,7 +176,7 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
             $this->db->beginTransaction();
 
 
-            $sQuery = 'INSERT INTO menu VALUES(:name, :start, :end)';
+            $sQuery = 'INSERT INTO menu(menu_name, menu_time_start, menu_time_end) VALUES(:name, :start, :end)';
 
             $oStmt = $this->db->prepare($sQuery);
 
@@ -198,6 +222,20 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
 
     public function data(){
         return $this->data;
+    }
+
+    public function getMenuTypes(){
+
+        $sQuery = 'SELECT * FROM menu_type  RIGHT JOIN menu_types ON menu_type.menu_type_id = menu_types.id';
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->execute();
+
+        return $oStmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function linkWithType($sType, $iMenuId){
+
     }
 
 } 

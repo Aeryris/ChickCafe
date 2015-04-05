@@ -10,13 +10,14 @@
 
     <div class="center-block" id="view_menu">
         <div class="btn-group" role="group" aria-label="...">
-            <button type="button" class="btn btn-default btn-lg">Breakfast</button>
-            <button type="button" class="btn btn-default btn-lg">Lunch</button>
-            <button type="button" class="btn btn-default btn-lg">Dinner</button>
-            <button type="button" class="btn btn-default btn-lg">Drinks</button>
+
+            <?php foreach($menuTypes as $key => $value): ?>
+            <a href="menu/view/id/<?php echo $value['menu_id'] ?>" type="button" class="btn btn-default btn-lg"><?php echo $value['menu_type_name'] ?> </a>
+            <?php endforeach; ?>
+
+
         </div>
-        <button type="button" class="btn btn-default btn-lg navbar-btn select">Select</button>
-    </div>
+     </div>
 </div>
 
 <div class="container">

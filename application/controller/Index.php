@@ -55,6 +55,11 @@ class Index_Controller extends Base_Controller{
         //var_dump(User_Model::user());
 
         //var_dump($oUser);
+
+
+        //var_dump(Menu_Model::menu()->getMenuTypes());
+        $this->template->menuTypes = Menu_Model::menu()->getMenuTypes();
+
         $this->view = 'index';
     }
 

@@ -54,5 +54,30 @@ class Ingredients_Controller extends Base_Controller implements Base_Controller_
         $this->view = 'ingredients_edit';
     }
 
+    public function order(){
+
+
+        $ingredientId = $_GET['id'];
+
+        $oIngredients = new Ingredients_Model();
+
+        if($_POST){
+            $iQuantity = $_POST['order'];
+
+            $this->template->error = $oIngredients->order($ingredientId, $iQuantity);
+        }
+
+
+
+
+
+        $this->template->ing = $oIngredients->ingredient($ingredientId);
+
+
+
+        $this->view = 'ingredients_edit';
+
+    }
+
 
 } 

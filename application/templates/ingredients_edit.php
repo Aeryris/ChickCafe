@@ -52,15 +52,20 @@
 
 
 
-            <form method="post" action="/food/edit/id/{! $_GET['id']}/add/">
+            <form method="post" action="/ingredients/order/id/{! $_GET['id']}/">
 
                 <label>Order stock</label>
-                <input type="text" value="{! $value['ingredient_stock'] }" />
+                <input type="text" name="order" value="{! $value['ingredient_stock'] }" />
 
                 <button type="submit">Order</button>
             </form>
 
             {/foreach}
+
+            <?php
+
+                if(isset($error)) echo $error;
+            ?>
         </div>
 
 
