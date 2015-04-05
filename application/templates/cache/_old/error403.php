@@ -30,32 +30,28 @@
  * @version 1.0
  * @license The MIT License (MIT)
  */
+
 ?>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>403 Forbidden - CheckCafe</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="application/assets/css/style-error.css">
+</head>
+<body>
 
-{include file=header.php}
-
-<div id="wrap">
-    <div id="main" class="container clear-top">
-
-
-        <div class="container">
-
-            <h3>Menus</h3>
-            <a href="/menu/add" class="btn btn-lg btn-primary btn-block">Add</a>
-
-            <div class="current-menus">
-                {foreach($all as $key => $value)}
-                <span><a href="/menu/edit/id/{! $value['menu_id'] }">Edit</a></span> <br />
-                <span><a href="/menu/view/id/{! $value['menu_id'] }/preview/view"><b>Name:</b> {! $value['menu_name'] }</a></span> <br />
-                <span><b>Start time:</b> {! $value['menu_time_start'] }</span> <br />
-                <span><b>End time:</b> {! $value['menu_time_end'] }</span> <br />
-                <div style="width: 100%; height: 1px; background-color: #000000"></div>
-                {/foreach}
-            </div>
-        </div>
-
+<div class="wrap">
+    <h1>CheckCafe</h1>
+    <div class="banner">
+        <img src="application/assets/images/notfound.png" alt="" />
     </div>
+    <div class="page">
+        <h2>Dude, you are not allowed to view this page</h2>
+    </div>
+
 </div>
 
-{include file=footer.php}
- 
+</body>
+</html>

@@ -83,7 +83,7 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
     }
 
     public function all(){
-        $sQuery = 'SELECT * FROM menu JOIN menu_items USING(menu_id)';
+        $sQuery = 'SELECT * FROM menu ';
 
         $oStmt = $this->db->prepare($sQuery);
 

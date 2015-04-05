@@ -32,30 +32,35 @@
  */
 ?>
 
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
 
-
         <div class="container">
+            <h3>Ingredients list</h3>
 
-            <h3>Menus</h3>
-            <a href="/menu/add" class="btn btn-lg btn-primary btn-block">Add</a>
+            <?php foreach($all as $key => $value): ?>
+            <br /> <br /> <br />
+            <div class="food">
 
-            <div class="current-menus">
-                {foreach($all as $key => $value)}
-                <span><a href="/menu/edit/id/{! $value['menu_id'] }">Edit</a></span> <br />
-                <span><a href="/menu/view/id/{! $value['menu_id'] }/preview/view"><b>Name:</b> {! $value['menu_name'] }</a></span> <br />
-                <span><b>Start time:</b> {! $value['menu_time_start'] }</span> <br />
-                <span><b>End time:</b> {! $value['menu_time_end'] }</span> <br />
-                <div style="width: 100%; height: 1px; background-color: #000000"></div>
-                {/foreach}
+                <span>Name: <?php echo $value['ingredient_name'] ?></span> <br />
+                <span>Stock: <?php echo $value['ingredient_stock'] ?></span> <br />
+                <span>Available in stock: <?php echo $value['ingredient_available'] ?></span> <br />
+                <a href="/ingredients/edit/id/<?php echo $value['ingredient_id'] ?>">Edit</a>
             </div>
+            <div style="width: 100%; height: 1px; background-color: #000000"></div>
+
+            <?php endforeach; ?>
+
         </div>
 
+
     </div>
+
+</div>
 </div>
 
-{include file=footer.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>
+
  

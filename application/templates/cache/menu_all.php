@@ -32,8 +32,7 @@
  */
 ?>
 
-
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
@@ -41,40 +40,22 @@
 
         <div class="container">
 
+            <h3>Menus</h3>
+            <a href="/menu/add" class="btn btn-lg btn-primary btn-block">Add</a>
 
-            {if(isset($menuItems->data[0]))}
-            <h3 class="menu-name">{! $menuItems->data[0]['menu_name'] }</h3>
-            <h4><a href="/menu/all">Go back</a></h4>
-            <legend>
-                <span style="color: red;">Red</span> - Available stock is empty
-                <span style="color: orange;">Orange</span> - Available stock is low (less than 15%)
-            </legend>
             <div class="current-menus">
-                <h4>Items</h4>
-                {foreach($menuItems->data as $key => $value)}
-                <div style="<?php if($value['item_available'] == 0) echo 'color: red'; elseif((($value['item_available'] / $value['item_stock']) * 100) < 15)  echo 'color: orange'; ?>">
-                <span class="menu-item-desc"><b>Description:</b> {! $value['item_description'] }</span> <br />
-                <span class="menu-item-stock"><b>Stock:</b> {! $value['item_available'] }/{! $value['item_stock'] }</span> <br />
-                <span class="menu-item-price"><b>Price:</b> {! $value['item_price'] }</span> <br />
-                <span class="menu-item-prep"><b>Preparation time:</b> {! $value['item_preptime'] }</span> <br />
-
-                <?php if(!isset($_GET['preview'])): ?>
-                    <button class="add_item_to_basket btn btn-material-deep-purple" id="{! $value['item_id'] }" href="#">Add</button>
-
-                <?php endif; ?>
+                <?php foreach($all as $key => $value): ?>
+                <span><a href="/menu/edit/id/<?php echo $value['menu_id'] ?>">Edit</a></span> <br />
+                <span><a href="/menu/view/id/<?php echo $value['menu_id'] ?>/preview/view"><b>Name:</b> <?php echo $value['menu_name'] ?></a></span> <br />
+                <span><b>Start time:</b> <?php echo $value['menu_time_start'] ?></span> <br />
+                <span><b>End time:</b> <?php echo $value['menu_time_end'] ?></span> <br />
                 <div style="width: 100%; height: 1px; background-color: #000000"></div>
-                </div>
-                {/foreach}
+                <?php endforeach; ?>
             </div>
-
-            {else}
-
-                No items in the menu
-
-            {/if}
         </div>
 
     </div>
 </div>
 
-{include file=footer.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>
+ 

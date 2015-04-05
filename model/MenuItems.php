@@ -56,6 +56,37 @@ class MenuItems_Model extends Foundation_Model implements MenuItems_Interface {
         return self::$oInstance;
     }
 
+    public function add($menuId, $iFoodId){
+        try{
+
+            $sQuery = 'INSERT INTO menu_items(menu_id, item_id) VALUES(:menuID, :foodID)';
+
+            $oStmt = $this->db->prepare($sQuery);
+            $oStmt->bindValue(':menuID', $menuId);
+            $oStmt->bindValue(':foodID', $iFoodId);
+
+            $oStmt->execute();
+
+        }catch(Exception $e){
+
+        }
+    }
+
+    public function remove($menuId, $iFoodId){
+        try{
+            $sQuery = 'DELETE FROM menu_items WHERE menu_id = :menuID AND item_id = :foodID';
+
+            $oStmt = $this->db->prepare($sQuery);
+            $oStmt->bindValue(':menuID', $menuId);
+            $oStmt->bindValue(':foodID', $iFoodId);
+
+            $oStmt->execute();
+
+        }catch(Exception $e){
+
+        }
+    }
+
     public function getByMenuId($iId){
 
         try{

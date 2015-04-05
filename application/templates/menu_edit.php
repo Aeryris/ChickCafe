@@ -31,30 +31,53 @@
  * @license The MIT License (MIT)
  */
 ?>
-
 {include file=header.php}
 
 <div id="wrap">
     <div id="main" class="container clear-top">
 
-
         <div class="container">
+            <h3>Editing menuname</h3>
+            <h4><a href="/menu/all">Go back</a></h4>
+            Foods:
+            <ul>
+                {foreach($foodLists as $key => $value)}
+                <li class="food">
 
-            <h3>Menus</h3>
-            <a href="/menu/add" class="btn btn-lg btn-primary btn-block">Add</a>
+                    {! $value['item_name'] } <a href="/menu/edit/id/{! $_GET['id']}/remove/{! $value['item_id'] } ">Remove</a>
 
-            <div class="current-menus">
-                {foreach($all as $key => $value)}
-                <span><a href="/menu/edit/id/{! $value['menu_id'] }">Edit</a></span> <br />
-                <span><a href="/menu/view/id/{! $value['menu_id'] }/preview/view"><b>Name:</b> {! $value['menu_name'] }</a></span> <br />
-                <span><b>Start time:</b> {! $value['menu_time_start'] }</span> <br />
-                <span><b>End time:</b> {! $value['menu_time_end'] }</span> <br />
-                <div style="width: 100%; height: 1px; background-color: #000000"></div>
+                </li>
+
+
+
+
                 {/foreach}
-            </div>
+            </ul>
+
+
+            <form action="/menu/edit/id/{! $_GET['id']}/add/add" method="post">
+
+                <select name="food">
+                    {foreach($allFoods as $key => $value)}
+
+                    <option value="{! $value['item_id'] }">{! $value['item_name'] }</option>
+
+                    {/foreach}
+
+
+
+                </select>
+                <button type="submit">Add</button>
+            </form>
+
+
+
         </div>
 
+
     </div>
+
+</div>
 </div>
 
 {include file=footer.php}

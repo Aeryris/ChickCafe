@@ -1,8 +1,7 @@
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
 	<div id="main" class="container clear-top">
-        <a href="/menu/all">All Menus list</a>
         <a href="/menu/add">Add menu</a>
         <a href="/ingredients/view">Ingredients list</a>
         <a href="/food/view">Foods list</a>
@@ -69,15 +68,15 @@
 				<form action="/staff/modify_staff" method="post">
 			    	<div class="dropdown">
 				  		<select class="selectpicker" name="staff_id" id="staff_id">
-				  			{foreach($get_staff as $key => $value)}
-				  				<option id="{! $key}" value="{! $value['staff_user_id']}">{! $value['staff_user_id']}</option>
-				  			{/foreach}
+				  			<?php foreach($get_staff as $key => $value): ?>
+				  				<option id="<?php echo $key ?>" value="<?php echo $value['staff_user_id'] ?>"><?php echo $value['staff_user_id'] ?></option>
+				  			<?php endforeach; ?>
 				  		</select>
 					</div>
 					<div class="form">
-						<input type="text" class="form-control" name="role" placeholder="Staff Role" id="role" value="{! $get_staff[0]['staff_role']}">
-						<input type="text" class="form-control" name="salary" placeholder="Staff Salary" id="salary" value="{! $get_staff[0]['staff_salary']}">
-						<input type="text" class="form-control" name="phone" placeholder="Staff Phone Number" id="phone" value="{! $get_staff[0]['staff_phone_number']}">
+						<input type="text" class="form-control" name="role" placeholder="Staff Role" id="role" value="<?php echo $get_staff[0]['staff_role'] ?>">
+						<input type="text" class="form-control" name="salary" placeholder="Staff Salary" id="salary" value="<?php echo $get_staff[0]['staff_salary'] ?>">
+						<input type="text" class="form-control" name="phone" placeholder="Staff Phone Number" id="phone" value="<?php echo $get_staff[0]['staff_phone_number'] ?>">
 						<button class="btn btn-lg btn-primary btn-block" type="submit">Modify Staff Details</button>
 					</div>
 				</form>
@@ -88,9 +87,9 @@
 		    	<form action="/staff/delete_staff" method="post">
 			    	<div class="dropdown">
 				  		<select class="selectpicker" name="staff_id" id="staff_id">
-				  			{foreach($get_staff as $key => $value)}
-				  				<option id="{! $key}" value="{! $value['staff_user_id']}">{! $value['staff_user_id']}</option>
-				  			{/foreach}
+				  			<?php foreach($get_staff as $key => $value): ?>
+				  				<option id="<?php echo $key ?>" value="<?php echo $value['staff_user_id'] ?>"><?php echo $value['staff_user_id'] ?></option>
+				  			<?php endforeach; ?>
 				  		</select>
 					</div>
 					<button class="btn btn-lg btn-primary btn-block" type="submit">Delete Staff Details</button>
@@ -101,4 +100,4 @@
 	</div>
 </div>
 
-{include file=footer.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>

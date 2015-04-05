@@ -130,6 +130,42 @@ class Menu_Controller extends Base_Controller{
 
     }
 
+    public function edit(){
+
+        $menuId = $_GET['id'];
+        if(!isset($menuId)){
+            header('/menu/all');
+            exit();
+        }
+
+        if(isset($_GET['remove'])){
+            $removeId = $_GET['remove'];
+            MenuItems_Model::menu()->remove($menuId, $removeId);
+        }else if(isset($_GET['add'])){
+            $addId = $_POST['food'];
+            MenuItems_Model::menu()->add($menuId, $addId);
+
+        }
+
+        $oIngredients = new Ingredients_Model();
+
+        $menuItems = MenuItems_Model::menu()->getByMenuId($menuId);
+
+        $this->template->foodLists = $menuItems->data;
+
+        $oFood = new Food_Model();
+        $this->template->allFoods = $oFood->all();
+        //var_dump($menuItems);
+        //var_dump($oFood->all());
+
+        //var_dump($_GET);
+
+
+
+
+        $this->view = 'menu_edit';
+    }
+
     public function imageUpload(){
         $target_dir = "food_images/";
         $ds          = DIRECTORY_SEPARATOR;  //1

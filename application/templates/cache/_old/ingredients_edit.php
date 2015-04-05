@@ -32,30 +32,42 @@
  */
 ?>
 
-{include file=header.php}
+
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
 
-
         <div class="container">
+            <h3>Editing foodname</h3>
+            <h4><a href="/ingredients/view">Go back</a></h4>
 
-            <h3>Menus</h3>
-            <a href="/menu/add" class="btn btn-lg btn-primary btn-block">Add</a>
+            <?php foreach($ing as $key => $value): ?>
+            <div class="ingredient">
 
-            <div class="current-menus">
-                {foreach($all as $key => $value)}
-                <span><a href="/menu/edit/id/{! $value['menu_id'] }">Edit</a></span> <br />
-                <span><a href="/menu/view/id/{! $value['menu_id'] }/preview/view"><b>Name:</b> {! $value['menu_name'] }</a></span> <br />
-                <span><b>Start time:</b> {! $value['menu_time_start'] }</span> <br />
-                <span><b>End time:</b> {! $value['menu_time_end'] }</span> <br />
-                <div style="width: 100%; height: 1px; background-color: #000000"></div>
-                {/foreach}
+                <span>Name: <?php echo $value['ingredient_name'] ?></span> <br />
+                <span>Stock: <?php echo $value['ingredient_stock'] ?></span> <br />
+                <span>Available in stock: <?php echo $value['ingredient_available'] ?></span> <br />
             </div>
+
+
+
+            <form method="post" action="/food/edit/id/<?php echo $_GET['id'] ?>/add/">
+
+                <label>Order stock</label>
+                <input type="text" value="<?php echo $value['ingredient_stock'] ?>" />
+
+                <button type="submit">Order</button>
+            </form>
+
+            <?php endforeach; ?>
         </div>
 
+
     </div>
+
+</div>
 </div>
 
-{include file=footer.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>
  

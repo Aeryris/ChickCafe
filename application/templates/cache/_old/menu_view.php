@@ -33,7 +33,7 @@
 ?>
 
 
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
@@ -41,40 +41,29 @@
 
         <div class="container">
 
-
-            {if(isset($menuItems->data[0]))}
-            <h3 class="menu-name">{! $menuItems->data[0]['menu_name'] }</h3>
-            <h4><a href="/menu/all">Go back</a></h4>
-            <legend>
-                <span style="color: red;">Red</span> - Available stock is empty
-                <span style="color: orange;">Orange</span> - Available stock is low (less than 15%)
-            </legend>
+            <?php if(isset($menuItems->data[0])): ?>
+            <h3 class="menu-name"><?php echo $menuItems->data[0]['menu_name'] ?></h3>
             <div class="current-menus">
                 <h4>Items</h4>
-                {foreach($menuItems->data as $key => $value)}
-                <div style="<?php if($value['item_available'] == 0) echo 'color: red'; elseif((($value['item_available'] / $value['item_stock']) * 100) < 15)  echo 'color: orange'; ?>">
-                <span class="menu-item-desc"><b>Description:</b> {! $value['item_description'] }</span> <br />
-                <span class="menu-item-stock"><b>Stock:</b> {! $value['item_available'] }/{! $value['item_stock'] }</span> <br />
-                <span class="menu-item-price"><b>Price:</b> {! $value['item_price'] }</span> <br />
-                <span class="menu-item-prep"><b>Preparation time:</b> {! $value['item_preptime'] }</span> <br />
-
-                <?php if(!isset($_GET['preview'])): ?>
-                    <button class="add_item_to_basket btn btn-material-deep-purple" id="{! $value['item_id'] }" href="#">Add</button>
-
-                <?php endif; ?>
+                <?php foreach($menuItems->data as $key => $value): ?>
+                <span class="menu-item-name"><b>Name:</b> <?php echo $value['menu_name'] ?></span> <br />
+                <span class="menu-item-desc"><b>Description:</b> <?php echo $value['item_description'] ?></span> <br />
+                <span class="menu-item-stock"><b>Stock:</b> <?php echo $value['item_available'] ?>/<?php echo $value['item_stock'] ?></span> <br />
+                <span class="menu-item-price"><b>Price:</b> <?php echo $value['item_price'] ?></span> <br />
+                <span class="menu-item-prep"><b>Preparation time:</b> <?php echo $value['item_preptime'] ?></span> <br />
+                <button class="add_item_to_basket btn btn-material-deep-purple" id="<?php echo $value['item_id'] ?>" href="#">Add</button>
                 <div style="width: 100%; height: 1px; background-color: #000000"></div>
-                </div>
-                {/foreach}
+                <?php endforeach; ?>
             </div>
 
-            {else}
+            <?php else: ?>
 
                 No items in the menu
 
-            {/if}
+            <?php endif; ?>
         </div>
 
     </div>
 </div>
 
-{include file=footer.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>
