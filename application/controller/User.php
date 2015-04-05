@@ -188,7 +188,7 @@ class User_Controller extends Base_Controller{
 
     public function account(){
         Auth_Core::init()->isAuth(true);
-        $oAcl = new Acl_Core(ACL::ACL_CUSTOMER);
+        //$oAcl = new Acl_Core(ACL::ACL_CUSTOMER);
 
 
         $this->view = 'account';

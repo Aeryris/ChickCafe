@@ -53,7 +53,16 @@ class Router_Dispatcher_Core implements Router_Dispatcher_Interface{
         $sController = $sController.'_Controller';
         $sController = ucwords($sController);
 
-        $oObject = new $sController;
+        if(class_exists($sController)){
+            $oObject = new $sController;
+        }else{
+            header('Location: /error403');
+            exit();
+        }
+
+
+
+
 
         $oClassReflection = new ReflectionClass($oObject);
         //var_dump($oClassReflection);

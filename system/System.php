@@ -95,6 +95,16 @@ class System_Core implements System_Interface{
 
         require_once(self::$sRootPath.DIRECTORY_SEPARATOR.'system'.DIRECTORY_SEPARATOR.'external'.DIRECTORY_SEPARATOR.'GoPayPal.class.php');
 
+        set_error_handler('\System\System_Core::myErrorHandler');
+    }
+
+    public static function myErrorHandler($errno, $errstr, $errfile, $errline) {
+        if ( E_RECOVERABLE_ERROR===$errno ) {
+            echo "'catched' catchable fatal error\n";
+            throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+            // return true;
+        }
+        return false;
     }
 
 

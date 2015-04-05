@@ -102,8 +102,8 @@ function setNotificationBadgeNumber(data, currentCount){
         });
     }
 
-    console.log("unreadCount: " + unreadCount);
-    console.log("currentCount: " + currentCount);
+    //console.log("unreadCount: " + unreadCount);
+    //console.log("currentCount: " + currentCount);
     if(unreadCount == 0){
         $("#notification_count").hide();
     }else{
@@ -208,8 +208,8 @@ function setNotificationsRead(){
                     data: {'data': data.result.user}
                 })
                     .done(function (data) {
-                        console.log('MarkAsRead: ');
-                        console.log(data);
+                        //console.log('MarkAsRead: ');
+                        //console.log(data);
                     }).fail(function (msg) {
                         console.log( msg );
                     })

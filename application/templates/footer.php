@@ -128,7 +128,34 @@
             $('#salary').val(data.staff_salary);
             $('#phone').val(data.staff_phone_number);
         })
-    })
+    });
+
+    function isInArray(value, array) {
+        return array.indexOf(value) > -1;
+    }
+
+    function checkAuth(){
+
+        var isAuth = <?php echo (isset($_SESSION['ak']) && $_SESSION['ak'] == sha1(md5($_SESSION['user']))) ?>
+
+        console.log(window.location);
+
+        var ignorePathname = ['/user/login',
+                              '/',
+                              '/menu',
+                              '/user/register',
+                              '/about',
+                              '/contact'];
+
+        console.log(ignorePathname);
+        console.log('Check');
+        console.log(isInArray(window.location.pathname, ignorePathname));
+        if(!isAuth && !isInArray(window.location.pathname, ignorePathname)){
+            window.location.assign('/user/logout');
+        }
+    }
+    checkAuth();
+   // setInterval(checkAuth, 300);
 
 </script>
 

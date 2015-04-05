@@ -29,14 +29,3 @@
  * @license The MIT License (MIT)
  */
 
-function checkAuth(){
-
-
-    var auth =
-
-
-
-
-}
-
-setInterval(checkAuth, 300);
