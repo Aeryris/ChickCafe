@@ -40,13 +40,18 @@
 
         <div class="container">
             <h3>ChickCafe Foods</h3>
+            <legend>
+                <span style="color: red;">Red</span> - Available stock is empty
+                <span style="color: orange;">Orange</span> - Available stock is low (less than 15%)
+            </legend>
 
             <div style="width: 100%; height: 1px; background-color: #000000"></div>
             <a href="/ingredients/view">Ingredients list</a>
             <div style="width: 100%; height: 1px; background-color: #000000"></div>
             {foreach($all as $key => $value)}
             <br /> <br /> <br />
-            <div class="food">
+            <div class="food" style="<?php if($value['item_available'] == 0) echo 'color: red'; elseif((($value['item_available'] / $value['item_stock']) * 100) < 15)  echo 'color: orange'; ?>">
+
 
                 <a href="/food/edit/id/{! $value['item_id'] }">Edit</a> <br />
                 <span>Name: {! $value['item_name'] }</span> <br />

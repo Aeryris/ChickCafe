@@ -2,6 +2,7 @@
 
 <div id="wrap">
 	<div id="main" class="container clear-top">
+        <a href="/menu/all">All Menus list</a>
         <a href="/menu/add">Add menu</a>
         <a href="/ingredients/view">Ingredients list</a>
         <a href="/food/view">Foods list</a>
