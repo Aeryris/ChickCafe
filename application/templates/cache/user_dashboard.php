@@ -31,51 +31,22 @@
  * @license The MIT License (MIT)
  */
 
-?>
+ ?>
 
 
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
 
         <div class="container">
+            <h3>Dashboard</h3>
 
-            <h3>Your Basket</h3>
-
-            <div class="">
-
-
-                    {foreach($oOrdersData as $key => $value)}
-                    <div>
-                        <span>Order no: {! $value['order_id'] }</span> <br />
-                        <span>Order date: {! $value['order_datetime'] }</span><br />
-                        <span>Price: {! $value['order_price'] }</span><br />
-                        <span>Order items:</span><br />
-                        <ul>
-                            {foreach($order->details($value['order_id']) as $k => $v)}
-
-                                <li>{! $v['item_name'] }</li>
-
-                            {/foreach}
-                        </ul>
-
-                        <a class="btn btn-lg btn-primary btn-block" href="/refund/orderid/ {! $value['order_id'] }">Request refund</a>
-
-                    </div>
-
-                    <div style="width: 100%; height: 1px; background-color: #000000"></div>
-
-                    {/foreach}
-
-
-            </div>
-
-
+            <a class="btn btn-lg btn-primary btn-block" href="/order/view">My Orders</a>
 
         </div>
 
     </div>
 </div>
 
-{include file=footer.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>

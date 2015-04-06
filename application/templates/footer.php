@@ -5,8 +5,6 @@
 </footer>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/application/assets/js/jquery-1.11.2.min.js"><\/script>')</script>
 <script src="/application/assets/js/bootstrap.min.js"></script>
 
 <script src="/application/assets/js/jquery.confirm.min.js"></script>
@@ -140,7 +138,7 @@
 
         var isAuth = <?php echo (isset($_SESSION['ak']) && $_SESSION['ak'] == sha1(md5($_SESSION['user']))) ?>
 
-        console.log(window.location);
+        //console.log(window.location);
 
         var ignorePathname = ['/user/login',
                               '/',
@@ -151,9 +149,9 @@
 
         var split = window.location.pathname.split('/');
 
-        console.log(ignorePathname);
-        console.log('Check');
-        console.log(isInArray(window.location.pathname, ignorePathname));
+        //console.log(ignorePathname);
+        //console.log('Check');
+        //console.log(isInArray(window.location.pathname, ignorePathname));
         if(!isAuth && !isInArray(window.location.pathname, ignorePathname)){
             window.location.assign('/user/logout');
         }
@@ -221,19 +219,80 @@
     });
 </script>
 <script src="/application/assets/js/jquery.timepicker.js"></script>
+
 <link type="text/css" href="/application/assets/css/jquery.timepicker.css" />
 <script>
 
+    $(function() {
+        $('form.require-validation').bind('submit', function(e) {
+            var $form         = $(e.target).closest('form'),
+                inputSelector = ['input[type=email]', 'input[type=password]',
+                    'input[type=text]', 'input[type=file]',
+                    'textarea'].join(', '),
+                $inputs       = $form.find('.required').find(inputSelector),
+                $errorMessage = $form.find('div.error'),
+                valid         = true;
 
+            $errorMessage.addClass('hide');
+            $('.has-error').removeClass('has-error');
+            $inputs.each(function(i, el) {
+                var $input = $(el);
+                if ($input.val() === '') {
+                    $input.parent().addClass('has-error');
+                    $errorMessage.removeClass('hide');
+                    e.preventDefault(); // cancel on first error
+                }
+            });
+        });
+    });
 
 
 </script>
 
-
+<script src="/application/assets/js/card.js"></script>
 <script>
 
+    var card = new Card({
+        // a selector or DOM element for the form where users will
+        // be entering their information
+        form: 'form', // *required*
+        // a selector or DOM element for the container
+        // where you want the card to appear
+        container: '.card-wrapper', // *required*
 
+        //formSelectors: {
+        //    numberInput: 'number', // optional — default input[name="number"]
+        //    expiryInput: 'expiry', // optional — default input[name="expiry"]
+         //   cvcInput: 'cvc', // optional — default input[name="cvc"]
+         //   nameInput: 'name' // optional - defaults input[name="name"]
+       // },
+
+        width: 200, // optional — default 350px
+        formatting: true, // optional - default true
+
+        // Strings for translation - optional
+        messages: {
+            validDate: 'valid\ndate', // optional - default 'valid\nthru'
+            monthYear: 'mm/yyyy' // optional - default 'month/year'
+        },
+
+        // Default values for rendered fields - optional
+        values: {
+            number: '•••• •••• •••• ••••',
+            name: 'Full Name',
+            expiry: '••/••',
+            cvc: '•••'
+        },
+
+        // if true, will log helpful messages for setting up Card
+        debug: true // optional - default false
+    });
+</script>
 
 </script>
+
+
+
+
 </body>
 </html>

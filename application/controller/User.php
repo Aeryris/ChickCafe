@@ -194,5 +194,11 @@ class User_Controller extends Base_Controller{
         $this->view = 'account';
     }
 
+    public function dashboard(){
+
+
+        $this->view = 'user_dashboard';
+    }
+
 
 } 

@@ -22,6 +22,8 @@
     <!--[if IE]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/application/assets/js/jquery-1.11.2.min.js"><\/script>')</script>
 
     <style>
 
@@ -246,7 +248,7 @@
                     <li class="active"><a href="/"><?php echo User_Model::user()['user_firstname'] ?> <?php echo User_Model::user()['user_lastname'] ?><span class="sr-only">(current)</span></a></li>
                     <?php
                     if(Acl_Core::allow([ACL::ACL_MANAGER, ACL::ACL_ADMIN, ACL::ACL_OWNER])){
-                        echo '<li><a href="/user/baskboard">Dashboard</a></li>';
+                        echo '<li><a href="/user/dashboard">Dashboard</a></li>';
                     }
                     ?>
 

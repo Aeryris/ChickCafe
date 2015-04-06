@@ -37,6 +37,8 @@ class Checkout_Model extends Foundation_Model{
 
     public static $oInstance = null;
 
+    public $iOrderId;
+
     public static function menu(){
 
         if(!self::$oInstance instanceof self){
@@ -44,6 +46,56 @@ class Checkout_Model extends Foundation_Model{
         }
 
         return self::$oInstance;
+    }
+
+    public function checkoutCard($iUserId, $aCardDetails){
+        try{
+
+            $sOrderQuery = 'INSERT INTO orders(order_datetime, order_price) VALUES(NOW(), :fullprice)';
+            $oStmtOrder = $this->db->prepare($sOrderQuery);
+
+            $oStmtOrder->bindValue(':fullprice', $aCardDetails['full-price']);
+
+            $oStmtOrder->execute();
+
+            $iOrderId = $this->db->lastInsertId();
+            $this->iOrderId = $iOrderId;
+
+            $sOrderItemsQuery = 'INSERT INTO order_items(item_id, order_id) VALUES(:itemid, :orderid)';
+            $aBasketData = Basket_Model::basket()->view();
+            foreach($aBasketData as $key => $value){
+                $oOrderItemsStmt = $this->db->prepare($sOrderItemsQuery);
+                $oOrderItemsStmt->bindValue(':itemid', $value['item_id']);
+                $oOrderItemsStmt->bindValue(':orderid', $iOrderId);
+
+                $oOrderItemsStmt->execute();
+            }
+
+
+            $sCustomerOrder = 'INSERT INTO customer_order(customer_id, order_id) VALUES(:cust_id, :orderid)';
+
+            $oCustomerLink = $this->db->prepare($sCustomerOrder);
+            $oCustomerLink->bindValue(':cust_id', $iUserId);
+            $oCustomerLink->bindValue(':orderid', $iOrderId);
+            $oCustomerLink->execute();
+
+            Basket_Model::basket()->clear();
+
+            $sQuery = 'INSERT INTO order_payment VALUES(:order_id, :name, :number, :cvc, :expiry)';
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindValue(':order_id', $iOrderId);
+            $oStmt->bindValue(':name', $aCardDetails['name']);
+            $oStmt->bindValue(':number', $aCardDetails['number']);
+            $oStmt->bindValue(':cvc', $aCardDetails['cvc']);
+            $oStmt->bindValue(':expiry', $aCardDetails['expiry']);
+
+            $oStmt->execute();
+
+
+        }catch(Exception $e){
+
+        }
     }
 
     public function checkout($iUserId, $iBasketId, $aPaymentData){
@@ -64,6 +116,7 @@ class Checkout_Model extends Foundation_Model{
             $oStmt->bindValue(':price', $aPaymentData['mc_gross']);
             $oStmt->execute();
             $iOrderId = $this->db->lastInsertId();
+            $this->iOrderId = $iOrderId;
 
             $sOrderItemsQuery = 'INSERT INTO order_items(item_id, order_id) VALUES(:itemid, :orderid)';
             $aBasketData = Basket_Model::basket()->view();

@@ -116,7 +116,7 @@ function setNotificationBadgeNumber(data, currentCount){
 
             //animate();
             //$('#notification_count').addClass('pulseAnimation').delay(2000).removeClass('pulseAnimation');
-            console.log('FUCCOEJFIJEJHVEHJVFJEBVIJEBVJENB');
+            //console.log('FUCCOEJFIJEJHVEHJVFJEBVIJEBVJENB');
             //$('#notification_count').css("-webkit-transition", "all 2s ease-in-out");
 
             $('#notification_count').addClass('pulseAnimation');
@@ -151,7 +151,7 @@ function setNotificationBadgeNumber(data, currentCount){
 
 function displayNotificationsList(){
     var notiData = null;
-    console.log('Display Notifications ');
+    //console.log('Display Notifications ');
     $(document).ready(function(){
 
         $.ajax({

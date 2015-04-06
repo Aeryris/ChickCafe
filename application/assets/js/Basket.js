@@ -58,7 +58,7 @@ var BasketPrototype = {
                 data: {item_id: itemId}
             })
                 .done(function (msg) {
-                    console.log("addToBasket");
+                    //console.log("addToBasket");
                 }).fail(function () {
                     //alert( "error" );
                 })
@@ -80,7 +80,7 @@ var BasketPrototype = {
                 data: {item_id: itemId}
             })
                 .done(function (msg) {
-                    console.log("remove item");
+                    //console.log("remove item");
                 }).fail(function () {
                     //alert( "error" );
                 })
@@ -104,7 +104,7 @@ var BasketPrototype = {
             priceSum = 0;
 
             for(var item in data.basket){
-                console.log(item);
+                //console.log(item);
                 html.push('<tr><td>'+data.basket[item].item_name+'<span>'+data.basket[item].item_description+'</span></td><td>'+data.basket[item].basket_items_quantity+'</td><td>'+data.basket[item].item_price+'</td></tr>');
                 priceWithQuantity = parseFloat(data.basket[item].item_price) * parseFloat(data.basket[item].basket_items_quantity);
 
@@ -133,7 +133,7 @@ var BasketPrototype = {
                 data: {item_id: itemId, quantity:quantity}
             })
                 .done(function (msg) {
-                    console.log("update Quantity");
+                    //console.log("update Quantity");
                 }).fail(function () {
                     //alert( "error" );
                 })
@@ -155,7 +155,7 @@ var BasketPrototype = {
                 dataType: "json"
             })
                 .done(function (data) {
-                    console.log(data);
+                    //console.log(data);
                     //BasketPrototype.displayBasket(msg);
 
 
@@ -209,7 +209,7 @@ var BasketPrototype = {
                 dataType: "json"
             })
                 .done(function (data) {
-                    console.log(data);
+                    //console.log(data);
                     var html = [];
 
                     priceSum = 0;

@@ -30,17 +30,18 @@
  * @version 1.0
  * @license The MIT License (MIT)
  */
+
 ?>
 
 
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
 
         <div class="container">
 
-            <h3>Order summary</h3>
+            <h3>Your Basket</h3>
 
             <div class="">
                 <table class="table">
@@ -50,39 +51,34 @@
                         <th>Quantity</th>
                         <th>Preparation time</th>
                         <th>Price</th>
+                        <th>Update</th>
                     </tr>
                     </thead>
-                    <tbody class="checkout-view-summary">
+                    <tbody class="basket-view-summary">
 
 
 
 
                     </tbody>
                     <tfoot>
-                    <tr>
-                        <th colspan="3">
-                            Total <span style="color: black" class="checkout-total-sum"></span>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="4">
-                            Total preparation time <span style="color: black" class="checkout-total-preparation"></span>
-                        </th>
-                    </tr>
+                        <tr>
+                            <th colspan="3">
+                                Total <span style="color: black" class="checkout-total-sum"></span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="4">
+                                Total preparation time <span style="color: black" class="checkout-total-preparation"></span>
+                            </th>
+                        </tr>
                     </tfoot>
                 </table>
                 <div style="float: right">
+                    <?php
 
+                    if(!empty($basketItems)) echo '<a href="/checkout/basket" id="checkout-submit-button" class="btn btn-lg btn-primary btn-block" type="submit">Checkout</a>';
 
-                    {if(!empty($basketItems))}
-                    {! $paypal }
-                    <div>
-                        <button id="checkout-submit-button" class="btn btn-lg btn-primary btn-block" type="submit">Pay with PayPal</button>
-                        <a href="/checkout/process_card" class="btn btn-lg btn-primary btn-block" >Pay with Debit Card</a>
-                    </div>
-                    </form>
-                    {/if}
-
+                    ?>
 
 
                 </div>
@@ -96,5 +92,5 @@
     </div>
 </div>
 
-{include file=footer.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>
  

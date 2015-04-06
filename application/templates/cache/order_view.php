@@ -34,7 +34,7 @@
 ?>
 
 
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
@@ -46,27 +46,27 @@
             <div class="">
 
 
-                    {foreach($oOrdersData as $key => $value)}
+                    <?php foreach($oOrdersData as $key => $value): ?>
                     <div>
-                        <span>Order no: {! $value['order_id'] }</span> <br />
-                        <span>Order date: {! $value['order_datetime'] }</span><br />
-                        <span>Price: {! $value['order_price'] }</span><br />
+                        <span>Order no: <?php echo $value['order_id'] ?></span> <br />
+                        <span>Order date: <?php echo $value['order_datetime'] ?></span><br />
+                        <span>Price: <?php echo $value['order_price'] ?></span><br />
                         <span>Order items:</span><br />
                         <ul>
-                            {foreach($order->details($value['order_id']) as $k => $v)}
+                            <?php foreach($order->details($value['order_id']) as $k => $v): ?>
 
-                                <li>{! $v['item_name'] }</li>
+                                <li><?php echo $v['item_name'] ?></li>
 
-                            {/foreach}
+                            <?php endforeach; ?>
                         </ul>
 
-                        <a class="btn btn-lg btn-primary btn-block" href="/refund/orderid/ {! $value['order_id'] }">Request refund</a>
+                        <a class="btn btn-lg btn-primary btn-block" href="/refund/orderid/ <?php echo $value['order_id'] ?>">Request refund</a>
 
                     </div>
 
                     <div style="width: 100%; height: 1px; background-color: #000000"></div>
 
-                    {/foreach}
+                    <?php endforeach; ?>
 
 
             </div>
@@ -78,4 +78,4 @@
     </div>
 </div>
 
-{include file=footer.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>

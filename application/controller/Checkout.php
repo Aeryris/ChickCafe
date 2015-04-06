@@ -35,6 +35,51 @@
 
 class Checkout_Controller extends Base_Controller{
 
+    public function process_card(){
+        Auth_Core::init()->isAuth(true);
+        $this->template->basket = Basket_Model::basket()->view();
+
+        $totalPrice = 0;
+
+        foreach(Basket_Model::basket()->view() as $key => $value){
+            $totalPrice += ($value['item_price'] * $value['basket_items_quantity']);
+        }
+
+
+
+        if($_POST){
+            $oCheckout = Checkout_Model::menu();
+            $oUser = new User_Model();
+            $oUser->attr(['email' => $_SESSION['user']]);
+              $oCheckout->checkoutCard(
+                  $oUser->aData['user_id'],
+                array('number' => $_POST['number'],
+                      'name' => $_POST['name'],
+                      'cvc' => $_POST['cvc'],
+                      'expiry' => $_POST['expiry'],
+                      'full-price' => $_POST['full-price']
+                )
+            );
+        }
+
+        $this->template->totalPrice = $totalPrice;
+
+        $this->view = 'checkout_card';
+    }
+
+    public function card(){
+        Auth_Core::init()->isAuth(true);
+
+        $aData = Basket_Model::basket()->view();
+        $oUser = new User_Model();
+        $oUser->attr(['email' => $_SESSION['user']]);
+
+        $custom = $oUser->aData['user_id'].'-'.$aData[0]['basket_id'];
+
+
+
+    }
+
     public function basket(){
         Auth_Core::init()->isAuth(true);
         $paypal = new GoPayPal(THIRD_PARTY_CART);

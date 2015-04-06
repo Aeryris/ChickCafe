@@ -33,7 +33,7 @@
 ?>
 
 
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
@@ -74,14 +74,14 @@
                 <div style="float: right">
 
 
-                    {if(!empty($basketItems))}
-                    {! $paypal }
+                    <?php if(!empty($basketItems)): ?>
+                    <?php echo $paypal ?>
                     <div>
                         <button id="checkout-submit-button" class="btn btn-lg btn-primary btn-block" type="submit">Pay with PayPal</button>
                         <a href="/checkout/process_card" class="btn btn-lg btn-primary btn-block" >Pay with Debit Card</a>
                     </div>
                     </form>
-                    {/if}
+                    <?php endif; ?>
 
 
 
@@ -96,5 +96,5 @@
     </div>
 </div>
 
-{include file=footer.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>
  
