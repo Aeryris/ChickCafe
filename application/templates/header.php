@@ -195,7 +195,7 @@
             <div class="checkout">
                 <a class="checkout__button pull-right" href="#"><!-- Fallback location -->
 							<span class="checkout__text">
-								<img style="height: 20px; width: 20px" src="http://mebath.com/wholesale/images/full-cart.png">
+								<i class="fa fa-shopping-cart"></i>
 							</span>
                 </a>
                 <div class="checkout__order">
