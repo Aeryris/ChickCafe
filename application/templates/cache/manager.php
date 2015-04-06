@@ -70,7 +70,7 @@
 			    	<div class="dropdown">
 				  		<select class="selectpicker" name="staff_id" id="staff_id">
 				  			<?php foreach($get_staff as $key => $value): ?>
-				  				<option id="<?php echo $key ?>" value="<?php echo $value['staff_user_id'] ?>"><?php echo $value['staff_user_id'] ?></option>
+				  				<option id="<?php echo $key ?>" value="<?php echo $value['staff_user_id'] ?>"><?php echo $value['user_firstname'] ?> <?php echo $value['user_lastname'] ?></option>
 				  			<?php endforeach; ?>
 				  		</select>
 					</div>
@@ -89,7 +89,7 @@
 			    	<div class="dropdown">
 				  		<select class="selectpicker" name="staff_id" id="staff_id">
 				  			<?php foreach($get_staff as $key => $value): ?>
-				  				<option id="<?php echo $key ?>" value="<?php echo $value['staff_user_id'] ?>"><?php echo $value['staff_user_id'] ?></option>
+				  				<option id="<?php echo $key ?>" value="<?php echo $value['staff_user_id'] ?>"><?php echo $value['user_firstname'] ?> <?php echo $value['user_lastname'] ?></option>
 				  			<?php endforeach; ?>
 				  		</select>
 					</div>

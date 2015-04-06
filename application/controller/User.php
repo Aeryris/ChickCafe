@@ -196,8 +196,32 @@ class User_Controller extends Base_Controller{
 
     public function dashboard(){
 
+        $oUser = new User_Model();
 
-        $this->view = 'user_dashboard';
+        $oUser->attr(['email' => $_SESSION['user']]);
+
+        $templateName = 'user_dashboard';
+
+        if($oUser->aData['user_type'] == 'C'){
+            //$templateName
+        }else if($oUser->aData['user_type'] == 'O'){
+
+            header('Location: /owner/owner');
+            exit();
+
+        }elseif($oUser->aData['user_type'] == 'M'){
+
+            header('Location: /staff/manager');
+            exit();
+        }
+        elseif($oUser->aData['user_type'] == 'S'){
+            header('Location: /staff/staff');
+            exit();
+        }
+
+
+
+        $this->view = $templateName;
     }
 
 
