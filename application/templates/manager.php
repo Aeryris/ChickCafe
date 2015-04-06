@@ -70,7 +70,7 @@
 			    	<div class="dropdown">
 				  		<select class="selectpicker" name="staff_id" id="staff_id">
 				  			{foreach($get_staff as $key => $value)}
-				  				<option id="{! $key}" value="{! $value['staff_user_id']}">{! $value['staff_user_id']}</option>
+				  				<option id="{! $key}" value="{! $value['staff_user_id']}">{! $value['user_firstname']} {! $value['user_lastname']}</option>
 				  			{/foreach}
 				  		</select>
 					</div>
@@ -89,7 +89,7 @@
 			    	<div class="dropdown">
 				  		<select class="selectpicker" name="staff_id" id="staff_id">
 				  			{foreach($get_staff as $key => $value)}
-				  				<option id="{! $key}" value="{! $value['staff_user_id']}">{! $value['staff_user_id']}</option>
+				  				<option id="{! $key}" value="{! $value['staff_user_id']}">{! $value['user_firstname']} {! $value['user_lastname']}</option>
 				  			{/foreach}
 				  		</select>
 					</div>
