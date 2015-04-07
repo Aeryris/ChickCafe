@@ -189,4 +189,26 @@ class Food_Model extends Foundation_Model implements Foundation_Interface{
         }
     }
 
+    public function add($aItemDetails){
+        try{
+
+            $sQuery = 'INSERT INTO item VALUES (NULL, :name, :desc, :stock, :avail, :price, :preptime, NULL, 0)';
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindValue(':name', $aItemDetails['food_name']);
+            $oStmt->bindValue(':desc', $aItemDetails['food_desc']);
+            $oStmt->bindValue(':stock', $aItemDetails['food_stock']);
+            $oStmt->bindValue(':avail', $aItemDetails['food_available']);
+            $oStmt->bindValue(':price', $aItemDetails['food_price']);
+            $oStmt->bindValue(':preptime', $aItemDetails['food_preptime']);
+
+            //var_dump($oStmt->execute());
+
+            return 'Item '.$aItemDetails['food_name'].' added to the system';
+
+        }catch(Exception $e){
+            return $e;
+        }
+    }
+
 } 

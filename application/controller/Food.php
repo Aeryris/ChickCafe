@@ -97,4 +97,18 @@ class Food_Controller extends Base_Controller{
 
     }
 
+    public function add(){
+
+
+        $oFood = new Food_Model();
+        $error = '';
+        if($_POST){
+            //var_dump($_POST);
+            $error = $oFood->add($_POST);
+        }
+
+        $this->template->error = $error;
+        $this->view = 'food_add';
+    }
+
 } 
