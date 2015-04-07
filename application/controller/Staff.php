@@ -255,7 +255,6 @@ class Staff_Controller extends Base_Controller{
     }
 
     public function get_all_staff() {
-        $this->db->beginTransaction();
         $sQuery = 'SELECT *
             FROM staff s
             INNER JOIN user u
@@ -277,7 +276,7 @@ class Staff_Controller extends Base_Controller{
 
         $oExecute = $oStmt->execute();
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode($data);
+            
     }
 
     public function modify_staff() {
@@ -300,7 +299,7 @@ class Staff_Controller extends Base_Controller{
 
             $oExecute = $oStmt->execute();
 
-            $this->view = 'manager';
+            header("Location:/staff/manager");
         } 
     }
 
@@ -333,10 +332,58 @@ class Staff_Controller extends Base_Controller{
             $oExecute = $oStmt->execute();
             $this->db->commit();
 
-            $this->view = 'manager';
+            header("Location:/staff/manager");
         } 
     }
+    // get daily specials 
+    public function get_daily_special() {
+        $this->db->beginTransaction();
+        $sQuery = "SELECT *
+                    FROM daily_special ds
+                    JOIN item i ON ds.item_id = i.item_id";
+        $oStmt = $this->db->prepare($sQuery);
+        $oExecute = $oStmt->execute();
+        $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+        // $this->view='manager';
+    }
 
+    public function get_all_items() {
+        $items = Food_Model::all();
+        return $items;
+    }
+
+    public function get_all_menus() {
+        $menus = Menu_Model::menu()->all();
+        return $menus;
+    }
+
+    // edit daily special
+    public function create_daily_special() {
+        try {
+            $iID = Field::post('item_id')->required();
+            $mID = Field::post('menu_id')->required();
+            $iID = $iID->sData;
+            $mID = $mID->sData;
+            echo "posts";
+            intval($iID[0]);
+            intval($mID[0]);
+            var_dump($iID[0]);
+            var_dump($mID[0]);
+            $oDS = new DailySpecial_Model();
+            echo "model made";
+            $oDS->setDailySpecial($iID,$mID);
+            echo "success"; 
+            header("Location: /staff/manager");
+        } catch (PDOException $e) {
+            var_dump($e);
+            exit();
+        } 
+        // header("Location: /staff/manager");
+    }
+
+
+    // get user profile
     public function get_profile() {
         $oUser = new User_Model();
         $oUser->attr(['email' => $_SESSION['user']]);
@@ -347,6 +394,7 @@ class Staff_Controller extends Base_Controller{
         return $oStaff;
     }
 
+    // staff page
     public function staff(){
         Auth_Core::init()->isAuth(true);
         if(Acl_Core::allow([ACL::ACL_STAFF,ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
@@ -358,7 +406,7 @@ class Staff_Controller extends Base_Controller{
             exit();
         }
     }
-
+    // reports page
     public function report() {
         Auth_Core::init()->isAuth(true);
         if(Acl_Core::allow([ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
@@ -373,10 +421,14 @@ class Staff_Controller extends Base_Controller{
         }
     }
 
+    // manager page
     public function manager() {
         // $oAcl = new Acl_Core(ACL::ACL_MANAGER);
         Auth_Core::init()->isAuth(true);
         if(Acl_Core::allow([ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
+            $this->template->get_ds = $this->get_daily_special();
+            $this->template->get_i = $this->get_all_items();
+            $this->template->get_m = $this->get_all_menus();
             $this->template->create_staff = $this->create_staff();
             $this->template->get_staff = $this->get_all_staff();
             $this->template->refund = $this->get_order_report();

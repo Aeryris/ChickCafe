@@ -34,7 +34,19 @@
 
 class Index_Controller extends Base_Controller{
 
-
+    // get latest daily special
+    public function get_latest() {
+        $db = Database_Core::get();
+        $db->beginTransaction();
+        $sQuery = "SELECT *
+                    FROM daily_special ds
+                    JOIN item i ON ds.item_id = i.item_id
+                    ORDER BY daily_special_id DESC LIMIT 1";
+        $oStmt = $db->prepare($sQuery);
+        $oStmt->execute();
+        $data = $oStmt->fetchAll(PDO::FETCH_ASSOC); 
+        return $data;
+    }
 
     public function index(){
 
@@ -63,6 +75,8 @@ class Index_Controller extends Base_Controller{
         $oMenu = Menu_Model::menu()->current();
 
         $this->template->oMenu = $oMenu;
+
+        $this->template->dailySpecial = $this->get_latest();
 
         $this->view = 'index';
     }

@@ -13,7 +13,7 @@
 		</br>
 	  <!-- Nav tabs -->
 	  <ul class="nav nav-pills" id="staff_tab" role="tablist">
-         <li role="presentation"><a href="#daily_special" aria-controls="daily_special" role="tab" data-toggle="tab" >Edit Daily Special</a></li>
+         <li role="presentation active"><a href="#add_daily_special" aria-controls="create_daily_special" role="tab" data-toggle="tab" >Create Daily Special</a></li>
             <li role="presentation"><a href="#refund" aria-controls="refund" role="tab" data-toggle="tab" >Approve Refunds</a></li>
             <li role="presentation"><a href="#create_staff" aria-controls="create_staff" role="tab" data-toggle="tab" >Create Staff</a></li>
             <li role="presentation"><a href="#modify_staff" aria-controls="modify_staff" role="tab" data-toggle="tab" >Modify Staff</a></li>
@@ -29,9 +29,29 @@
                		</iframe>
             </div>
 
-		    <div role="tabpanel" class="tab-pane" id="daily_special">
-		    	Daily Special
+		    <div role="tabpanel" class="tab-pane" id="add_daily_special">
+	    		<h2>Create new daily specials</h2>
+	    		<p>The most recent one is used as the daily special for the day. 
+	    		The item must already be in the system in order for it to appear on the list</p>
+			    <div class="form">
+					<form class="form-inline" method="post" action="/staff/create_daily_special">
+					<p>Item Name</p>
+					<select class="selectpicker" name="item_id" id="item_name">
+					{foreach($get_i as $key => $value)}
+						<option id="{! $key}" value="{! $value['item_id']}">{! $value['item_name']}</option>
+					{/foreach}
+					</select>
+					<p>Menu Name</p>
+					<select class="selectpicker" name="menu_id" id="menu_name">
+						{foreach($get_m as $key => $value)}
+							<option id="{! $key}" value="{! $value['menu_id']}">{! $value['menu_name']}</option>
+						{/foreach}
+					</select>
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Set New Daily Special</button>
+					</form>
+				</div>
 		    </div>
+		    
 		    <div role="tabpanel" class="tab-pane" id="refund">
 		    	<h2>Approve orders where a refund has been requested</h2>
 		    	<p>This list is refreshed every day with orders from over the day </p>
