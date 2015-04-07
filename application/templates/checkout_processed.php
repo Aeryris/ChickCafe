@@ -31,7 +31,8 @@
  * @license The MIT License (MIT)
  */
 
-?>
+ ?>
+
 
 
 {include file=header.php}
@@ -41,46 +42,18 @@
 
         <div class="container">
 
-            <h3>Your Basket</h3>
+            <h1>Payment successful</h1>
 
-            <div class="">
-
-
-                    {foreach($oOrdersData as $key => $value)}
-                    <div class="cardView" style="clear: both">
-                        <span>Order no: {! $value['order_id'] }</span> <br />
-                        <span>Order date: {! $value['order_datetime'] }</span><br />
-                        <span>Price: {! $value['order_price'] }</span><br />
-                        <span>Order items:</span><br />
-
-                        <div style="padding: 20px 20px 20px 20px">
-                            {foreach($order->details($value['order_id']) as $k => $v)}
-
-
-                                    <img style="height: 50px; width: 50px" src="/food_images/{! $v['item_img'] }">
-                                    {! $v['item_name'] }
-
-
-
-                            {/foreach}
-                        </div>
-                        <br />
-                        <!-- <a class="btn btn-lg btn-primary btn-block" href="/refund/orderid/{! $value['order_id'] }">Request refund</a> -->
-
-                    </div>
-
-
-
-                    {/foreach}
-
-
-            </div>
-
-
+            <a class="btn btn-lg btn-primary" href="/order/view">View orders</a>
 
         </div>
 
+
+
     </div>
+
 </div>
+</div>
+
 
 {include file=footer.php}

@@ -72,6 +72,17 @@ class Checkout_Controller extends Base_Controller{
         $this->view = 'checkout_card';
     }
 
+    public function processing(){
+
+
+
+        $this->view = 'checkout_card_processing';
+    }
+
+    public function processed(){
+        $this->view = 'checkout_processed';
+    }
+
     public function card(){
         Auth_Core::init()->isAuth(true);
 

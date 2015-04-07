@@ -31,7 +31,8 @@
  * @license The MIT License (MIT)
  */
 
-?>
+ ?>
+
 
 
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
@@ -41,46 +42,18 @@
 
         <div class="container">
 
-            <h3>Your Basket</h3>
+            <h1>Payment successful</h1>
 
-            <div class="">
-
-
-                    <?php foreach($oOrdersData as $key => $value): ?>
-                    <div class="cardView" style="clear: both">
-                        <span>Order no: <?php echo $value['order_id'] ?></span> <br />
-                        <span>Order date: <?php echo $value['order_datetime'] ?></span><br />
-                        <span>Price: <?php echo $value['order_price'] ?></span><br />
-                        <span>Order items:</span><br />
-
-                        <div style="padding: 20px 20px 20px 20px">
-                            <?php foreach($order->details($value['order_id']) as $k => $v): ?>
-
-
-                                    <img style="height: 50px; width: 50px" src="/food_images/<?php echo $v['item_img'] ?>">
-                                    <?php echo $v['item_name'] ?>
-
-
-
-                            <?php endforeach; ?>
-                        </div>
-                        <br />
-                        <!-- <a class="btn btn-lg btn-primary btn-block" href="/refund/orderid/<?php echo $value['order_id'] ?>">Request refund</a> -->
-
-                    </div>
-
-
-
-                    <?php endforeach; ?>
-
-
-            </div>
-
-
+            <a class="btn btn-lg btn-primary" href="/order/view">View orders</a>
 
         </div>
 
+
+
     </div>
+
 </div>
+</div>
+
 
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>
