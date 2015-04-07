@@ -45,11 +45,18 @@ class Menu_Controller extends Base_Controller{
         $this->view = 'menu';
     }
 
+    public $displayItem;
+
     public function view(){
         try{
 
             $oMenuItems = MenuItems_Model::menu()->getByMenuId($_GET['id']);
+            $oIngredient = new Ingredients_Model();
+            $this->displayItem = true;
 
+
+            $this->template->oIngredients = $oIngredient;
+            //$this->template->displayItem = $this->displayItem;
             $this->template->menuItems = $oMenuItems;
 
             $this->view = 'menu_view';

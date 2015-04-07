@@ -52,6 +52,53 @@
             <div class="current-menus">
                 <h4>Items</h4>
                 {foreach($menuItems->data as $key => $value)}
+
+                <?php
+
+                $displayItem = true;
+                $requiredIngredientsToMake = 0;
+                    $requiredIngredients = 0;
+                    foreach ($oIngredients->ingredients($value['item_id']) as $k => $v) {
+                        $requiredIngredients = $v['ingredient_quantity'] * $value['item_available'];
+
+                        //var_dump($v);
+
+                        $ingredientAvailable = $v['ingredient_available'];
+                        //var_dump('Available: '. $ingredientAvailable);
+                        //var_dump('Required: '.$requiredIngredients);
+                       // var_dump('SHow: '.(int)($ingredientAvailable /  $v['ingredient_quantity']));
+
+                        if($ingredientAvailable != 0){
+                            $available = (int)($ingredientAvailable /  $v['ingredient_quantity']);
+                            //var_dump($available);
+                            if($value['item_available'] >= $available){
+                                $value['item_available'] = $available;
+                            }
+
+                        }else{
+                            $displayItem = false;
+                        }
+
+                        //Basket_Model::basket()->clear();
+
+                        if ($requiredIngredients > $v['ingredient_available']) {
+
+                            //$displayItem = false;
+                        }
+
+
+
+                    }
+
+                if($value['item_available'] == 0){
+                    $displayItem =false;
+                }
+
+
+                ?>
+
+
+                <?php if($displayItem): ?>
                 <div style="<?php if($value['item_available'] == 0) echo 'color: red'; elseif((($value['item_available'] / $value['item_stock']) * 100) < 15)  echo 'color: orange'; ?>">
                 <span class="menu-item-desc"><b>Description:</b> {! $value['item_description'] }</span> <br />
                 <span class="menu-item-stock"><b>Stock:</b> {! $value['item_available'] }/{! $value['item_stock'] }</span> <br />
@@ -65,6 +112,7 @@
                 <?php endif; ?>
                 <div style="width: 100%; height: 1px; background-color: #000000"></div>
                 </div>
+                <?php endif; ?>
                 {/foreach}
             </div>
 

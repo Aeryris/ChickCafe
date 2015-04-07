@@ -80,10 +80,12 @@ function checkFoods(){
 
     });
 
+    checkIngredients();
+
 }
 
 function checkIngredients(){
-
+  //  console.log('Check ingredient ');
     var date = new Date();
     var time = addZero(date.getHours()) + ':' + addZero(date.getMinutes()) + ':' + addZero(date.getSeconds());
     var now = addZero(date.getFullYear()) + '-' + addZero(date.getMonth()) + '-' + addZero(date.getDay()) + '-' +time;
@@ -120,5 +122,5 @@ function checkIngredients(){
 }
 
 setInterval(checkFoods, 1000);
-setInterval(checkIngredients, 1000);
+
 

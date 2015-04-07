@@ -7,7 +7,7 @@
         <a href="/ingredients/view">Ingredients list</a>
         <a href="/food/view">Foods list</a>
 		<div role="tabpanel">
-
+		</br>
 	  <!-- Nav tabs -->
 	  <ul class="nav nav-pills" id="staff_tab" role="tablist">
          <li role="presentation" class="active"><a href="#edit_menu" aria-controls="edit_menu" role="tab" data-toggle="tab" >Edit Menu</a></li>
@@ -21,10 +21,10 @@
   <!-- Tab panes -->
 		<div class="tab-content">
             <div role="tabpanel" class="tab-pane" id="add_menu">
-               <iframe src="/menu/add">
+	               <iframe src="/menu/add">
 
 
-               </iframe>
+               		</iframe>
             </div>
 	      	<div role="tabpanel" class="tab-pane" id="edit_menu">
 		    	Edit menu
@@ -33,7 +33,30 @@
 		    	Daily Special
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="refund">
-		    	Refunds
+		    	<h2>Approve orders where a refund has been requested</h2>
+		    	<p>This list is refreshed every day with orders from over the day </p>
+		    	<table class="table" id="refund_table">
+		    		<tr>
+		    			<th>Order ID</th>
+		    			<th>Order Date</th>
+		    			<th>Customer Name</th>
+		    			<th>Refund Amount</th>
+		    			<th>Approve Refund?</th>
+		    		</tr>
+		    		<!-- foreach loop goes here -->
+		    		<?php foreach($refund as $key => $value): ?>
+		    		<form class="form-inline" id="key" value="key" method="post" action="/staff/approve_refund">
+					<tr class="info">
+		    			<td><?php echo $value['order_id'] ?></td>
+		    			<td><?php echo $value['order_datetime'] ?></td>
+		    			<td><?php echo $value['user_firstname'] ?> <?php echo $value['user_lastname'] ?></td>
+		    			<td>{! $value['order_price']</td>
+		    		</tr>
+		    			<button class="btn btn-primary btn-xs" type="submit">Approve Refund</button>
+					</form>
+		    		<?php endforeach; ?>
+		    		<!-- end foreach -->
+		    	</table>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="create_staff">
 		    	<h2>Create a new staff memeber</h2>

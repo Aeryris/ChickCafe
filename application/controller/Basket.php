@@ -58,7 +58,7 @@ class Basket_Controller extends Base_Controller implements Basket_Controller_Int
         Auth_Core::init()->isAuth(true);
         Basket_Model::basket()->create();
 
-        var_dump(Basket_Model::basket()->view());
+
 
         $this->template->basketItems = $aBasketData = Basket_Model::basket()->view();
         $this->view = 'basket_view';
