@@ -125,4 +125,24 @@ class MenuItems_Model extends Foundation_Model implements MenuItems_Interface {
         return $this->data;
     }
 
+    public function changeTime($menuId, $start, $end){
+
+        try{
+
+            $oStmt = $this->db->prepare('UPDATE menu SET menu_time_start = :start, menu_time_end = :end WHERE menu_id = :id');
+            $oStmt->bindValue(':id', $menuId);
+            $oStmt->bindValue(':start', $start);
+            $oStmt->bindValue(':end', $end);
+
+            $oStmt->execute();
+
+            return 'Time changed';
+
+
+        }catch(Exception $e){
+
+        }
+
+    }
+
 } 

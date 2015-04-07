@@ -37,7 +37,7 @@
     <div id="main" class="container clear-top">
 
         <div class="container">
-            <h3>Editing menuname</h3>
+            <h3>Editing {! $foodLists[0]['menu_name'] }</h3>
             <h4><a href="/menu/all">Go back</a></h4>
             Foods:
             <ul>
@@ -69,6 +69,26 @@
                 </select>
                 <button type="submit">Add</button>
             </form>
+    <br /> <br />
+            <form action="/menu/edit/id/{! $_GET['id']}/change/time" method="post">
+
+                <div class="form-group">
+                    <label for="menu_start_time">Start time</label>
+                    <input type="text" value="{! $menu_start_time }" class="form-control timepicker" name="menu_start_time" id="menu_start_time" />
+                </div>
+                <div class="form-group">
+                    <label for="menu_end_time">End time</label>
+                    <input type="text" value="{! $menu_end_time }" class="form-control" name="menu_end_time" id="menu_end_time" />
+                </div>
+                <button name="change-time" type="submit">Change time</button>
+            </form>
+
+            <?php
+    if(isset($error)) echo  $error;
+
+?>
+
+
 
 
 

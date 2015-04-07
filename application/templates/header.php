@@ -24,7 +24,20 @@
     <![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/application/assets/js/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="/application/assets/js/jquery.datetimepicker.js"></script>
+    <link rel="stylesheet" href="/application/assets/js/jquery.datetimepicker.css">
+    <script>
+    $(document).ready(function(){
+        $('#menu_start_time').datetimepicker({
+        });
 
+        $('#menu_end_time').datetimepicker({
+        });
+
+    });
+
+
+    </script>
     <style>
 
         .navbar{

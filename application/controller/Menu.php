@@ -139,6 +139,8 @@ class Menu_Controller extends Base_Controller{
 
     public function edit(){
 
+        $error = '';
+
         $menuId = $_GET['id'];
         if(!isset($menuId)){
             header('/menu/all');
@@ -154,12 +156,22 @@ class Menu_Controller extends Base_Controller{
 
         }
 
+        if(isset($_GET['change']) && isset($_POST['change-time'])){
+            $error = MenuItems_Model::menu()->changeTime($menuId, $_POST['menu_start_time'], $_POST['menu_end_time']);
+        }
+
         $oIngredients = new Ingredients_Model();
 
         $menuItems = MenuItems_Model::menu()->getByMenuId($menuId);
-
+        //var_dump($menuItems);
         $this->template->foodLists = $menuItems->data;
 
+        $d = $menuItems->data;
+
+        $this->template->menu_start_time = $d[0]['menu_time_start'] ? $d[0]['menu_time_start'] : '';
+        $this->template->menu_end_time = $d[0]['menu_time_end'] ? $d[0]['menu_time_end'] : '';
+
+        $this->template->error = $error;
         $oFood = new Food_Model();
         $this->template->allFoods = $oFood->all();
         //var_dump($menuItems);
