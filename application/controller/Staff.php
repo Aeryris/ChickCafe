@@ -349,7 +349,7 @@ class Staff_Controller extends Base_Controller{
 
     public function staff(){
         Auth_Core::init()->isAuth(true);
-        if(Acl_Core::allow(['S','M','O','A'])){
+        if(Acl_Core::allow([ACL::ACL_STAFF,ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
             $this->template->stock = $this->get_ingredient_stock();
             $this->template->item_stock = $this->get_item_stock();
             $this->view = 'staff';
@@ -361,7 +361,7 @@ class Staff_Controller extends Base_Controller{
 
     public function report() {
         Auth_Core::init()->isAuth(true);
-        if(Acl_Core::allow(['M','O','A'])){
+        if(Acl_Core::allow([ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
             $this->template->customer_spending = $this->get_customer_spending_report();
             $this->template->orders = $this->get_order_report();
             $this->template->refunds = $this->get_refund_report();
@@ -376,7 +376,7 @@ class Staff_Controller extends Base_Controller{
     public function manager() {
         // $oAcl = new Acl_Core(ACL::ACL_MANAGER);
         Auth_Core::init()->isAuth(true);
-        if(Acl_Core::allow(['M','O','A'])){
+        if(Acl_Core::allow([ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
             $this->template->create_staff = $this->create_staff();
             $this->template->get_staff = $this->get_all_staff();
             $this->template->refund = $this->get_order_report();
