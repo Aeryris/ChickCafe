@@ -82,7 +82,8 @@ class Staff_Controller extends Base_Controller{
                     FROM customer cu
                     INNER JOIN customer_order co ON cu.customer_user_id
                     INNER JOIN user u ON cu.customer_user_id = u.user_id
-                    WHERE u.user_id = cu.customer_user_id";
+                    WHERE u.user_id = cu.customer_user_id
+                    GROUP BY u.user_id";
         $oStmt = $this->db->prepare($sQuery);
         $oStmt->execute();
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -431,7 +432,7 @@ class Staff_Controller extends Base_Controller{
             $this->template->get_m = $this->get_all_menus();
             $this->template->create_staff = $this->create_staff();
             $this->template->get_staff = $this->get_all_staff();
-            $this->template->refund = $this->get_order_report();
+            $this->template->refund = $this->get_refund_report();
             $this->view = 'manager';
         } else {
             header('Location: /error403'); //Forbidden
