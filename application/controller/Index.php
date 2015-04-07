@@ -60,6 +60,10 @@ class Index_Controller extends Base_Controller{
         //var_dump(Menu_Model::menu()->getMenuTypes());
         $this->template->menuTypes = Menu_Model::menu()->getMenuTypes();
 
+        $oMenu = Menu_Model::menu()->current();
+
+        $this->template->oMenu = $oMenu;
+
         $this->view = 'index';
     }
 
