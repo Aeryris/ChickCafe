@@ -116,8 +116,100 @@ class Staff_Controller extends Base_Controller{
         return $data;
     }
 
-    public function approve_refund() {
+    public function get_today_order() {
+        $sQuery = "SELECT *
+                    FROM orders o
+                    INNER JOIN customer_order co ON o.order_id = co.order_id
+                    JOIN customer cu ON co.customer_id = cu.customer_user_id
+                    INNER JOIN user u ON cu.customer_user_id = u.user_id
+                    INNER JOIN order_items oi ON oi.order_id = o.order_id
+                    INNER JOIN item i ON oi.item_id = i.item_id
+                    WHERE o.order_id = co.order_id AND o.order_datetime = CURDATE()
+                    ORDER BY o.order_datetime ASC"; 
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->execute();
+        $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+        $orders = [];
+        foreach($data as $key => $value) {
+            $orders[$value['order_id']][] = $value;
+        }
+        foreach($orders as $orderID => $dataSet) {
+            $items = [];
+            $original = $dataSet;
+            foreach($dataSet as $key => $value) {
+                $theItem = [
+                    'item_id' => $value['item_id'],
+                    'item_name' => $value['item_name'],
+                    'item_description' => $value['item_description'],
+                    'item_stock' => $value['item_stock'],
+                    'item_available' => $value['item_available'],
+                    'item_price' => $value['item_price'],
+                    'item_preptime' => $value['item_preptime'],
+                    'item_img' => $value['item_img']
+                ];
+                $orders[$orderID][0]['items'][] = $theItem;
+                $orders[$orderID][0]['item_names'][] = $value['item_name'];
+                unset(
+                    $orders[$orderID][0]['item_id'],
+                    $orders[$orderID][0]['item_name'],
+                    $orders[$orderID][0]['item_description'],
+                    $orders[$orderID][0]['item_stock'],
+                    $orders[$orderID][0]['item_available'],
+                    $orders[$orderID][0]['item_price'],
+                    $orders[$orderID][0]['item_preptime'],
+                    $orders[$orderID][0]['item_img']
+                );
+            }
+        }
+        foreach($orders as $orderID => $set) {
+            $finalOrders[] = $set[0];
+        }
+        return $finalOrders;   
+    }
 
+    public function approve_refund() {
+        $oID = Field::post('order_id')->required();
+        $sDate = Field::post('order_datetime')->required();
+        $sAmount = Field::post('order_price')->required();
+        if ($oID != null) {
+            try {
+            $oID = intval($oID->value());
+            // create entry in refund table
+            $this->db->beginTransaction();
+            $sQuery = 'INSERT INTO refund (refund_order, refund_date, refund_amount)
+            VALUES (:order_id, :date, :amount)';
+
+            $oStmt = $this->db->prepare($sQuery);
+            $oStmt->bindValue(':order_id', $oID, PDO::PARAM_INT);
+            $oStmt->bindValue(':date', $sDate->value(), PDO::PARAM_STR);
+            $oStmt->bindValue(':amount', $sAmount->value(), PDO::PARAM_INT);
+            $oExecute = $oStmt->execute();
+            $this->db->commit();
+            // add link to customer order using refund ID
+            $data = new Refund_Model(); 
+            $data = $data->get_id($oID);
+            // var_dump($data);
+            $rID = intval($data['refund_id']);
+            var_dump($rID);
+            // var_dump($rID); var_dump($oID);
+            echo "query 1 done";
+            // do 2nd query 
+            $this->db->beginTransaction();
+            $sQuery = 'UPDATE customer_order SET refund_refund_id = :refund_id WHERE order_id = :order_id';
+            $oStmt = $this->db->prepare($sQuery);
+            $oStmt->bindValue(':refund_id', $rID, PDO::PARAM_INT);
+            $oStmt->bindValue(':order_id', $oID, PDO::PARAM_INT);
+            $oStmt->execute();
+            $this->db->commit();
+            echo "committed";
+            header("Location: /staff/manager");            
+            } catch (PDOException $e) {
+                header("Location: /staff/manager");
+                exit();
+            }
+        }
+        header("Location: /staff/manager");
+        exit();
     }
 
     public function create_staff() {
@@ -287,7 +379,7 @@ class Staff_Controller extends Base_Controller{
         if(Acl_Core::allow(['M','O','A'])){
             $this->template->create_staff = $this->create_staff();
             $this->template->get_staff = $this->get_all_staff();
-            $this->template->refund = $this->get_refund_report();
+            $this->template->refund = $this->get_order_report();
             $this->view = 'manager';
         } else {
             header('Location: /error403'); //Forbidden
