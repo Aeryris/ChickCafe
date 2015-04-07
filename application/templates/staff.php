@@ -23,8 +23,12 @@
 		<div class="tab-content">
 
 		    <div role="tabpanel" class="tab-pane active" id="stock">
-		    	<h2>Item Stock</h2>
-					{foreach($oMenuItems as $key => $value)}
+		    	<h2>Item and Ingredient Stock</h2>
+					{foreach($stock as $key => $value)}
+						<span class="menu-item-name"><b>Ingredient Name:</b> {! $value['ingredient_name'] }</span> <br />
+						<span class="menu-item-stock"><b>Stock Remaining:</b> {! $value['ingredient_available'] }/{! $value['ingredient_stock'] }</span> <br />
+					{/foreach}
+					{foreach($item_stock as $key => $value)}
 						<span class="menu-item-name"><b>Item Name:</b> {! $value['item_name'] }</span> <br />
 						<span class="menu-item-stock"><b>Stock Remaining:</b> {! $value['item_available'] }/{! $value['item_stock'] }</span> <br />
 					{/foreach}
@@ -37,7 +41,7 @@
 		    	<h2>Your Profile</h2>
 		    	<p>Level: {! $profile->role }</p>
 		    	<p>Your Salary: {! number_format($profile->salary,2) }</p>
-		    	<p>Your Numbner: {! $profile->phoneNumber }</p>
+		    	<p>Your Number: {! $profile->phoneNumber }</p>
 		    </div>
 		</div>
 

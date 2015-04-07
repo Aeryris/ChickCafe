@@ -2,9 +2,23 @@
 
 class Staff_Controller extends Base_Controller{
 
-    public function get_stock() {
-        $this->template->oMenuItems = MenuItems_Model::menu()->getByMenuId(1)->data();
-        $this->view = "staff";
+    public function get_ingredient_stock() {
+        $this->db->beginTransaction();
+        $sQuery = "SELECT *
+                    FROM ingredient";
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->execute();
+        $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
+    public function get_item_stock() {
+        $sQuery = "SELECT *
+                    FROM item";
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->execute();
+        $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
     }
 
     public function get_orders() {
@@ -67,10 +81,8 @@ class Staff_Controller extends Base_Controller{
         $sQuery = "SELECT *
                     FROM customer cu
                     INNER JOIN customer_order co ON cu.customer_user_id
-                    JOIN orders o ON co.order_id = o.order_id
                     INNER JOIN user u ON cu.customer_user_id = u.user_id
-                    WHERE co.customer_id = cu.customer_user_id
-                    ORDER BY o.order_datetime ASC ";
+                    WHERE u.user_id = cu.customer_user_id";
         $oStmt = $this->db->prepare($sQuery);
         $oStmt->execute();
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -244,29 +256,43 @@ class Staff_Controller extends Base_Controller{
     }
 
     public function staff(){
-        // Auth_Core::init()->isAuth(true);
-        // $oAcl = new Acl_Core(array(ACL::ACL_ADMIN | ACL::ACL_MANAGER | ACL::ACL_OWNER | ACL::ACL_STAFF)); 
-        $this->template->profile = $this->get_profile();
-        $this->template->stock = $this->get_stock();
-        $this->view = 'staff';
+        Auth_Core::init()->isAuth(true);
+        if(Acl_Core::allow(['S','M','O','A'])){
+            $this->template->stock = $this->get_ingredient_stock();
+            $this->template->item_stock = $this->get_item_stock();
+            $this->view = 'staff';
+        } else {
+            header('Location: /error403'); //Forbidden
+            exit();
+        }
     }
 
     public function report() {
-        // Auth_Core::init()->isAuth(true);
-     //    $oAcl = new Acl_Core(array(ACL::ACL_ADMIN | ACL::ACL_MANAGER | ACL::ACL_OWNER)); 
-        $this->template->customer_spending = $this->get_customer_spending_report();
-        $this->template->orders = $this->get_order_report();
-        $this->template->refunds = $this->get_refund_report();
-        $this->template->stock = $this->get_stock_report();                
-        $this->view = 'report';
+        Auth_Core::init()->isAuth(true);
+        if(Acl_Core::allow(['M','O','A'])){
+            $this->template->customer_spending = $this->get_customer_spending_report();
+            $this->template->orders = $this->get_order_report();
+            $this->template->refunds = $this->get_refund_report();
+            $this->template->stock = $this->get_stock_report();                
+            $this->view = 'report';
+        } else {
+            header('Location: /error403'); //Forbidden
+            exit();
+        }
     }
 
     public function manager() {
         // $oAcl = new Acl_Core(ACL::ACL_MANAGER);
-        // Auth_Core::init()->isAuth(true);
-        // $oAcl = new Acl_Core(array(ACL::ACL_ADMIN | ACL::ACL_MANAGER)); 
-        $this->template->create_staff = $this->create_staff();
-        $this->template->get_staff = $this->get_all_staff();
-        $this->view = 'manager';
+        Auth_Core::init()->isAuth(true);
+        if(Acl_Core::allow(['M','O','A'])){
+            $this->template->create_staff = $this->create_staff();
+            $this->template->get_staff = $this->get_all_staff();
+            $this->template->refund = $this->get_refund_report();
+            $this->view = 'manager';
+        } else {
+            header('Location: /error403'); //Forbidden
+            exit();
+        }
+       
     }
 } 
