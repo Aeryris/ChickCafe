@@ -51,7 +51,7 @@ class Checkout_Controller extends Base_Controller{
             $oCheckout = Checkout_Model::menu();
             $oUser = new User_Model();
             $oUser->attr(['email' => $_SESSION['user']]);
-              $oCheckout->checkoutCard(
+             $orderId = $oCheckout->checkoutCard(
                   $oUser->aData['user_id'],
                 array('number' => $_POST['number'],
                       'name' => $_POST['name'],
@@ -60,7 +60,12 @@ class Checkout_Controller extends Base_Controller{
                       'full-price' => $_POST['full-price']
                 )
             );
+
+            $oNotification = new Notification_Model();
+            $oNotification->setMsgToUserId($oUser->aData['user_id'], 'You have placed an order <a class="order-link" href="/order/view/id/'.$orderId.'">(view)</a>');
         }
+
+
 
         $this->template->totalPrice = $totalPrice;
 

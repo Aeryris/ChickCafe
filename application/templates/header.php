@@ -34,9 +34,19 @@
         $('#menu_end_time').datetimepicker({
         });
 
+        $(document).on('click', 'a', function (){
+
+            console.log('Click click');
+
+        });
+
+
+
     });
 
-
+    function run(url){
+        window.location.assign('/order/view/id/'+url);
+    }
     </script>
     <style>
 

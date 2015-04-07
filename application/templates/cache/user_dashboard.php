@@ -43,7 +43,25 @@
             <h3>Dashboard</h3>
 
             <div>
-                Total spendings: <?php echo $user_total_spending ?>
+                Total spendings: £<?php echo $user_total_spending ?>
+                </br>
+                Status:
+
+                <?php
+
+                if($user_total_spending > 1000 && $user_total_spending < 2000){
+                    echo 'Silver <br />';
+                    echo 'You need to spend £'.(2000 - $user_total_spending).' more to get Gold membership';
+                }else if($user_total_spending > 2000 && $user_total_spending < 5000){
+                    echo 'Gold <br />';
+                    echo 'You need to spend £'.(5000 - $user_total_spending).' more to get Diamond membership';
+                }else if($user_total_spending > 5000) {
+                    echo 'Diamond <br />';
+                }else{
+                    echo 'You need to spend £'.(1000 - $user_total_spending).' more to get Silver membership';
+                }
+
+                ?>
             </div>
 
             <a class="btn btn-lg btn-primary btn-block" href="/order/view">My Orders</a>

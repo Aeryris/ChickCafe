@@ -60,7 +60,7 @@
                             <?php endforeach; ?>
                         </ul>
 
-                        <a class="btn btn-lg btn-primary btn-block" href="/refund/orderid/ <?php echo $value['order_id'] ?>">Request refund</a>
+                        <!-- <a class="btn btn-lg btn-primary btn-block" href="/refund/orderid/<?php echo $value['order_id'] ?>">Request refund</a> -->
 
                     </div>
 

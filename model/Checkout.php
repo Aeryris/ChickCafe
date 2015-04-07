@@ -154,7 +154,7 @@ class Checkout_Model extends Foundation_Model{
             $oSpending->execute();
 
 
-
+            return $iOrderId;
 
 
 

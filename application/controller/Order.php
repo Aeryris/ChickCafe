@@ -37,14 +37,26 @@ class Order_Controller extends Base_Controller{
 
     public function view(){
 
-
         $oOrders = new Order_Model();
+
+        $orderData = $oOrders->all()->data;
+
+        if(isset($_GET['id'])){
+            $orderData = $oOrders->details($_GET['id']);
+        }
+
+        //var_dump($orderData);
+
+
+
         $this->template->order = $oOrders;
-        $this->template->oOrdersData = $oOrders->all()->data;
+        $this->template->oOrdersData = $orderData;
 
 
         $this->view = 'order_view';
     }
+
+
 
     public function refund(){
 
