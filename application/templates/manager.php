@@ -2,16 +2,15 @@
 
 <div id="wrap">
 	<div id="main" class="container clear-top">
-        <a href="/menu/all">All Menus list</a>
-        <a href="/menu/add">Add menu</a>
-        <a href="/ingredients/view">Ingredients list</a>
-        <a href="/food/view">Foods list</a>
+        <a class="btn btn-lg btn-primary" href="/menu/all">All Menus list</a>
+        <a class="btn btn-lg btn-primary" href="/menu/add">Add menu</a>
+        <a class="btn btn-lg btn-primary" href="/ingredients/view">Ingredients list</a>
+        <a class="btn btn-lg btn-primary" href="/food/view">Foods list</a>
 		<div role="tabpanel">
 		</br>
 	  <!-- Nav tabs -->
 	  <ul class="nav nav-pills" id="staff_tab" role="tablist">
-         <li role="presentation" class="active"><a href="#edit_menu" aria-controls="edit_menu" role="tab" data-toggle="tab" >Edit Menu</a></li>
-            <li role="presentation"><a href="#daily_special" aria-controls="daily_special" role="tab" data-toggle="tab" >Edit Daily Special</a></li>
+         <li role="presentation"><a href="#daily_special" aria-controls="daily_special" role="tab" data-toggle="tab" >Edit Daily Special</a></li>
             <li role="presentation"><a href="#refund" aria-controls="refund" role="tab" data-toggle="tab" >Approve Refunds</a></li>
             <li role="presentation"><a href="#create_staff" aria-controls="create_staff" role="tab" data-toggle="tab" >Create Staff</a></li>
             <li role="presentation"><a href="#modify_staff" aria-controls="modify_staff" role="tab" data-toggle="tab" >Modify Staff</a></li>
@@ -26,9 +25,7 @@
 
                		</iframe>
             </div>
-	      	<div role="tabpanel" class="tab-pane" id="edit_menu">
-		    	Edit menu
-		    </div>
+
 		    <div role="tabpanel" class="tab-pane" id="daily_special">
 		    	Daily Special
 		    </div>

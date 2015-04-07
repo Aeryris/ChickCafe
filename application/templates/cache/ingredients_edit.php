@@ -40,7 +40,8 @@
 
         <div class="container">
             <h3>Editing foodname</h3>
-            <h4><a href="/ingredients/view">Go back</a></h4>
+            <div class="cardView">
+            <h4><a class="btn btn-sm btn-primary" href="/ingredients/view">Go back</a></h4>
 
             <?php foreach($ing as $key => $value): ?>
             <div class="ingredient">
@@ -56,8 +57,8 @@
 
                 <label>Order stock</label>
                 <input type="text" name="order" value="<?php echo $value['ingredient_stock'] ?>" />
-
-                <button type="submit">Order</button>
+                <br />
+                <button class="btn btn-sm btn-primary" type="submit">Order</button>
             </form>
 
             <?php endforeach; ?>
@@ -67,7 +68,7 @@
                 if(isset($error)) echo $error;
             ?>
         </div>
-
+    </div>
 
     </div>
 

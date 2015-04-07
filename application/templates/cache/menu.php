@@ -44,10 +44,11 @@
             <h3>Current menus</h3>
                 <div class="current-menus">
             <?php foreach($oMenu->data() as $key => $value): ?>
+                    <div style="" class="cardView">
                 <span><a href="menu/view/id/<?php echo $value['menu_id'] ?>"><b>Name:</b> <?php echo $value['menu_name'] ?></a></span> <br />
                 <span><b>Start time:</b> <?php echo $value['menu_time_start'] ?></span> <br />
                 <span><b>End time:</b> <?php echo $value['menu_time_end'] ?></span> <br />
-                    <div style="width: 100%; height: 1px; background-color: #000000"></div>
+                    </div>
             <?php endforeach; ?>
                 </div>
         </div>

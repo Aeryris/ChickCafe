@@ -41,15 +41,16 @@
         <div class="container">
 
             <h3>Menus</h3>
-            <a href="/menu/add" class="btn btn-lg btn-primary btn-block">Add</a>
+            <a href="/menu/add" class="btn btn-lg btn-primary">Add</a>
 
             <div class="current-menus">
                 <?php foreach($all as $key => $value): ?>
-                <span><a href="/menu/edit/id/<?php echo $value['menu_id'] ?>">Edit</a></span> <br />
-                <span><a href="/menu/view/id/<?php echo $value['menu_id'] ?>/preview/view"><b>Name:</b> <?php echo $value['menu_name'] ?></a></span> <br />
+                <div style="" class="cardView">
+                <span><a href="/menu/view/id/<?php echo $value['menu_id'] ?>/preview/view"><b></b> <?php echo $value['menu_name'] ?></a></span> <span><a class="btn btn-sm" href="/menu/edit/id/<?php echo $value['menu_id'] ?>">Edit</a></span>  <br />
                 <span><b>Start time:</b> <?php echo $value['menu_time_start'] ?></span> <br />
                 <span><b>End time:</b> <?php echo $value['menu_time_end'] ?></span> <br />
-                <div style="width: 100%; height: 1px; background-color: #000000"></div>
+
+                </div>
                 <?php endforeach; ?>
             </div>
         </div>

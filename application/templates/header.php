@@ -36,7 +36,7 @@
 
         $(document).on('click', 'a', function (){
 
-            console.log('Click click');
+
 
         });
 
@@ -197,6 +197,21 @@
             100% {
                 transform: scale(1, 1);
             };
+        }
+
+        .cardView{
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            float: left;
+            margin-left: 10px;
+            width: 40%;
+            padding: 5px 5px 5px 5px;
+            background-color: rgba(255, 248, 248, 0.50);
+            margin-bottom: 10px;
+            -webkit-box-shadow: 10px 10px 53px -21px rgba(0,0,0,0.66);
+            -moz-box-shadow: 10px 10px 53px -21px rgba(0,0,0,0.66);
+            box-shadow: 10px 10px 53px -21px rgba(0,0,0,0.66);
         }
 
 

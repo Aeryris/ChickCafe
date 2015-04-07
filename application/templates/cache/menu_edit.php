@@ -37,15 +37,17 @@
     <div id="main" class="container clear-top">
 
         <div class="container">
+
             <h3>Editing <?php echo $foodLists[0]['menu_name'] ?></h3>
-            <h4><a href="/menu/all">Go back</a></h4>
+            <h4><a class="btn btn-sm btn-primary" href="/menu/all">Go back</a></h4>
+            <div class="cardView">
             Foods:
             <ul>
                 <?php foreach($foodLists as $key => $value): ?>
                 <li class="food">
 
-                    <?php echo $value['item_name'] ?> <a href="/menu/edit/id/<?php echo $_GET['id'] ?>/remove/<?php echo $value['item_id'] ?> ">Remove</a>
-
+                   <a style="" class="btn btn-sm" href="/menu/edit/id/<?php echo $_GET['id'] ?>/remove/<?php echo $value['item_id'] ?> ">Remove</a>
+                    <span style=""> <?php echo $value['item_name'] ?> </span>
                 </li>
 
 
@@ -67,7 +69,7 @@
 
 
                 </select>
-                <button type="submit">Add</button>
+                <button class="btn btn-sm btn-primary" type="submit">Add</button>
             </form>
     <br /> <br />
             <form action="/menu/edit/id/<?php echo $_GET['id'] ?>/change/time" method="post">
@@ -80,7 +82,7 @@
                     <label for="menu_end_time">End time</label>
                     <input type="text" value="<?php echo $menu_end_time ?>" class="form-control" name="menu_end_time" id="menu_end_time" />
                 </div>
-                <button name="change-time" type="submit">Change time</button>
+                <button class="btn btn-sm btn-primary" name="change-time" type="submit">Change time</button>
             </form>
 
             <?php
@@ -91,7 +93,7 @@
 
 
 
-
+</div>
         </div>
 
 

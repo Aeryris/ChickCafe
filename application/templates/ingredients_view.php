@@ -39,18 +39,17 @@
 
         <div class="container">
             <h3>Ingredients list</h3>
-
+            <h4><a class="btn btn-sm btn-primary" href="/staff/manager">Go back</a></h4>
             {foreach($all as $key => $value)}
-            <br /> <br /> <br />
-            <div class="food">
 
+
+                <div style="" class="cardView">
                 <span>Name: {! $value['ingredient_name'] }</span> <br />
                 <span>Stock: {! $value['ingredient_stock'] }</span> <br />
                 <span>Available in stock: {! $value['ingredient_available'] }</span> <br />
-                <a href="/ingredients/edit/id/{! $value['ingredient_id'] }">Edit</a>
-            </div>
-            <div style="width: 100%; height: 1px; background-color: #000000"></div>
+                <a class="btn btn-sm btn-primary" href="/ingredients/edit/id/{! $value['ingredient_id'] }">Edit</a>
 
+           </div>
             {/foreach}
 
         </div>

@@ -40,6 +40,7 @@
         <div class="container">
 
             <h3>Add menu</h3>
+            <h4><a class="btn btn-sm btn-primary" href="/menu/all">Go back</a></h4>
             <form action="/menu/add" method="post" enctype="multipart/form-data">
 
                     <div class="form-group">
@@ -66,7 +67,7 @@
 
 
 
-                <button type="submit" class="btn btn-lg btn-primary btn-block">Add</button>
+                <button type="submit" class="btn btn-lg btn-primary">Add</button>
 
 
             </form>

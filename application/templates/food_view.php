@@ -41,19 +41,21 @@
         <div class="container">
             <h3>ChickCafe Foods</h3>
             <legend>
-                <span style="color: red;">Red</span> - Available stock is empty
-                <span style="color: orange;">Orange</span> - Available stock is low (less than 15%)
+                <span style="color: red;"><i class="fa fa-exclamation-triangle"></i></span> - Available stock is empty
+                <span style="color: orange;"><i class="fa fa-exclamation-triangle"></i></span> - Available stock is low (less than 15%)
             </legend>
 
-            <div style="width: 100%; height: 1px; background-color: #000000"></div>
-            <a href="/ingredients/view">Ingredients list</a>
-            <div style="width: 100%; height: 1px; background-color: #000000"></div>
+
+            <a class="btn btn-sm btn-primary" href="/ingredients/view">Ingredients list</a>
+            <br />
             {foreach($all as $key => $value)}
-            <br /> <br /> <br />
-            <div class="food" style="<?php if($value['item_available'] == 0) echo 'color: red'; elseif((($value['item_available'] / $value['item_stock']) * 100) < 15)  echo 'color: orange'; ?>">
+
+            <div class="cardView" style="float: none">
+            <div class="food" style="">
 
 
-                <a href="/food/edit/id/{! $value['item_id'] }">Edit</a> <br />
+                <a class="btn btn-sm btn-primary" href="/food/edit/id/{! $value['item_id'] }">Edit</a> <br />
+                <span style="<?php if($value['item_available'] == 0) echo 'color: red'; elseif((($value['item_available'] / $value['item_stock']) * 100) < 15)  echo 'color: orange'; else echo 'display: none' ?>"><i class="fa fa-exclamation-triangle"></i></span>
                 <span>Name: {! $value['item_name'] }</span> <br />
                 <span>Description: {! $value['item_description'] }</span> <br />
                 <span>Stock: {! $value['item_stock'] }</span> <br />
@@ -64,6 +66,7 @@
                 <ul>
                     <?php $oIngredientsList = $oIngredients->ingredients($value['item_id']); ?>
                     <?php if(empty($oIngredientsList)) echo 'None'; ?>
+                    <div class="cardView" style="float: none; background-color: rgba(0, 172, 255, 0.34)">
                     {foreach($oIngredientsList as $k => $v)}
                     <li class="ingredient">
 
@@ -73,10 +76,12 @@
 
 
                     {/foreach}
+                        </div>
                 </ul>
 
             </div>
-            <div style="width: 100%; height: 1px; background-color: #000000"></div>
+                </div>
+
 
             {/foreach}
 
