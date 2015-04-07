@@ -173,10 +173,9 @@ class Checkout_Model extends Foundation_Model{
 
 
 
-            $sQuery = 'INSERT INTO orders(order_datetime, order_price) VALUES(:odate, :price)';
+            $sQuery = 'INSERT INTO orders(order_price, order_datetime) VALUES(:price, NOW())';
 
             $oStmt = $this->db->prepare($sQuery);
-            $oStmt->bindValue(':odate', $aPaymentData['payment_date']);
             $oStmt->bindValue(':price', $aPaymentData['mc_gross']);
             $oStmt->execute();
             $iOrderId = $this->db->lastInsertId();
@@ -203,6 +202,69 @@ class Checkout_Model extends Foundation_Model{
             $oCustomerLink->bindValue(':cust_id', $iUserId);
             $oCustomerLink->bindValue(':orderid', $iOrderId);
             $oCustomerLink->execute();
+
+
+
+            $sCustomerSpendingQuery = 'UPDATE customer SET customer_spending_total = customer_spending_total + :fullprice WHERE customer_user_id = :cust_id';
+
+            $oSpending = $this->db->prepare($sCustomerSpendingQuery);
+            $oSpending->bindValue(':fullprice', $aPaymentData['mc_gross']);
+            $oSpending->bindValue(':cust_id', $iUserId);
+
+            $oSpending->execute();
+
+
+
+            $sItemsStockQuery = 'UPDATE item SET item_available = item_available - :basket_items_quantity WHERE item_id = :itemid';
+            $aItemsData = Basket_Model::basket()->view();
+
+            foreach($aItemsData as $key => $value){
+                $oItemStock = $this->db->prepare($sItemsStockQuery);
+                $oItemStock->bindValue(':basket_items_quantity', $value['basket_items_quantity']);
+                $oItemStock->bindValue(':itemid', $value['item_id']);
+
+                $oItemStock->execute();
+            }
+
+            $sIngredientsStockQuery = 'UPDATE ingredient SET ingredient_available = ingredient_available - :ing_required WHERE ingredient_id = :ing_id';
+            $sIngredientsInfoQuery = 'SELECT * FROM item_ingredients JOIN ingredient USING(ingredient_id) WHERE item_id = :item_id';
+            $aIngredientsData = Basket_Model::basket()->view();
+
+
+            //var_dump('Update ingredients');
+
+            foreach($aIngredientsData as $key => $value){
+                //var_dump('Value');
+                //var_dump($value);
+
+                $oIngredient = $this->db->prepare($sIngredientsInfoQuery);
+                $oIngredient->bindValue(':item_id', $value['item_id']);
+
+                $oIngredient->execute();
+
+                $aIngredientInfoResult = $oIngredient->fetchAll(PDO::FETCH_ASSOC);
+                //var_dump('Ingredient info');
+                //var_dump($aIngredientInfoResult);
+
+                foreach($aIngredientInfoResult as $k => $v){
+                    //var_dump('Result');
+                    //var_dump($v);
+                    $UpdateIngredient = $this->db->prepare($sIngredientsStockQuery);
+                    $UpdateIngredient->bindValue(':ing_required', $v['ingredient_quantity']*$value['basket_items_quantity']);
+                    $UpdateIngredient->bindValue(':ing_id', $v['ingredient_id']);
+                    $UpdateIngredient->execute();
+                    //var_dump($UpdateIngredient->execute());
+                }
+
+
+                //$oItemStock = $this->db->prepare($sIngredientsStockQuery);
+                //$oItemStock->bindValue(':ing_required', $value['basket_items_quantity']);
+                //$oItemStock->bindValue(':itemid', $value['item_id']);
+
+                //$oItemStock->execute();
+            }
+
+
 
             Basket_Model::basket()->clear();
 

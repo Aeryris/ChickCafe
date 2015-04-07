@@ -171,7 +171,7 @@ class Checkout_Controller extends Base_Controller{
         $oCheckout = new Checkout_Model();
         $this->checkout_status = $oCheckout->checkout($userId, $basketId, $aPaymentData);
 
-        $this->view = 'checkout_processing';
+        $this->view = 'checkout_card_processing';
     }
 
 
