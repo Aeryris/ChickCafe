@@ -37,7 +37,7 @@
     <div id="main" class="container clear-top">
 
         <div class="container">
-            <h3>Editing foodname</h3>
+            <h3>Editing <?php echo $foodDetails['item_name'] ?></h3>
             <h4><a href="/food/view">Go back</a></h4>
             Ingredients:
             <ul>
@@ -65,6 +65,19 @@
 
                 <button type="submit">Add</button>
             </form>
+
+            <form method="post" action="/food/edit/id/<?php echo $_GET['id'] ?>/order/">
+                <span>Available <?php echo $foodDetails['item_available'] ?></span> <br />
+                <span>Max stock <?php echo $foodDetails['item_stock'] ?></span> <br />
+                <?php $orderQuan = $foodDetails['item_stock'] -  $foodDetails['item_available'];?>
+                <label for="order">Order</label>
+                <input name="order" type="text" value="<?php echo $orderQuan ?>" />
+
+                <button type="submit">Order</button>
+            </form>
+            <?php
+            if(isset($error)) echo $error
+            ?>
 
 
         </div>

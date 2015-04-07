@@ -35,28 +35,20 @@
 		    <div role="tabpanel" class="tab-pane" id="refund">
 		    	<h2>Approve orders where a refund has been requested</h2>
 		    	<p>This list is refreshed every day with orders from over the day </p>
-		    	<table class="table" id="refund_table">
-		    		<tr>
-		    			<th>Order ID</th>
-		    			<th>Order Date</th>
-		    			<th>Customer Name</th>
-		    			<th>Refund Amount</th>
-		    			<th>Approve Refund?</th>
-		    		</tr>
 		    		<!-- foreach loop goes here -->
 		    		<?php foreach($refund as $key => $value): ?>
-		    		<form class="form-inline" id="key" value="key" method="post" action="/staff/approve_refund">
-					<tr class="info">
-		    			<td><?php echo $value['order_id'] ?></td>
-		    			<td><?php echo $value['order_datetime'] ?></td>
-		    			<td><?php echo $value['user_firstname'] ?> <?php echo $value['user_lastname'] ?></td>
-		    			<td>{! $value['order_price']</td>
-		    		</tr>
+		    		<form class="form-inline" id="<?php echo $value['order_id'] ?>" value="<?php echo $value['order_id'] ?>" method="post" action="/staff/approve_refund">
+		    			<p>Order ID: <?php echo $value['order_id'] ?></p>
+		    			<input type="hidden" name="order_id" id="order_id" value="<?php echo $value['order_id'] ?>">
+		    			<p>Order Date/Time: <?php echo $value['order_datetime'] ?></p>
+		    			<input type="hidden" name="order_datetime" id="order_datetime" value="<?php echo $value['order_datetime'] ?>">
+		    			<p> Customer Name: <?php echo $value['user_firstname'] ?> <?php echo $value['user_lastname'] ?></p>
+		    			<p>Order Price: <?php echo $value['order_price'] ?></p>
+		    			<input type="hidden" name="order_price" id="order_price" value="<?php echo $value['order_price'] ?>">
 		    			<button class="btn btn-primary btn-xs" type="submit">Approve Refund</button>
 					</form>
 		    		<?php endforeach; ?>
 		    		<!-- end foreach -->
-		    	</table>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="create_staff">
 		    	<h2>Create a new staff memeber</h2>

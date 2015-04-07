@@ -160,4 +160,33 @@ class Food_Model extends Foundation_Model implements Foundation_Interface{
         }
     }
 
+    public function order($iItemId, $iQuantity){
+        try{
+            $sQuery = 'SELECT * FROM item AS i WHERE item_id = :iid';
+
+            $oStmt = $this->db->prepare($sQuery);
+            $oStmt->bindValue(':iid', $iItemId);
+            $oStmt->execute();
+
+            $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $stock = $data[0]['item_available'] + $iQuantity;
+
+            if($stock <= $data[0]['item_stock']){
+                $sUpdate = 'UPDATE item SET item_available = item_available + :quantity, item_stock_notification = 0 WHERE item_id = :iid';
+                $oStmtUpdate  = $this->db->prepare($sUpdate);
+                $oStmtUpdate ->bindValue(':quantity', $iQuantity);
+                $oStmtUpdate->bindValue(':iid', $iItemId);
+                $oStmtUpdate ->execute();
+                return 'Order made';
+            }else{
+                return 'The maximum stock is '.$data[0]['item_stock'].' by ordering more you will end up with '.$stock ;
+            }
+
+
+        }catch(Exception $e){
+            var_dump($e);
+        }
+    }
+
 } 

@@ -58,6 +58,8 @@ class Food_Controller extends Base_Controller{
 
         $oFood = new Food_Model();
 
+        $error = '';
+
         if(isset($_GET['remove'])){
             //var_dump($_GET);
             //var_dump('REMOVE: '.$_GET['remove']);
@@ -72,6 +74,10 @@ class Food_Controller extends Base_Controller{
             $oFood->addIngredient($itemId, $_POST['add']);
         }
 
+        if(isset($_POST['order'])){
+           $error = $oFood->order($itemId, $_POST['order']);
+        }
+
         //var_dump($itemId);
 
 
@@ -80,9 +86,10 @@ class Food_Controller extends Base_Controller{
 
         $oIngredientsList = $oIngredients->ingredients($itemId);
         //var_dump($oIngredientsList);
-
+        $this->template->error = $error;
         $this->template->allIngredients = $oIngredients->all();
-
+        $this->template->oFood = $oFood;
+        $this->template->foodDetails = $oFood->get($_GET['id'])->data[0];
         $this->template->ingredientsList = $oIngredientsList;
 
 
