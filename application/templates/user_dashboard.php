@@ -42,30 +42,30 @@
         <div class="container">
             <h3>Dashboard</h3>
 
-            <div>
-                Total spendings: £{! $user_total_spending }
-                </br>
-                Status:
+            <div class="cardView">
+                <h4>Total spendings:</h4> £{! $user_total_spending }
+
+                <h4>Status:</h4>
 
                 <?php
 
                 if($user_total_spending > 1000 && $user_total_spending < 2000){
                     echo 'Silver <br />';
-                    echo 'You need to spend £'.(2000 - $user_total_spending).' more to get Gold membership';
+                    echo 'You need to spend <b>£'.(2000 - $user_total_spending).'</b> more to get Gold membership';
                 }else if($user_total_spending > 2000 && $user_total_spending < 5000){
                     echo 'Gold <br />';
-                    echo 'You need to spend £'.(5000 - $user_total_spending).' more to get Diamond membership';
+                    echo 'You need to spend <b>£'.(5000 - $user_total_spending).'</b> more to get Diamond membership';
                 }else if($user_total_spending > 5000) {
                     echo 'Diamond <br />';
                 }else{
-                    echo 'You need to spend £'.(1000 - $user_total_spending).' more to get Silver membership';
+                    echo 'You need to spend <b>£'.(1000 - $user_total_spending).'</b> more to get Silver membership';
                 }
 
                 ?>
             </div>
-
-            <a class="btn btn-lg btn-primary btn-block" href="/order/view">My Orders</a>
-
+            <div style="clear: both">
+            <a class="btn btn-lg btn-primary" href="/order/view">My Orders</a>
+            </div>
         </div>
 
     </div>

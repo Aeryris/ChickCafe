@@ -52,7 +52,7 @@ class Order_Model extends Foundation_Model implements  Order_Interface{
 
            // $sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id JOIN order_items AS oi ON o.order_id = oi.order_id JOIN item AS i ON oi.item_id = i.item_id  WHERE co.customer_id = :cust_id';
 
-            $sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id WHERE co.customer_id = :cust_id';
+            $sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id WHERE co.customer_id = :cust_id ORDER BY order_datetime DESC';
 
             $oStmt = $this->db->prepare($sQuery);
 
@@ -77,7 +77,7 @@ class Order_Model extends Foundation_Model implements  Order_Interface{
     public function details($iOrderId){
         try{
 
-            $sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id JOIN order_items AS oi ON o.order_id = oi.order_id JOIN item AS i ON oi.item_id = i.item_id  WHERE co.order_id = :cust_id';
+            $sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id JOIN order_items AS oi ON o.order_id = oi.order_id JOIN item AS i ON oi.item_id = i.item_id  WHERE co.order_id = :cust_id ';
 
             //$sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id WHERE co.customer_id = :cust_id';
 

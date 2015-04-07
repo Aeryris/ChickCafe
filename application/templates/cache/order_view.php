@@ -47,7 +47,7 @@
 
 
                     <?php foreach($oOrdersData as $key => $value): ?>
-                    <div>
+                    <div class="cardView" style="clear: both">
                         <span>Order no: <?php echo $value['order_id'] ?></span> <br />
                         <span>Order date: <?php echo $value['order_datetime'] ?></span><br />
                         <span>Price: <?php echo $value['order_price'] ?></span><br />
@@ -64,7 +64,7 @@
 
                     </div>
 
-                    <div style="width: 100%; height: 1px; background-color: #000000"></div>
+
 
                     <?php endforeach; ?>
 
