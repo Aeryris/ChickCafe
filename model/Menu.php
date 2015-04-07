@@ -131,6 +131,9 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
 
             $oStmt = $this->db->prepare($sQuery);
 
+
+            if($this->id == null) $this->id = $iId;
+
             $oStmt->bindParam(':id', $this->id, PDO::PARAM_INT);
 
             $oExecute = $oStmt->execute();

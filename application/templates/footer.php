@@ -108,7 +108,7 @@
         {
             return false;
         });
-        //setInterval(displayNotificationsList, 1000);
+        setInterval(displayNotificationsList, 1000);
 
     });
 </script>

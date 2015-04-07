@@ -59,13 +59,32 @@ class MenuItems_Model extends Foundation_Model implements MenuItems_Interface {
     public function add($menuId, $iFoodId){
         try{
 
-            $sQuery = 'INSERT INTO menu_items(menu_id, item_id) VALUES(:menuID, :foodID)';
+            $sCheck = 'SELECT * FROM menu_items WHERE menu_id = :mid AND item_id = :iid';
+            $oItemCheck = $this->db->prepare($sCheck);
+            $oItemCheck->bindValue(':mid', $menuId);
+            $oItemCheck->bindValue(':iid', $iFoodId);
 
-            $oStmt = $this->db->prepare($sQuery);
-            $oStmt->bindValue(':menuID', $menuId);
-            $oStmt->bindValue(':foodID', $iFoodId);
+            $oItemCheck->execute();
 
-            $oStmt->execute();
+            $aItemData = $oItemCheck->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+            if(empty($aItemData)){
+                $sQuery = 'INSERT INTO menu_items(menu_id, item_id) VALUES(:menuID, :foodID)';
+
+                $oStmt = $this->db->prepare($sQuery);
+                $oStmt->bindValue(':menuID', $menuId);
+                $oStmt->bindValue(':foodID', $iFoodId);
+
+                $oStmt->execute();
+            }else{
+                return 'Item is already in the menu';
+            }
+
+
+
+
 
         }catch(Exception $e){
 

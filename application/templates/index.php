@@ -4,7 +4,7 @@
     <div id="main" class="container clear-top">
 
 <div class="bg"></div>
-<div class="jumbotron" style="">
+<div class="jumbotron" style="height: 100%">
     <div style="font-size:60px ;width: 100%; height: 200px;background: url(http://vignette2.wikia.nocookie.net/stargate/images/f/fe/Coffee.jpeg/revision/latest?cb=20150309203723);  background-repeat: no-repeat;  background-size: cover;">
        Today's Daily Special
 
@@ -14,7 +14,7 @@
     <p class="lead">Today's daily special is...</p>
 
 
-    <div class="center-block" id="view_menu">
+    <div class="center-block" id="view_menu" style="height: 400px; overflow: auto">
         <div style="display: none" class="btn-group" role="group" aria-label="...">
 
             {foreach($menuTypes as $key => $value)}

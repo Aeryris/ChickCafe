@@ -186,7 +186,7 @@ class Menu_Controller extends Base_Controller{
             MenuItems_Model::menu()->remove($menuId, $removeId);
         }else if(isset($_GET['add'])){
             $addId = $_POST['food'];
-            MenuItems_Model::menu()->add($menuId, $addId);
+            $error = MenuItems_Model::menu()->add($menuId, $addId);
 
         }
 
@@ -202,8 +202,18 @@ class Menu_Controller extends Base_Controller{
 
         $d = $menuItems->data;
 
-        $this->template->menu_start_time = $d[0]['menu_time_start'] ? $d[0]['menu_time_start'] : '';
-        $this->template->menu_end_time = $d[0]['menu_time_end'] ? $d[0]['menu_time_end'] : '';
+        if(isset($d[0]['menu_time_start'])){
+            $this->template->menu_start_time = $d[0]['menu_time_start'] ? $d[0]['menu_time_start'] : '';
+            $this->template->menu_end_time = $d[0]['menu_time_end'] ? $d[0]['menu_time_end'] : '';
+        }else{
+            $this->template->menu_start_time = '';
+            $this->template->menu_end_time = '';
+        }
+
+        $oMenu = Menu_Model::menu()->get($menuId);
+
+
+        $this->template->menu = $oMenu->data;
 
         $this->template->error = $error;
         $oFood = new Food_Model();

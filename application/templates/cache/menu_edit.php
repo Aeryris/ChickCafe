@@ -37,8 +37,7 @@
     <div id="main" class="container clear-top">
 
         <div class="container">
-
-            <h3>Editing <?php echo $foodLists[0]['menu_name'] ?></h3>
+            <h3>Editing <?php echo $menu['menu_name'] ?></h3>
             <h4><a class="btn btn-sm btn-primary" href="/menu/all">Go back</a></h4>
             <div class="cardView">
             Foods:
@@ -86,7 +85,7 @@
             </form>
 
             <?php
-    if(isset($error)) echo  $error;
+    if(isset($error)) echo  '<h4 style="color: red">'.$error.'</h4>';
 
 ?>
 
