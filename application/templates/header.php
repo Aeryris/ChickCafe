@@ -263,10 +263,10 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="/menu">Menu</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact Us</a></li>
+                <li class="active"><a href="/"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="/menu"><i class="fa fa-spoon"></i> Menu</a></li>
+                <li><a href="#"><i class="fa fa-info-circle"></i> About Us</a></li>
+                <li><a href="#"><i class="fa fa-at"></i> Contact Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
@@ -290,13 +290,13 @@
                     }
                     ?>
 
-                    <li><a href="/user/account">Account</a></li>
-                    <li><a href="/user/logout">Logout</a></li>
+                    <li><a href="/user/account"><i class="fa fa-user"></i> Account</a></li>
+                    <li><a href="/user/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
                 <?php endif; ?>
 
                 <?php if(!Auth_Core::init()->isAuth()): ?>
-                    <li><a href="/user/login">Login</a></li>
-                    <li><a href="/user/register">Register</a></li>
+                    <li><a href="/user/login"><i class="fa fa-sign-in"></i> Login</a></li>
+                    <li><a href="/user/register"><i class="fa fa-sign-out"></i> Register</a></li>
                 <?php endif; ?>
 
                 <!-- Only show when user is registered -->
