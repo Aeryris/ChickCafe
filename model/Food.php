@@ -132,9 +132,9 @@ class Food_Model extends Foundation_Model implements Foundation_Interface{
 
     public function removeIngredient($iItemId, $iIngredientId){
         try{
+            $info = $this->in($iItemId, $iIngredientId);
 
-
-            if(empty($this->in($iItemId, $iIngredientId))) {
+            if(empty($this->in($iItemId, $iIngredientId)) || $info[0]['ingredient_quantity'] <= 0) {
 
                 $sQuery = 'DELETE FROM item_ingredients WHERE ingredient_id = :ing_id AND item_id = :it_id';
                 $oStmt = $this->db->prepare($sQuery);
@@ -202,7 +202,7 @@ class Food_Model extends Foundation_Model implements Foundation_Interface{
             $oStmt->bindValue(':price', $aItemDetails['food_price']);
             $oStmt->bindValue(':preptime', $aItemDetails['food_preptime']);
 
-            //var_dump($oStmt->execute());
+            $oStmt->execute();
 
             return 'Item '.$aItemDetails['food_name'].' added to the system';
 

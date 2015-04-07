@@ -38,6 +38,7 @@
 
         <div class="container">
             <h3>Add food</h3>
+            <h4><a class="btn btn-sm btn-primary" href="/staff/manager">Go back</a></h4>
 
             <form action="/food/add" method="post">
 
@@ -65,7 +66,7 @@
                     <label for="food_preptime">Preparation time</label>
                     <input type="text" value="" class="form-control" name="food_preptime" />
                 </div>
-                <button type="submit" class="btn btn-lg btn-primary btn-block">Add</button>
+                <button type="submit" class="btn btn-lg btn-primary">Add</button>
 
             </form>
 

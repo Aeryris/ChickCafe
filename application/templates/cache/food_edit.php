@@ -38,13 +38,14 @@
 
         <div class="container">
             <h3>Editing <?php echo $foodDetails['item_name'] ?></h3>
-            <h4><a href="/food/view">Go back</a></h4>
-            Ingredients:
+            <h4><a class="btn btn-sm btn-primary" href="/food/view">Go back</a></h4>
+            <div class="cardView">
+            <h4>Ingredients:</h4>
             <ul>
             <?php foreach($ingredientsList as $key => $value): ?>
             <li class="ingredient">
 
-              <?php echo $value['ingredient_name'] ?> [ <?php echo $value['ingredient_quantity'] ?> ] <a href="/food/edit/id/<?php echo $_GET['id'] ?>/remove/<?php echo $value['ingredient_id'] ?> ">Remove</a>
+              <?php echo $value['ingredient_name'] ?> [ <?php echo $value['ingredient_quantity'] ?> ] <a class="btn btn-sm" href="/food/edit/id/<?php echo $_GET['id'] ?>/remove/<?php echo $value['ingredient_id'] ?> ">Remove</a>
 
             </li>
 
@@ -63,7 +64,7 @@
 
                 </select>
 
-                <button type="submit">Add</button>
+                <button class="btn btn-sm btn-primary" type="submit">Add</button>
             </form>
 
             <form method="post" action="/food/edit/id/<?php echo $_GET['id'] ?>/order/">
@@ -72,8 +73,8 @@
                 <?php $orderQuan = $foodDetails['item_stock'] -  $foodDetails['item_available'];?>
                 <label for="order">Order</label>
                 <input name="order" type="text" value="<?php echo $orderQuan ?>" />
-
-                <button type="submit">Order</button>
+                <br />
+                <button class="btn btn-sm btn-primary" type="submit">Order</button>
             </form>
             <?php
             if(isset($error)) echo $error
@@ -82,7 +83,7 @@
 
         </div>
 
-
+</div>
     </div>
 
 </div>

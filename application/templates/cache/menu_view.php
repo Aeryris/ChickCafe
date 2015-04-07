@@ -46,7 +46,7 @@
             <h3 class="menu-name"><?php echo $menuItems->data[0]['menu_name'] ?></h3>
             <h4><a class="btn btn-sm btn-primary" href="/menu/all">Go back</a></h4>
             <legend>
-                
+
                 <span style="color: orange;">Orange</span> - Available stock is low (less than 15%)
             </legend>
             <div class="current-menus">

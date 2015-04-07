@@ -40,15 +40,11 @@
             <h3>Add food</h3>
             <h4><a class="btn btn-sm btn-primary" href="/staff/manager">Go back</a></h4>
 
-            <form action="/food/add" method="post">
+            <form action="/ingredients/add" method="post">
 
                 <div class="form-group">
                     <label for="food_name">Name</label>
                     <input type="text" value="" class="form-control" name="food_name" />
-                </div>
-                <div class="form-group">
-                    <label for="food_desc">Description</label>
-                    <input type="text" value="" class="form-control" name="food_desc" />
                 </div>
                 <div class="form-group">
                     <label for="food_stock">Stock</label>
@@ -58,27 +54,20 @@
                     <label for="food_available">Available</label>
                     <input type="text" value="" class="form-control" name="food_available" />
                 </div>
-                <div class="form-group">
-                    <label for="food_price">Price</label>
-                    <input type="text" value="" class="form-control" name="food_price" />
-                </div>
-                <div class="form-group">
-                    <label for="food_preptime">Preparation time</label>
-                    <input type="text" value="" class="form-control" name="food_preptime" />
-                </div>
+
                 <button type="submit" class="btn btn-lg btn-primary">Add</button>
 
             </form>
 
             <?php if(isset($error)) echo $error ?>
 
-            </div>
-
-
         </div>
 
 
     </div>
+
+
+</div>
 
 </div>
 </div>

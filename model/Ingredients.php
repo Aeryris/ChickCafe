@@ -109,6 +109,26 @@ class Ingredients_Model extends Foundation_Model{
     }
 
 
+    public function add($aItemDetails){
+        try{
+
+            $sQuery = 'INSERT INTO ingredient VALUES (NULL, :name, :stock, :avail, NULL, 0)';
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindValue(':name', $aItemDetails['food_name']);
+            $oStmt->bindValue(':stock', $aItemDetails['food_stock']);
+            $oStmt->bindValue(':avail', $aItemDetails['food_available']);
+
+            $oStmt->execute();
+
+            return 'Ingredient '.$aItemDetails['food_name'].' added to the system';
+
+        }catch(Exception $e){
+            return $e;
+        }
+    }
+
+
 
 
 

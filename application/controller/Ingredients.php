@@ -79,5 +79,20 @@ class Ingredients_Controller extends Base_Controller implements Base_Controller_
 
     }
 
+    public function add(){
+
+        $oFood = new Ingredients_Model();
+        $error = '';
+        if($_POST){
+            //var_dump($_POST);
+            $error = $oFood->add($_POST);
+        }
+
+        $this->template->error = $error;
+
+
+        $this->view = 'ingredient_add';
+    }
+
 
 } 

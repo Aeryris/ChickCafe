@@ -3,9 +3,12 @@
 <div id="wrap">
 	<div id="main" class="container clear-top">
         <a class="btn btn-lg btn-primary" href="/menu/all">All Menus list</a>
-        <a class="btn btn-lg btn-primary" href="/menu/add">Add menu</a>
         <a class="btn btn-lg btn-primary" href="/ingredients/view">Ingredients list</a>
         <a class="btn btn-lg btn-primary" href="/food/view">Foods list</a>
+        <br />
+        <a class="btn btn-lg btn-primary" href="/menu/add">Add menu</a>
+        <a class="btn btn-lg btn-primary" href="/menu/add">Add Ingredient</a>
+        <a class="btn btn-lg btn-primary" href="/food/add">Add Food</a>
 		<div role="tabpanel">
 		</br>
 	  <!-- Nav tabs -->
