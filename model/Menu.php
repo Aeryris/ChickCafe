@@ -56,6 +56,8 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
     public $startTime;
     public $endTime;
 
+    public $image;
+
     public $id;
     public $data;
 
@@ -156,6 +158,11 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
         return $this;
     }
 
+    public function setImage($sImage){
+        $this->image = $sImage;
+        return $this;
+    }
+
     public function save(){
 
         if($this->bIsNew){
@@ -176,13 +183,14 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
             $this->db->beginTransaction();
 
 
-            $sQuery = 'INSERT INTO menu(menu_name, menu_time_start, menu_time_end) VALUES(:name, :start, :end)';
+            $sQuery = 'INSERT INTO menu(menu_name, menu_time_start, menu_time_end, menu_image) VALUES(:name, :start, :end, :image)';
 
             $oStmt = $this->db->prepare($sQuery);
 
             $oStmt->bindValue(':name', $this->name, PDO::PARAM_STR);
             $oStmt->bindValue(':start', $this->startTime, PDO::PARAM_STR);
             $oStmt->bindValue(':end', $this->endTime, PDO::PARAM_STR);
+            $oStmt->bindValue(':image', $this->image, PDO::PARAM_STR);
 
             $bExecuted = $oStmt->execute();
 

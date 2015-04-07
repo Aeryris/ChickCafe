@@ -103,11 +103,45 @@ class Menu_Controller extends Base_Controller{
             $sEndTime = $_POST['menu_end_time'];
             $sMenuType = $_POST['menu_type'];
 
-            $oMenu = Menu_Model::menu()
-                ->add()->setName($sName)
-                ->setStartTime($sStartTime)
-                ->setEndTime($sEndTime)
-                ->save();
+            if($_FILES['food_image']['name'])
+            {
+                //if no errors...
+                if(!$_FILES['food_image']['error'])
+                {
+                    $valid_file = true;
+                    //var_dump($_FILES);
+                    //now is the time to modify the future file name and validate the file
+                    $new_file_name = strtolower($_FILES['food_image']['tmp_name']); //rename file
+                    if($_FILES['food_image']['size'] > (1024000)) //can't be larger than 1 MB
+                    {
+                        $valid_file = false;
+                        $error = 'Oops!  Your file\'s size is to large.';
+                    }
+
+                    //if the file has passed the test
+                    if($valid_file)
+                    {
+                        //move it to where we want it to be
+                        move_uploaded_file($_FILES['food_image']['tmp_name'], \System\System_Core::$sRootPath.DIRECTORY_SEPARATOR.'food_images'.DIRECTORY_SEPARATOR.strtolower($_FILES['food_image']['name']));
+                        $error = 'Congratulations!  Your file was accepted.';
+                        $_POST['image'] = strtolower($_FILES['food_image']['name']);
+                        $oMenu = Menu_Model::menu()
+                            ->add()->setName($sName)
+                            ->setStartTime($sStartTime)
+                            ->setEndTime($sEndTime)
+                            ->setImage($_POST['image'])
+                            ->save();
+                    }
+                }
+                //if there is an error...
+                else
+                {
+                    //set that to be the returned message
+                    $error = 'Ooops!  Your upload triggered the following error:  '.$_FILES['food_image']['error'];
+                }
+            }
+
+
 
 
 

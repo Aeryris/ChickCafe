@@ -113,7 +113,7 @@ class Food_Controller extends Base_Controller{
                 if(!$_FILES['food_image']['error'])
                 {
                     $valid_file = true;
-                    var_dump($_FILES);
+                    //var_dump($_FILES);
                     //now is the time to modify the future file name and validate the file
                     $new_file_name = strtolower($_FILES['food_image']['tmp_name']); //rename file
                     if($_FILES['food_image']['size'] > (1024000)) //can't be larger than 1 MB
@@ -136,7 +136,7 @@ class Food_Controller extends Base_Controller{
                 else
                 {
                     //set that to be the returned message
-                    $error = 'Ooops!  Your upload triggered the following error:  '.$_FILES['photo']['error'];
+                    $error = 'Ooops!  Your upload triggered the following error:  '.$_FILES['food_image']['error'];
                 }
             }
 

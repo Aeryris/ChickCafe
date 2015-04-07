@@ -64,6 +64,10 @@
 
                         </select>
                     </div>
+                <div class="form-group">
+                    <label for="food_preptime">Image</label>
+                    <input type="file" value="" class="form-control" name="food_image" />
+                </div>
 
 
 
