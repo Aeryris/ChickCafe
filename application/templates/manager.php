@@ -35,28 +35,20 @@
 		    <div role="tabpanel" class="tab-pane" id="refund">
 		    	<h2>Approve orders where a refund has been requested</h2>
 		    	<p>This list is refreshed every day with orders from over the day </p>
-		    	<table class="table" id="refund_table">
-		    		<tr>
-		    			<th>Order ID</th>
-		    			<th>Order Date</th>
-		    			<th>Customer Name</th>
-		    			<th>Refund Amount</th>
-		    			<th>Approve Refund?</th>
-		    		</tr>
 		    		<!-- foreach loop goes here -->
 		    		{foreach($refund as $key => $value)}
-		    		<form class="form-inline" id="key" value="key" method="post" action="/staff/approve_refund">
-					<tr class="info">
-		    			<td>{! $value['order_id']}</td>
-		    			<td>{! $value['order_datetime']}</td>
-		    			<td>{! $value['user_firstname']} {! $value['user_lastname']}</td>
-		    			<td>{! $value['order_price']</td>
-		    		</tr>
+		    		<form class="form-inline" id="{! $value['order_id']}" value="{! $value['order_id']}" method="post" action="/staff/approve_refund">
+		    			<p>Order ID: {! $value['order_id']}</p>
+		    			<input type="hidden" name="order_id" id="order_id" value="{! $value['order_id']}">
+		    			<p>Order Date/Time: {! $value['order_datetime']}</p>
+		    			<input type="hidden" name="order_datetime" id="order_datetime" value="{! $value['order_datetime']}">
+		    			<p> Customer Name: {! $value['user_firstname']} {! $value['user_lastname']}</p>
+		    			<p>Order Price: {! $value['order_price']}</p>
+		    			<input type="hidden" name="order_price" id="order_price" value="{! $value['order_price']}">
 		    			<button class="btn btn-primary btn-xs" type="submit">Approve Refund</button>
 					</form>
 		    		{/foreach}
 		    		<!-- end foreach -->
-		    	</table>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="create_staff">
 		    	<h2>Create a new staff memeber</h2>

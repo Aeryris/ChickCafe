@@ -32,29 +32,63 @@
  */
 
 interface Refund_Interface{
-    public function get($iId);
-    public function make();
+    public function get_id($oID);
+    public function make($oID);
     public function setOrderId($iId);
     public function setDate($sDate);
     public function setAmount($bAmount);
 }
 
-class Refund_Model implements Refund_Interface {
+class Refund_Model extends Foundation_Model implements Refund_Interface {
 
-    public function get($iId){
+    public $db;
+
+    public function get_id($oID){
+        $db = Database_Core::get();
+        if ($oID != null) {
+            try{
+                $sQuery = 'SELECT *
+                            FROM refund WHERE refund_order = :order_id';
+                $oStmt = $db->prepare($sQuery);
+                $oStmt->bindValue(':order_id', $oID, PDO::PARAM_INT);
+                $oStmt->execute();
+                $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+                // var_dump($data);
+                $rID = $data[0];
+                // var_dump($rID);
+                // exit();
+
+                return $rID;
+            }catch(Exception $e){
+
+            }
+        }
+    }
+
+    public function make($oID){
+        if ($oID != null) {
+            
+        }
+    }
+
+    public function __construct()
+    {
 
     }
-    public function make(){
 
-    }
     public function setOrderId($iId){
-
+        $this->orderId = $iId;
+        return $this;
     }
+
     public function setDate($sDate){
-
+        $this->date = $sDate;
+        return $this;
     }
-    public function setAmount($bAmount){
 
+    public function setAmount($bAmount){
+        $this->amount = $bAmount;
+        return $this;
     }
 
 } 
