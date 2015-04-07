@@ -103,7 +103,7 @@
                 <div style="<?php if($value['item_available'] == 0) echo 'color: red'; elseif((($value['item_available'] / $value['item_stock']) * 100) < 15)  echo 'color: orange'; ?>">
                 <div style="width: 150px; height: 150px; float: left" class="food_image">
                     
-<img style="height: 100%; width: 100%" src="/food_images/{! $value['item_img'] }">
+<img style="height: 100%; width: 100%;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" src="/food_images/{! $value['item_img'] }">
                 </div>
                     <div class="food_data" style="float: left; margin-left: 10px">
                     <span class="menu-item-desc"><b>Description:</b> {! $value['item_description'] }</span> <br />
