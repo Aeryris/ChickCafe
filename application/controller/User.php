@@ -220,7 +220,7 @@ class User_Controller extends Base_Controller{
         }
 
 
-
+        $this->template->user_total_spending = $oUser->aData['customer_spending_total'];
         $this->view = $templateName;
     }
 

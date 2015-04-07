@@ -42,6 +42,10 @@
         <div class="container">
             <h3>Dashboard</h3>
 
+            <div>
+                Total spendings: <?php echo $user_total_spending ?>
+            </div>
+
             <a class="btn btn-lg btn-primary btn-block" href="/order/view">My Orders</a>
 
         </div>

@@ -57,9 +57,10 @@
                 <span class="menu-item-stock"><b>Stock:</b> <?php echo $value['item_available'] ?>/<?php echo $value['item_stock'] ?></span> <br />
                 <span class="menu-item-price"><b>Price:</b> <?php echo $value['item_price'] ?></span> <br />
                 <span class="menu-item-prep"><b>Preparation time:</b> <?php echo $value['item_preptime'] ?></span> <br />
+                    <input type="hidden" class="remaining-stock" name="remaining-stock" value="<?php echo $value['item_available'] ?>" />
 
-                <?php if(!isset($_GET['preview'])): ?>
-                    <button class="add_item_to_basket btn btn-material-deep-purple" id="<?php echo $value['item_id'] ?>" href="#">Add</button>
+                <?php if(!isset($_GET['preview']) && $value['item_available'] != 0): ?>
+                    <button class="add_item_to_basket btn btn-material-deep-purple" id="<?php echo $value['item_id'] ?>" data-remain="<?php echo $value['item_available'] ?>" href="#">Add</button>
 
                 <?php endif; ?>
                 <div style="width: 100%; height: 1px; background-color: #000000"></div>

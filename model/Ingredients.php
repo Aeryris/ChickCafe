@@ -92,7 +92,7 @@ class Ingredients_Model extends Foundation_Model{
             $stock = $data[0]['ingredient_available'] + $iQuantity;
 
             if($stock <= $data[0]['ingredient_stock']){
-                $sUpdate = 'UPDATE ingredient SET ingredient_available = ingredient_available + :quantity';
+                $sUpdate = 'UPDATE ingredient SET ingredient_available = ingredient_available + :quantity, ingredient_stock_notification = 0';
                 $oStmtUpdate  = $this->db->prepare($sUpdate);
                 $oStmtUpdate ->bindValue(':quantity', $iQuantity);
                 $oStmtUpdate ->execute();

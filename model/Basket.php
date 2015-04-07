@@ -545,6 +545,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
         $oUser = new User_Model();
         $oUser->attr(['email' => $_SESSION['user']]);
 
+
         return $this->findBasketWithItems($oUser->aData['user_id']);
     }
 

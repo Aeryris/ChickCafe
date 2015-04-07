@@ -197,7 +197,7 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
     }
 
     public function insertData(){
-        echo("<pre>");
+        //echo("<pre>");
         $this->fillIn();
         try{
             $this->db->beginTransaction();
@@ -297,7 +297,7 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
     public function attr($aAttr){
         try{
 
-            $sQuery = "SELECT * FROM user WHERE ";
+            $sQuery = "SELECT * FROM user RIGHT JOIN customer ON user.user_id = customer.customer_user_id WHERE ";
 
             foreach($aAttr as $key => $value){
                 $sQuery .= "user_".$key. " = :". $key. " AND ";

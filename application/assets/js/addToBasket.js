@@ -36,11 +36,27 @@ $(document).ready(function(){
      * Ajax Call to basket -> Basket refresh
      */
 
+    console.log('text');
+
+
+
     $('button.add_item_to_basket').click(function(){
 
         console.log($(this).parent('.current-menus'));
         var menu_name = $(this).parent('.current-menus').closest('.menu-name');
         var item_id = $(this).attr('id');
+
+        //console.log($('button.add_item_to_basket').);
+
+        console.log($(this).data('remain'));
+        var remain = $(this).data('remain')-1;
+
+        if($(this).data('remain') == 0){
+            alert('You cannot add more, we do not have enough in stock');
+            return;
+        }
+
+        $(this).data('remain', remain);
 
 
         (function() {
