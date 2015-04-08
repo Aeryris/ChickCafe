@@ -22,8 +22,78 @@ class Staff_Controller extends Base_Controller{
     }
 
     public function get_orders() {
+        $sQuery = "SELECT *
+                    FROM orders o
+                    INNER JOIN customer_order co ON o.order_id = co.order_id
+                    JOIN customer cu ON co.customer_id = cu.customer_user_id
+                    INNER JOIN order_items oi ON oi.order_id = o.order_id
+                    INNER JOIN item i ON oi.item_id = i.item_id
+                    WHERE DATE(`order_datetime`) = CURDATE() AND order_ready = 'F'
+                    ORDER BY o.order_datetime ASC"; 
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->execute();
+        $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($data != null) {
+            $orders = [];
+            foreach($data as $key => $value) {
+                $orders[$value['order_id']][] = $value;
+            }
+            foreach($orders as $orderID => $dataSet) {
+                $items = [];
+                $original = $dataSet;
+                foreach($dataSet as $key => $value) {
+                    $theItem = [
+                        'item_id' => $value['item_id'],
+                        'item_name' => $value['item_name'],
+                        'item_description' => $value['item_description'],
+                        'item_stock' => $value['item_stock'],
+                        'item_available' => $value['item_available'],
+                        'item_price' => $value['item_price'],
+                        'item_preptime' => $value['item_preptime'],
+                        'item_img' => $value['item_img']
+                    ];
+                    $orders[$orderID][0]['items'][] = $theItem;
+                    $orders[$orderID][0]['item_names'][] = $value['item_name'];
+                    $orders[$orderID][0]['item_preptimes'][] = $value['item_preptime'];
+                    unset(
+                        $orders[$orderID][0]['item_id'],
+                        $orders[$orderID][0]['item_name'],
+                        $orders[$orderID][0]['item_description'],
+                        $orders[$orderID][0]['item_stock'],
+                        $orders[$orderID][0]['item_available'],
+                        $orders[$orderID][0]['item_price'],
+                        $orders[$orderID][0]['item_preptime'],
+                        $orders[$orderID][0]['item_img']
+                    );
+                }
+            }
+            foreach($orders as $orderID => $set) {
+                $finalOrders[] = $set[0];
+            }
+            return $finalOrders;
+        }   
+    }
 
-        $this->view="staff";
+    public function ready_order() {
+        try {
+            $oID = Field::post('order_id')->required();
+            $sID = User_Model::user()['user_id'];
+            if ($oID != null && $sID != null) {
+                $this->db->beginTransaction();
+                $sQuery = "UPDATE orders SET order_ready_datetime = NOW( ) ,
+                            order_ready = 'T',
+                            order_staff_id = :staff_id WHERE order_id = :order_id";
+                $oStmt = $this->db->prepare($sQuery);
+                $oStmt->bindValue(':order_id', $oID->value(), PDO::PARAM_INT);
+                $oStmt->bindValue(':staff_id', $sID, PDO::PARAM_INT);
+                $oStmt->execute();
+                $this->db->commit();
+            }
+            header("Location: /staff/staff");
+        } catch (Exception $e) {
+            echo "haha";
+            die();
+        }
     }
 
     public function get_order_report() {
@@ -97,7 +167,7 @@ class Staff_Controller extends Base_Controller{
                     JOIN orders o ON co.order_id = o.order_id
                     INNER JOIN user u ON co.customer_id = u.user_id
                     WHERE re.refund_id = co.refund_refund_id
-                    ORDER BY o.order_datetime ASC ";
+                    ORDER BY o.order_datetime ASC";
         $oStmt = $this->db->prepare($sQuery);
         $oStmt->execute();
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -125,7 +195,7 @@ class Staff_Controller extends Base_Controller{
                     INNER JOIN user u ON cu.customer_user_id = u.user_id
                     INNER JOIN order_items oi ON oi.order_id = o.order_id
                     INNER JOIN item i ON oi.item_id = i.item_id
-                    WHERE o.order_id = co.order_id AND o.order_datetime = CURDATE()
+                    WHERE o.order_id = co.order_id AND DATE(o.order_datetime) = CURDATE()
                     ORDER BY o.order_datetime ASC"; 
         $oStmt = $this->db->prepare($sQuery);
         $oStmt->execute();
@@ -237,7 +307,7 @@ class Staff_Controller extends Base_Controller{
                           ->setPassword($oUser->passwordSecure($sPassword->value()))
                           ->setFirstName($sFirstName->value())
                           ->setLastName($sLastName->value())
-        
+
                           ->setSalary($sSalary->value())
                           ->setRole($sRole->value())
                           ->setPhoneNumber($sPhoneNumber->value())
@@ -259,7 +329,7 @@ class Staff_Controller extends Base_Controller{
         $sQuery = 'SELECT *
             FROM staff s
             INNER JOIN user u
-            WHERE s.staff_user_id = u.user_id';
+            WHERE s.staff_user_id = u.user_id AND s.staff_role <> "Unemployed" ';
         $oStmt = $this->db->prepare($sQuery);
         $oStmt->execute();
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -350,7 +420,7 @@ class Staff_Controller extends Base_Controller{
     }
 
     public function get_all_items() {
-        $items = Food_Model::all();
+        $items = new Food_Model();
         return $items;
     }
 
@@ -401,6 +471,8 @@ class Staff_Controller extends Base_Controller{
         if(Acl_Core::allow([ACL::ACL_STAFF,ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
             $this->template->stock = $this->get_ingredient_stock();
             $this->template->item_stock = $this->get_item_stock();
+            $this->template->orders = $this->get_orders();
+            $this->template->profile = $this->get_profile();
             $this->view = 'staff';
         } else {
             header('Location: /error403'); //Forbidden
@@ -432,7 +504,7 @@ class Staff_Controller extends Base_Controller{
             $this->template->get_m = $this->get_all_menus();
             $this->template->create_staff = $this->create_staff();
             $this->template->get_staff = $this->get_all_staff();
-            $this->template->refund = $this->get_refund_report();
+            $this->template->refund = $this->get_order_report();
             $this->view = 'manager';
         } else {
             header('Location: /error403'); //Forbidden

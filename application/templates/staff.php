@@ -10,6 +10,16 @@
 
 <div id="wrap">
 	<div id="main" class="container clear-top">
+		<?php if(Acl_Core::allow([ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
+        	echo '<a class="btn btn-lg btn-primary" href="/staff/manager">Manager Dashboard</a>';
+        	echo '<a class="btn btn-lg btn-primary" href="/staff/report">Reports</a>';
+        } else {
+
+        	} ?>
+
+        <?php if (Acl_Core::allow([ACL::ACL_OWNER])) {
+    		echo '<a class="btn btn-lg btn-primary" href="/owner/owner">Backup/Restore Database</a>';
+        }?>
 		<div role="tabpanel">
 
 	  <!-- Nav tabs -->
@@ -34,8 +44,21 @@
 					{/foreach}
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="orders">
-		    	Current unprocessed order list goes here
-		    	{! $orders}
+		    	{foreach($orders as $key => $value)}
+		    		<form method="post" value="{! $value['order_id']}" method="post" action="/staff/ready_order">
+	    			<p>Order ID: {! $value['order_id']}</p>
+	    			<input type="hidden" name="order_id" id="order_id" value="{! $value['order_id']}"/>
+	    			<p>Order Date/Time: {! $value['order_datetime']}</p>
+	    			{foreach ($value['item_names'] as $k => $v)}
+	    			<p>Item name: {! $v}</p>
+	    			{/foreach}
+	    			{foreach ($value['item_preptimes'] as $k => $v)}
+	    			<p>Item preptime: {! $v}</p>
+	    			{/foreach}
+	    			<!-- <input type="hidden" name="staff_id" id="staff_id" value="{! $profile->user_id}"/> -->
+	    			<button class="btn btn-primary" type="submit">Order is Ready</button>
+	    			</form>
+		    	{/foreach}
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="profile">
 		    	<h2>Your Profile</h2>

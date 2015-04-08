@@ -10,6 +10,16 @@
 
 <div id="wrap">
 	<div id="main" class="container clear-top">
+	<?php if(Acl_Core::allow([ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
+        	echo '<a class="btn btn-lg btn-primary" href="/staff/staff">Staff Dashboard</a>';
+        	echo '<a class="btn btn-lg btn-primary" href="/staff/manager">Manager Dashboard</a>';
+        } else {
+
+        	} ?>
+
+        <?php if (Acl_Core::allow([ACL::ACL_OWNER])) {
+    		echo '<a class="btn btn-lg btn-primary" href="/owner/owner_backup">Backup/Restore Database</a>';
+        }?>
 		<div role="tabpanel">
 
 	  <!-- Nav tabs -->

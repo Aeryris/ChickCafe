@@ -70,7 +70,7 @@ class Staff_Model extends UserType_Model implements Staff_Interface {
     {
         $staffID = $oUser->aData['user_id'];
         try {
-            $sQuery = "SELECT * FROM staff WHERE staff_user_id = :staffID AND staff_role = 'Retail';";
+            $sQuery = "SELECT * FROM staff WHERE staff_user_id = :staffID;";
             $oStmt = $this->db->prepare($sQuery);
 
             $oStmt->bindValue(":staffID", $staffID);
