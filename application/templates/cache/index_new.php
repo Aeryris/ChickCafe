@@ -87,7 +87,8 @@
                             <div class="box-icon">
                                 <img alt="<?php echo $value['item_description'] ?>" style="width: 100%; height: 100%;border-radius: 50%;" src="/food_images/<?php echo $value['item_img'] ?>">
                             </div>
-                            <h4 class="text-center"><?php echo $value['item_name'] ?></h4>
+                            <h4 class="text-center"><?php echo $value['item_name'] ?> <p style="font-size: 60px; color: gold" class="text-center"> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span></p></h4>
+
                             <p style="color: #000000"><?php  echo  $value['item_description'] ?></p>
                             <a href="/menu/view/id/<?php echo $value['item_id'] ?>" class="btn">View</a>
                         </div>
@@ -96,8 +97,10 @@
 
                 <?php endforeach; ?>
 
-                <hr><hr>
+
             </div>
+
+            <hr><hr>
             <div class="row">
 
 
