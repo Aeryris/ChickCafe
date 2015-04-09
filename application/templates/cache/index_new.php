@@ -75,6 +75,32 @@
 
         <div class="container">
             <div class="row">
+
+                <h2>Today's daily special is: </h2>
+                <?php foreach($dailySpecial as $key => $value): ?>
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+                    <div class="box" style="background: white">
+                        <div class="box-image" style="background: url(/food_images/<?php echo $value['item_img'] ?>)">
+                        </div>
+                        <div class="info" style="padding: 10px 25px;">
+                            <div class="box-icon">
+                                <img alt="<?php echo $value['item_description'] ?>" style="width: 100%; height: 100%;border-radius: 50%;" src="/food_images/<?php echo $value['item_img'] ?>">
+                            </div>
+                            <h4 class="text-center"><?php echo $value['item_name'] ?></h4>
+                            <p style="color: #000000"><?php  echo  $value['item_description'] ?></p>
+                            <a href="/menu/view/id/<?php echo $value['item_id'] ?>" class="btn">View</a>
+                        </div>
+                    </div>
+                </div>
+
+                <?php endforeach; ?>
+
+                <hr><hr>
+            </div>
+            <div class="row">
+
+
             <?php foreach($oMenu->data() as $key => $value): ?>
 
 

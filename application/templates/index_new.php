@@ -75,6 +75,32 @@
 
         <div class="container">
             <div class="row">
+
+                <h2>Today's daily special is: </h2>
+                {foreach($dailySpecial as $key => $value)}
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+                    <div class="box" style="background: white">
+                        <div class="box-image" style="background: url(/food_images/{! $value['item_img'] })">
+                        </div>
+                        <div class="info" style="padding: 10px 25px;">
+                            <div class="box-icon">
+                                <img alt="{! $value['item_description'] }" style="width: 100%; height: 100%;border-radius: 50%;" src="/food_images/{! $value['item_img'] }">
+                            </div>
+                            <h4 class="text-center">{! $value['item_name'] }</h4>
+                            <p style="color: #000000"><?php  echo  $value['item_description'] ?></p>
+                            <a href="/menu/view/id/{! $value['item_id'] }" class="btn">View</a>
+                        </div>
+                    </div>
+                </div>
+
+                {/foreach}
+
+                <hr><hr>
+            </div>
+            <div class="row">
+
+
             {foreach($oMenu->data() as $key => $value)}
 
 
