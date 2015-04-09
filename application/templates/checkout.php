@@ -80,6 +80,7 @@
                     <div>
                         <button id="checkout-submit-button" class="btn btn-lg btn-primary btn-block" type="submit">Pay with PayPal</button>
                         <a href="/checkout/process_card" class="btn btn-lg btn-primary btn-block" >Pay with Debit Card</a>
+
                     </div>
                     </form>
                     {/if}

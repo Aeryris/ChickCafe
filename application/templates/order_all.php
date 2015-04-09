@@ -44,9 +44,22 @@ SOFTWARE.
 
             <div class="">
 
+                <?php //var_dump($oOrdersData) ?>
+
+                <?php
+
+                $oUser = new User_Model();
+
+
+                ?>
+
 
                 {foreach($oOrdersData as $key => $value)}
                 <div class="cardView" style="clear: both">
+
+                    <?php $oUser->attr(['id' => $value['customer_id']]); ?>
+
+                    <span>Name: <?php echo $oUser->aData['user_firstname']; echo ' '; echo $oUser->aData['user_lastname']; ?></span> <br />
 
                     <span>Priority order: <?php echo $value['order_priority'] ? ' <i style="color: green" class="glyphicon glyphicon-signal"> Yes</i>' : 'No'; ?></span> <br />
                     <span>Order no: {! $value['order_id'] }</span> <br />

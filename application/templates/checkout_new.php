@@ -93,8 +93,10 @@ SOFTWARE.
                                 {if(!empty($basketItems))}
                                 {! $paypal }
                                 <div>
-                                    <button disabled="disabled" id="checkout-submit-button" class="btn btn-lg btn-primary btn-block enable" type="submit">Pay with PayPal</button>
-                                    <a href="/checkout/process_card" class="btn btn-lg btn-primary btn-block a-attr" >Pay with Debit Card</a>
+                                    Pay with
+                                    <button disabled="disabled" id="checkout-submit-button" class="btn btn-lg btn-primary btn-block enable" type="submit">PayPal</button>
+                                    <a href="/checkout/process_card" class="btn btn-lg btn-primary btn-block a-attr" >Debit Card</a>
+                                    <a href="/checkout/process_card_transfer" class="btn btn-lg btn-primary btn-block a-attr" >Bank Transfer</a>
                                 </div>
                                 </form>
                                 {/if}

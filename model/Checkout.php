@@ -142,7 +142,7 @@ class Checkout_Model extends Foundation_Model{
 
             Basket_Model::basket()->clear();
 
-            $sQuery = 'INSERT INTO order_payment VALUES(:order_id, :name, :number, :cvc, :expiry)';
+            $sQuery = 'INSERT INTO order_payment(order_id, order_payment_name, order_payment_number, order_payment_cvc, order_payment_expiry) VALUES(:order_id, :name, :number, :cvc, :expiry)';
             $oStmt = $this->db->prepare($sQuery);
 
             $oStmt->bindValue(':order_id', $iOrderId);
@@ -150,6 +150,128 @@ class Checkout_Model extends Foundation_Model{
             $oStmt->bindValue(':number', $aCardDetails['number']);
             $oStmt->bindValue(':cvc', $aCardDetails['cvc']);
             $oStmt->bindValue(':expiry', $aCardDetails['expiry']);
+
+            $oStmt->execute();
+
+            $sCustomerSpendingQuery = 'UPDATE customer SET customer_spending_total = customer_spending_total + :fullprice WHERE customer_user_id = :cust_id';
+
+            $oSpending = $this->db->prepare($sCustomerSpendingQuery);
+            $oSpending->bindValue(':fullprice', $aCardDetails['full-price']);
+            $oSpending->bindValue(':cust_id', $iUserId);
+
+            $oSpending->execute();
+
+
+            return $iOrderId;
+
+
+
+        }catch(Exception $e){
+
+        }
+    }
+
+    public function checkoutCardTransfer($iUserId, $aCardDetails){
+        try{
+
+            $sOrderQuery = 'INSERT INTO orders(order_datetime, order_price, order_priority) VALUES(NOW(), :fullprice, :priority)';
+            $oStmtOrder = $this->db->prepare($sOrderQuery);
+
+            $oStmtOrder->bindValue(':fullprice', $aCardDetails['full-price']);
+
+            $priority = 0;
+
+            if(isset($_SESSION['addOrderPriority']) && $_SESSION['addOrderPriority'] == 'true'){
+                $priority = 1;
+            }
+            $oStmtOrder->bindValue(':priority', $priority);
+
+
+            $oStmtOrder->execute();
+
+            $iOrderId = $this->db->lastInsertId();
+            $this->iOrderId = $iOrderId;
+
+            $sOrderItemsQuery = 'INSERT INTO order_items(item_id, order_id) VALUES(:itemid, :orderid)';
+            $aBasketData = Basket_Model::basket()->view();
+            foreach($aBasketData as $key => $value){
+                $oOrderItemsStmt = $this->db->prepare($sOrderItemsQuery);
+                $oOrderItemsStmt->bindValue(':itemid', $value['item_id']);
+                $oOrderItemsStmt->bindValue(':orderid', $iOrderId);
+
+                $oOrderItemsStmt->execute();
+            }
+
+
+
+            $sItemsStockQuery = 'UPDATE item SET item_available = item_available - :basket_items_quantity WHERE item_id = :itemid';
+            $aItemsData = Basket_Model::basket()->view();
+
+            foreach($aItemsData as $key => $value){
+                $oItemStock = $this->db->prepare($sItemsStockQuery);
+                $oItemStock->bindValue(':basket_items_quantity', $value['basket_items_quantity']);
+                $oItemStock->bindValue(':itemid', $value['item_id']);
+
+                $oItemStock->execute();
+            }
+
+            $sIngredientsStockQuery = 'UPDATE ingredient SET ingredient_available = ingredient_available - :ing_required WHERE ingredient_id = :ing_id';
+            $sIngredientsInfoQuery = 'SELECT * FROM item_ingredients JOIN ingredient USING(ingredient_id) WHERE item_id = :item_id';
+            $aIngredientsData = Basket_Model::basket()->view();
+
+
+            //var_dump('Update ingredients');
+
+            foreach($aIngredientsData as $key => $value){
+                //var_dump('Value');
+                //var_dump($value);
+
+                $oIngredient = $this->db->prepare($sIngredientsInfoQuery);
+                $oIngredient->bindValue(':item_id', $value['item_id']);
+
+                $oIngredient->execute();
+
+                $aIngredientInfoResult = $oIngredient->fetchAll(PDO::FETCH_ASSOC);
+                //var_dump('Ingredient info');
+                //var_dump($aIngredientInfoResult);
+
+                foreach($aIngredientInfoResult as $k => $v){
+                    //var_dump('Result');
+                    //var_dump($v);
+                    $UpdateIngredient = $this->db->prepare($sIngredientsStockQuery);
+                    $UpdateIngredient->bindValue(':ing_required', $v['ingredient_quantity']*$value['basket_items_quantity']);
+                    $UpdateIngredient->bindValue(':ing_id', $v['ingredient_id']);
+                    $UpdateIngredient->execute();
+                    //var_dump($UpdateIngredient->execute());
+                }
+
+
+                //$oItemStock = $this->db->prepare($sIngredientsStockQuery);
+                //$oItemStock->bindValue(':ing_required', $value['basket_items_quantity']);
+                //$oItemStock->bindValue(':itemid', $value['item_id']);
+
+                //$oItemStock->execute();
+            }
+
+
+
+
+            $sCustomerOrder = 'INSERT INTO customer_order(customer_id, order_id) VALUES(:cust_id, :orderid)';
+
+            $oCustomerLink = $this->db->prepare($sCustomerOrder);
+            $oCustomerLink->bindValue(':cust_id', $iUserId);
+            $oCustomerLink->bindValue(':orderid', $iOrderId);
+            $oCustomerLink->execute();
+
+            Basket_Model::basket()->clear();
+
+            $sQuery = 'INSERT INTO order_payment(order_id, order_payment_name, order_payment_sortcode, order_payment_account) VALUES(:order_id, :name, :sortcode, :account)';
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oStmt->bindValue(':order_id', $iOrderId);
+            $oStmt->bindValue(':name', $aCardDetails['name']);
+            $oStmt->bindValue(':sortcode', $aCardDetails['sortcode']);
+            $oStmt->bindValue(':account', $aCardDetails['account']);
 
             $oStmt->execute();
 

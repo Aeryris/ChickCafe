@@ -82,6 +82,54 @@ class Checkout_Controller extends Base_Controller{
         $this->view = 'checkout_card';
     }
 
+    public function process_card_transfer(){
+
+        Auth_Core::init()->isAuth(true);
+        $this->template->basket = Basket_Model::basket()->view();
+
+        $totalPrice = 0;
+
+        foreach(Basket_Model::basket()->view() as $key => $value){
+            $totalPrice += ($value['item_price'] * $value['basket_items_quantity']);
+        }
+
+        $priority = 0;
+        if(isset($_SESSION['addOrderPriority']) && $_SESSION['addOrderPriority'] == 'true'){
+            $priority = $totalPrice * (5 / 100);
+        }
+
+        $totalPrice += $priority;
+
+
+
+        if($_POST){
+            $oCheckout = Checkout_Model::menu();
+            $oUser = new User_Model();
+            $oUser->attr(['email' => $_SESSION['user']]);
+            $orderId = $oCheckout->checkoutCardTransfer(
+                $oUser->aData['user_id'],
+                array('account' => $_POST['account'],
+                    'name' => $_POST['name'],
+                    'sortcode' => $_POST['sortcode'],
+                    'full-price' => $_POST['full-price']
+                )
+            );
+
+            $oNotification = new Notification_Model();
+            $oNotification->setMsgToUserId($oUser->aData['user_id'], 'You have placed an order <a class="order-link" href="/order/view/id/'.$orderId.'">(view)</a>');
+            header('Location: /checkout/processing');
+            exit();
+        }
+
+
+
+
+        $this->template->totalPrice = $totalPrice;
+
+
+        $this->view = 'checkout_card_transfer';
+    }
+
     public function processing(){
 
 
