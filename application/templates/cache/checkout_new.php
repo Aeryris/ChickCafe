@@ -45,7 +45,7 @@ SOFTWARE.
                         <div class="panel-title">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <h5><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h5>
+                                    <h5><span class="glyphicon glyphicon-shopping-cart"></span> Checkout</h5>
                                 </div>
                                 <div class="col-xs-4">
 
