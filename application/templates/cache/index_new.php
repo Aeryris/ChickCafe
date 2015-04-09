@@ -44,9 +44,12 @@
 
             <div class="ha-parallax-body">
 
+
                 <div class="ha-content ha-content-black">
 
-                    Guys think of some slogan or whatever text to put on here
+                    <h1 class="ribbon">
+                        <strong class="ribbon-content">WELCOME TO</strong>
+                    </h1>
 
                 </div>
 
@@ -56,7 +59,8 @@
 
                 </div>
 
-                <div class="ha-heading-parallax ha-content-black">ChickCafe</div>
+                <div style="font-size: 80px" class="ha-heading-parallax ha-content-black">ChickCafe</div>
+                <div style="color:white">-------------------------------------- <i class="fa fa-star"></i> --------------------------------------</div>
 
             </div>
 
