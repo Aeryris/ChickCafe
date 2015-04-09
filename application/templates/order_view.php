@@ -50,7 +50,7 @@
                     <div class="cardView" style="clear: both">
                         <span>Order no: {! $value['order_id'] }</span> <br />
                         <span>Order date: {! $value['order_datetime'] }</span><br />
-                        <span>Price: {! $value['order_price'] }</span><br />
+                        <span>Price: £{! $value['order_price'] }</span><br />
                         <span>Order items:</span><br />
 
                         <div style="padding: 20px 20px 20px 20px">

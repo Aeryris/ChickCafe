@@ -58,7 +58,10 @@ class Basket_Controller extends Base_Controller implements Basket_Controller_Int
         Auth_Core::init()->isAuth(true);
         Basket_Model::basket()->create();
 
+        $oUser = new User_Model();
+        $oUser->attr(['email' => $_SESSION['user']]);
 
+        $this->template->oUser = $oUser->aData;
 
         $this->template->basketItems = $aBasketData = Basket_Model::basket()->view();
         $this->view = 'basket_view_new';

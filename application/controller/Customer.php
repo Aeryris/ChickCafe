@@ -30,17 +30,27 @@ SOFTWARE.
  * @license The MIT License (MIT)
  */
 
-class Session_Controller extends Base_Controller{
+class Customer_Controller extends Base_Controller {
 
-    public function set(){
-        $_SESSION['addOrderPriority'] = $_POST['addOrderPriority'];
+    public function index(){
 
-        if(isset($_POST['calculatedPrice'])){
-            $_SESSION['calculatedPrice'] = $_POST['calculatedPrice'];
+        $oUser = new User_Model();
+
+        if($_POST){
+            $oUser->updateCustomerDiscount($_POST['userid'], $_POST['discount']);
         }
 
 
 
+        $all = $oUser->getAllCustomers();
+
+        $this->template->customers = $all;
+
+
+
+
+
+        $this->view = 'customer_discount';
     }
 
 } 

@@ -90,7 +90,6 @@
                             <h4 class="text-center"><?php echo $value['item_name'] ?> <p style="font-size: 60px; color: gold" class="text-center"> <span class="glyphicon glyphicon-flash" aria-hidden="true"></span></p></h4>
 
                             <p style="color: #000000"><?php  echo  $value['item_description'] ?></p>
-                            <a href="/menu/view/id/<?php echo $value['item_id'] ?>" class="btn">View</a>
                         </div>
                     </div>
                 </div>

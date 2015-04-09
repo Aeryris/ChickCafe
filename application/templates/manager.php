@@ -8,7 +8,7 @@
         <a class="btn btn-lg btn-primary" href="/order/all">Orders list</a>
         <br />
         <a class="btn btn-lg btn-primary" href="/menu/add">Add menu</a>
-        <a class="btn btn-lg btn-primary" href="/menu/add">Add Ingredient</a>
+        <a class="btn btn-lg btn-primary" href="/ingredients/add">Add Ingredient</a>
         <a class="btn btn-lg btn-primary" href="/food/add">Add Food</a>
         <br />
         <a class="btn btn-lg btn-primary" href="/staff/staff">Staff Dashboard</a>

@@ -65,12 +65,13 @@ class Checkout_Controller extends Base_Controller{
                       'name' => $_POST['name'],
                       'cvc' => $_POST['cvc'],
                       'expiry' => $_POST['expiry'],
-                      'full-price' => $_POST['full-price']
+                      'full-price' => $_SESSION['calculatedPrice']
                 )
             );
 
             $oNotification = new Notification_Model();
             $oNotification->setMsgToUserId($oUser->aData['user_id'], 'You have placed an order <a class="order-link" href="/order/view/id/'.$orderId.'">(view)</a>');
+
             header('Location: /checkout/processing');
             exit();
         }
@@ -111,7 +112,7 @@ class Checkout_Controller extends Base_Controller{
                 array('account' => $_POST['account'],
                     'name' => $_POST['name'],
                     'sortcode' => $_POST['sortcode'],
-                    'full-price' => $_POST['full-price']
+                    'full-price' => $_SESSION['calculatedPrice']
                 )
             );
 
@@ -138,6 +139,13 @@ class Checkout_Controller extends Base_Controller{
     }
 
     public function processed(){
+
+        $oUser = new User_Model();
+        $oUser->attr(['email' => $_SESSION['user']]);
+
+        $oNotification = new Notification_Model();
+        $oNotification->setMsgToUserId($oUser->aData['user_id'], 'Payment successful. Order is confirmed');
+
         $this->view = 'checkout_processed';
     }
 
@@ -156,6 +164,8 @@ class Checkout_Controller extends Base_Controller{
 
     public function basket(){
         Auth_Core::init()->isAuth(true);
+
+
         $paypal = new GoPayPal(THIRD_PARTY_CART);
         $paypal->sandbox = true;
         $paypal->openInNewWindow = true;
@@ -174,6 +184,7 @@ class Checkout_Controller extends Base_Controller{
         $oUser->attr(['email' => $_SESSION['user']]);
 
 
+        $this->template->oUser = $oUser->aData;
 
 
         $paypal->set('custom', $oUser->aData['user_id'].'-'.$aData[0]['basket_id']);//userid-basketid

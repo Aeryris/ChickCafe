@@ -46,8 +46,23 @@ SOFTWARE.
                                 <div class="col-xs-6">
                                     <h5><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h5>
                                 </div>
-                                <div class="col-xs-4">
-
+                                <div class="col-xs-12">
+                                    <div class="stepwizard">
+                                        <div class="stepwizard-row">
+                                            <div class="stepwizard-step">
+                                                <button style="background: red" type="button" class="btn btn-primary btn-circle ">1</button>
+                                                <p>Cart</p>
+                                            </div>
+                                            <div class="stepwizard-step">
+                                                <button type="button" class="btn btn-primary btn-circle ">2</button>
+                                                <p>Checkout</p>
+                                            </div>
+                                            <div class="stepwizard-step">
+                                                <button type="button" class="btn btn-primary btn-circle" disabled="disabled">3</button>
+                                                <p>Payment</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -81,35 +96,7 @@ SOFTWARE.
                     </style>
                     <script>
 
-                        $(document).ready(function(){
 
-                            $('.opt').on('click', function(){
-                                console.log($(this).find('input').attr('id'));
-
-                                var price = $('.checkout-total-sum-original').text();
-                                price = parseFloat(price);
-                                var priorityPrice = price * (5 / 100);
-
-
-                                console.log('Price: ' + price);
-                                console.log('Priority Price: ' + priorityPrice);
-                                $.post('/session/set', { addOrderPriority: false });
-
-                                if($(this).find('input').attr('id') == 'on'){
-
-                                    $.post('/session/set', { addOrderPriority: true });
-
-
-
-                                    $('.checkout-total-sum').text(parseFloat(price + priorityPrice).toFixed(2));
-                                }else{
-                                    $.post('/session/set', { addOrderPriority: false });
-                                    $('.checkout-total-sum').text(parseFloat(price).toFixed(2));
-                                }
-                            });
-
-
-                        });
 
                     </script>
                     <div class="panel-footer">
@@ -126,10 +113,20 @@ SOFTWARE.
                         </div>
                     </div>
                     <div class="panel-footer">
+                        <p>Discount: <?php echo $oUser['customer_vip_discount'] ?>%</p>
+
+                    </div>
+                    <div class="panel-footer">
                         <div class="row text-center">
                             <div class="col-xs-9">
                                 <strong style="display: none" class="checkout-total-sum-original"></strong>
-                                <h4 class="text-right">Total £<strong class="checkout-total-sum"></strong></h4>
+                                <h5 class="text-right">Total: £<strong class="checkout-total-sum"></strong></h5>
+                                <h5 class="text-right">Discount: <strong class=""><?php echo $oUser['customer_vip_discount'] ?>%</strong></h5>
+                                <h4 class="text-right">After discount: £<strong class="checkout-total-sum-after-discount">  </strong></h4>
+
+
+
+                                <input type="hidden" name="after-discount" class="after-discount" value="" />
                             </div>
                             <div class="col-xs-3">
                                 <?php
@@ -146,6 +143,48 @@ SOFTWARE.
     </div>
 
 </div>
+
+<script>
+
+    function calc(priceV){
+
+
+
+        var price = priceV; //$('.checkout-total-sum-original').text();
+        price = parseFloat(price);
+
+        var userDiscount = <?php echo $oUser['customer_vip_discount']; ?>;
+        var calc = price;
+        var finalPrice = calc - (calc * (userDiscount / 100));
+        $.post('/session/set', { addOrderPriority: false, calculatedPrice:finalPrice });
+        return parseFloat(finalPrice).toFixed(2);
+
+    }
+
+    $(document).ready(function(){
+
+        $('.opt').on('click', function(){
+            console.log($(this).find('input').attr('id'));
+
+            var price = $('.after-discount').text(); //$('.checkout-total-sum-original').text();
+            price = parseFloat(price);
+            var priorityPrice = price * (5 / 100);
+            var userDiscount = <?php echo $oUser['customer_vip_discount']; ?>;
+            var finalPrice = price + priorityPrice;// - priorityPrice;
+            $.post('/session/set', { addOrderPriority: false });
+            if($(this).find('input').attr('id') == 'on'){
+                $.post('/session/set', { addOrderPriority: true, calculatedPrice:finalPrice  });
+                $('.checkout-total-sum-after-discount').text(parseFloat(finalPrice).toFixed(2));
+            }else{
+                $.post('/session/set', { addOrderPriority: false, calculatedPrice:price });
+                $('.checkout-total-sum-after-discount').text(parseFloat(price).toFixed(2));
+            }
+        });
+
+
+    });
+
+</script>
 
 
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>

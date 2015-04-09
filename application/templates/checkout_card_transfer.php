@@ -72,7 +72,7 @@ SOFTWARE.
                                     <div class='form-row'>
                                         <div class='col-xs-12 form-group account required'>
                                             <label class='control-label'>Account number</label>
-                                            <input name="account" autocomplete='off' class='form-control card-account' placeholder='ex. 12345678' size='8' maxlength="8" type='text'>
+                                            <input name="account" autocomplete='off' class='form-control card-account' placeholder='ex. 12345678' size='9' maxlength="9" type='text'>
                                         </div>
 
 
@@ -81,8 +81,8 @@ SOFTWARE.
                                         <div class='col-md-12'>
                                             <div class='form-control total btn btn-info'>
                                                 Total:
-                                                <span class='amount'>£{! $totalPrice }</span>
-                                                <input type="hidden" name="full-price" value="{! $totalPrice }" />
+                                                <span class='amount'>£{! $_SESSION['calculatedPrice'] }</span>
+                                                <input type="hidden" name="full-price" value="{! $_SESSION['calculatedPrice'] }" />
                                             </div>
                                         </div>
                                     </div>

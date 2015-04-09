@@ -65,6 +65,8 @@ class User_Controller extends Base_Controller{
         $this->view = 'login';
     }
 
+
+
     public function register(){
 
         if(Input_Core::getPost()){

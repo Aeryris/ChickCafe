@@ -84,7 +84,7 @@
                                     <div class='col-md-12'>
                                         <div class='form-control total btn btn-info'>
                                             Total:
-                                            <span class='amount'>£{! $totalPrice }</span>
+                                            <span class='amount'>£{! $_SESSION['calculatedPrice'] }</span>
                                             <input type="hidden" name="full-price" value="{! $totalPrice }" />
                                         </div>
                                     </div>

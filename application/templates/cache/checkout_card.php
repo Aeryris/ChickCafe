@@ -84,7 +84,7 @@
                                     <div class='col-md-12'>
                                         <div class='form-control total btn btn-info'>
                                             Total:
-                                            <span class='amount'>£<?php echo $totalPrice ?></span>
+                                            <span class='amount'>£<?php echo $_SESSION['calculatedPrice'] ?></span>
                                             <input type="hidden" name="full-price" value="<?php echo $totalPrice ?>" />
                                         </div>
                                     </div>

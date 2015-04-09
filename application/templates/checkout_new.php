@@ -45,8 +45,23 @@ SOFTWARE.
                                 <div class="col-xs-6">
                                     <h5><span class="glyphicon glyphicon-shopping-cart"></span> Checkout</h5>
                                 </div>
-                                <div class="col-xs-4">
-
+                                <div class="col-xs-12">
+                                    <div class="stepwizard">
+                                        <div class="stepwizard-row">
+                                            <div class="stepwizard-step">
+                                                <a href="/basket/view" type="button" class="btn btn-primary btn-circle">1</a>
+                                                <p>Cart</p>
+                                            </div>
+                                            <div class="stepwizard-step">
+                                                <button  style="background: red" type="button" class="btn btn-primary btn-circle">2</button>
+                                                <p>Checkout</p>
+                                            </div>
+                                            <div class="stepwizard-step">
+                                                <button type="button" class="btn btn-primary btn-circle" disabled="disabled">3</button>
+                                                <p>Payment</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -59,27 +74,20 @@ SOFTWARE.
 
                     </div>
 
+
+
                     <script>
+
                         $(document).ready(function(){
-                            $('a.a-attr').attr('disabled', true);
+                            //$('a.a-attr').attr('disabled', true);
                             function updatePriority(){
 
+                                //$('.updating').hide();
+                                //$('button').prop('disabled', false);
 
-                            <?php if(isset($_SESSION['addOrderPriority']) && $_SESSION['addOrderPriority'] == 'true'): ?>
-                            var price = $('.checkout-total-sum').text();
-                            price = parseFloat(price);
-                            var priorityPrice = price * (5 / 100);
+                                //$('a.a-attr').attr('disabled', false);
 
 
-                            console.log('Price: ' + price);
-                            console.log('Priority Price: ' + priorityPrice);
-                            $('.checkout-total-sum').text(parseFloat(price + priorityPrice).toFixed(2));
-                                $('.updating').hide();
-                                $('button').prop('disabled', false);
-
-                                $('a.a-attr').attr('disabled', false);
-
-                            <?php endif; ?>
                             }
                             setTimeout(updatePriority, 2000);
                         });
@@ -87,14 +95,14 @@ SOFTWARE.
                     <div class="panel-footer">
                         <div class="row text-center">
                             <div class="col-xs-9">
-                                <h4 class="text-right"><span class="updating">Updating...</span>Total £<strong class="checkout-total-sum"></strong></h4>
+                                <h4 class="text-right"><span class="updating"></span>Total £<strong class="total"><?php echo $_SESSION['calculatedPrice'] ?></strong></h4>
                             </div>
                             <div class="col-xs-3">
                                 {if(!empty($basketItems))}
                                 {! $paypal }
                                 <div>
                                     Pay with
-                                    <button disabled="disabled" id="checkout-submit-button" class="btn btn-lg btn-primary btn-block enable" type="submit">PayPal</button>
+                                    <button id="checkout-submit-button" class="btn btn-lg btn-primary btn-block enable" type="submit">PayPal</button>
                                     <a href="/checkout/process_card" class="btn btn-lg btn-primary btn-block a-attr" >Debit Card</a>
                                     <a href="/checkout/process_card_transfer" class="btn btn-lg btn-primary btn-block a-attr" >Bank Transfer</a>
                                 </div>

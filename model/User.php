@@ -297,7 +297,7 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
     public function attr($aAttr){
         try{
 
-            $sQuery = "SELECT * FROM user RIGHT JOIN customer ON user.user_id = customer.customer_user_id WHERE ";
+            $sQuery = "SELECT * FROM user RIGHT JOIN customer ON user.user_id = customer.customer_user_id JOIN customer_vip ON user.user_id = customer_vip_id WHERE ";
 
             foreach($aAttr as $key => $value){
                 $sQuery .= "user_".$key. " = :". $key. " AND ";
@@ -355,6 +355,93 @@ class User_Model extends Foundation_Model implements User_Model_Interface{
                 exit();
             }
         }
+    }
+
+    public function getAllCustomers(){
+        try{
+
+            $sQuery = 'SELECT * FROM user JOIN customer_vip ON user_id = customer_vip_id JOIN customer ON user_id = customer.customer_user_id WHERE user_type = "C"';
+            $db = Database_Core::get();
+            $oStmt = $db->prepare($sQuery);
+
+            $oExecute = $oStmt->execute();
+
+            return $oStmt->fetchAll(PDO::FETCH_ASSOC);
+            //var_dump($aData);
+        }catch(PDOException $e){
+            var_dump($e);
+
+        }
+    }
+
+    public function getCustomerDiscount($iUserId){
+        try{
+
+            $sQuery = 'SELECT * FROM user JOIN customer_vip ON user_id = customer_vip_id JOIN customer ON user_id = customer.customer_user_id WHERE user_id = :id';
+            $db = Database_Core::get();
+            $oStmt = $db->prepare($sQuery);
+
+            $oStmt->bindParam(':id', $iUserId);
+
+
+            $oExecute = $oStmt->execute();
+
+            return $oStmt->fetch(PDO::FETCH_ASSOC);
+            //var_dump($aData);
+        }catch(PDOException $e){
+            var_dump($e);
+
+        }
+    }
+
+    public function updateCustomerDiscount($iUserId, $dDiscount){
+        try{
+
+            $sQuery = 'UPDATE customer_vip SET customer_vip_discount = :discount WHERE customer_vip_id = :id';
+
+            $db = Database_Core::get();
+            $oStmt = $db->prepare($sQuery);
+
+            $oStmt->bindValue(':discount', $dDiscount);
+            $oStmt->bindValue(':id', $iUserId);
+
+            $oExecute = $oStmt->execute();
+
+
+            //var_dump($aData);
+        }catch(PDOException $e){
+            var_dump($e);
+
+        }
+    }
+
+    public function checkVIPDiscount($iUserId){
+
+        try{
+
+            $sQuery = 'SELECT * FROM user JOIN customer_vip ON user_id = customer_vip_id JOIN customer ON user_id = customer.customer_user_id WHERE user_id = :id';
+            $db = Database_Core::get();
+            $oStmt = $db->prepare($sQuery);
+
+            $oStmt->bindParam(':id', $iUserId);
+
+
+            $oExecute = $oStmt->execute();
+
+            $aData = $oStmt->fetch(PDO::FETCH_ASSOC);
+
+            $spending = $aData['customer_spending_total'];
+            $discount = 0;
+            if($spending >= 1000 && $spending < 2000){
+                //$discount
+            }
+
+            //var_dump($aData);
+        }catch(PDOException $e){
+            var_dump($e);
+
+        }
+
     }
 
 
