@@ -12,7 +12,7 @@
         <a class="btn btn-lg btn-primary" href="/food/add">Add Food</a>
         <br />
         <a class="btn btn-lg btn-primary" href="/staff/staff">Staff Dashboard</a>
-        <a class="btn btn-lg btn-primary" href="/staff/reports">Reports</a>
+        <a class="btn btn-lg btn-primary" href="/staff/report">Reports</a>
         <?php if (Acl_Core::allow([ACL::ACL_OWNER])) { ?>
     		<a class="btn btn-lg btn-primary" href="/owner/owner_backup">Backup/Restore Database</a>
     	<?php } ?>

@@ -238,6 +238,165 @@ class Staff_Controller extends Base_Controller{
         return $finalOrders;   
     }
 
+    public function get_unprocessed_order() {
+        $sQuery = "SELECT *
+                    FROM orders o
+                    INNER JOIN customer_order co ON o.order_id = co.order_id
+                    JOIN customer cu ON co.customer_id = cu.customer_user_id
+                    INNER JOIN user u ON cu.customer_user_id = u.user_id
+                    INNER JOIN order_items oi ON oi.order_id = o.order_id
+                    INNER JOIN item i ON oi.item_id = i.item_id
+                    WHERE o.order_id = co.order_id AND DATE(o.order_datetime) = CURDATE() AND o.order_ready = 'F'
+                    ORDER BY o.order_datetime ASC"; 
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->execute();
+        $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+        $orders = [];
+        foreach($data as $key => $value) {
+            $orders[$value['order_id']][] = $value;
+        }
+        foreach($orders as $orderID => $dataSet) {
+            $items = [];
+            $original = $dataSet;
+            foreach($dataSet as $key => $value) {
+                $theItem = [
+                    'item_name' => $value['item_name'],
+                    'item_preptime' => $value['item_preptime']
+                ];
+                $orders[$orderID][0]['items'][] = $theItem;
+                $orders[$orderID][0]['item_names'][] = $value['item_name'];
+                $orders[$orderID][0]['item_preptimes'][] = $value['item_preptime'];
+                unset(
+                    $orders[$orderID][0]['item_name'],
+                    $orders[$orderID][0]['item_preptime']
+                );
+            }
+        }
+        foreach($orders as $orderID => $set) {
+            $finalOrders[] = $set[0];
+        }
+        return $finalOrders;   
+    }
+
+    public function single_staff_performance_report() {
+        $sID = User_Model::user()['user_id'];
+        $sQuery = "SELECT * FROM staff s
+                        INNER JOIN user u ON s.staff_user_id = :staff_id
+                        INNER JOIN orders o ON u.user_id = :staff_id
+                        INNER JOIN order_items oi WHERE o.order_id = oi.order_id
+                        GROUP BY o.order_staff_id";
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->bindValue(':staff_id',$sID,PDO::PARAM_INT);
+        $oStmt->execute();
+        $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data; 
+    }
+
+    public function single_staff_calc() {
+        $staffPerf = $this->single_staff_performance_report();
+        $data = null;
+        foreach ($staffPerf as $key => $value) {
+            $sID = User_Model::user()['user_id'];
+            $sQuery = "SELECT * FROM orders o
+                    INNER JOIN order_items oi ON o.order_id = oi.order_id
+                    INNER JOIN item i ON oi.item_id = i.item_id
+                    INNER JOIN staff s WHERE o.order_staff_id = :staff_id 
+                    AND o.order_ready = 'T' GROUP BY o.order_id";
+            $oStmt = $this->db->prepare($sQuery);
+            $oStmt->bindValue(':staff_id',$sID,PDO::PARAM_INT);
+            $oStmt->execute();
+            $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+            $calc = [];
+            $itemprep = 0;
+            $ordervalue = 0;
+            $ordersmade = 0;
+            $item_count = 1;
+            foreach ($data as $key => $value) {
+                if ($item_count != 1) {
+                    $itemprep = ($itemprep + $value['item_preptime']) / $item_count;
+                } else {
+                    $itemprep = $itemprep + $value['item_preptime'];
+                }  
+                $item_count = $item_count + 1;
+                if ($value['order_id'] != $lastOrderId){
+                        $ordersmade += 1;
+                        $ordervalue += $value['order_price'];
+                }
+                $calc = [
+                    'item_total_prep' => $itemprep,
+                    'order_value' => $ordervalue,
+                    'orders_made' => $ordersmade
+                ];
+            }   
+            $data = $calc;
+        return $data;
+        }
+    }
+
+    public function staff_performance_report() {
+        $sQuery = "SELECT *
+                    FROM staff s
+                    INNER JOIN user u ON s.staff_user_id = u.user_id";
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->execute();
+        $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
+    public function all_staff_calc() {
+        $staffPerf = $this->staff_performance_report();
+        $results = []; // Array to store all results
+		
+		// For each staff member
+        foreach ($staffPerf as $key => $value) {
+            $sID = $value['user_id'];
+            $sQuery = "SELECT * FROM orders o
+                    INNER JOIN order_items oi ON o.order_id = oi.order_id
+                    INNER JOIN item i ON oi.item_id = i.item_id
+                    INNER JOIN user u ON u.user_id = o.order_staff_id
+                    INNER JOIN staff s WHERE o.order_staff_id = :staff_id AND 
+                    o.order_ready = 'T' GROUP BY o.order_id";
+            $oStmt = $this->db->prepare($sQuery);
+            $oStmt->bindValue(':staff_id',$sID,PDO::PARAM_INT);
+            $oStmt->execute();
+            $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+            $itemprep = 0;
+            $ordervalue = 0;
+            $ordersmade = 0;
+            $item_count = 0;
+			
+			// For each order/database row
+            foreach ($data as $key => $value) {
+               // $sID = $value['staff_user_id'];
+               // if ($last_staff_member_id != $value['staff_user_id']) { 
+                   // if ($value['order_id'] != $lastOrderId) { // Order IDs are unique because of the GROUP BY
+                        $ordersmade += 1;
+                        $ordervalue = $ordervalue + $value['order_price'];
+                        $item_count += 1;
+                        if ($item_count != 0) {
+                        $itemprep = ($itemprep + $value['item_preptime']) / $item_count;
+                        } else {
+                            $itemprep = ($itemprep + $value['item_preptime']);
+                        } 
+                  //  }
+                  //  $lastOrderId = $value['order_id'];
+               //}
+               // $last_staff_member_id = $value['staff_user_id'];
+            }
+				  
+			$results[] = array(
+				'staff_user_id' => $sID,
+				'staff_name' => $value['user_firstname'] . ' ' . $value['user_lastname'],
+				'item_total_prep' => $itemprep,
+				'order_value' => $ordervalue,
+				'orders_made' => $ordersmade
+			);
+        }
+		
+		// Return all results
+		return $results;
+    }
+
     public function approve_refund() {
         $oID = Field::post('order_id')->required();
         $sDate = Field::post('order_datetime')->required();
@@ -470,14 +629,15 @@ class Staff_Controller extends Base_Controller{
         return $oStaff;
     }
 
-    // staff page
+        // staff page
     public function staff(){
         Auth_Core::init()->isAuth(true);
         if(Acl_Core::allow([ACL::ACL_STAFF,ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
             $this->template->stock = $this->get_ingredient_stock();
             $this->template->item_stock = $this->get_item_stock();
-            $this->template->orders = $this->get_orders();
+            $this->template->orders = $this->get_unprocessed_order();
             $this->template->profile = $this->get_profile();
+            $this->template->performance = $this->single_staff_calc();
             $this->view = 'staff';
         } else {
             header('Location: /error403'); //Forbidden
@@ -491,7 +651,9 @@ class Staff_Controller extends Base_Controller{
             $this->template->customer_spending = $this->get_customer_spending_report();
             $this->template->orders = $this->get_order_report();
             $this->template->refunds = $this->get_refund_report();
-            $this->template->stock = $this->get_stock_report();                
+            $this->template->stock = $this->get_stock_report();  
+            $this->template->today_order = $this->get_unprocessed_order();  
+            $this->template->performance = $this->all_staff_calc();            
             $this->view = 'report';
         } else {
             header('Location: /error403'); //Forbidden
@@ -509,7 +671,7 @@ class Staff_Controller extends Base_Controller{
             $this->template->get_m = $this->get_all_menus();
             $this->template->create_staff = $this->create_staff();
             $this->template->get_staff = $this->get_all_staff();
-            $this->template->refund = $this->get_order_report();
+            $this->template->refund = $this->get_today_order();
             $this->view = 'manager';
         } else {
             header('Location: /error403'); //Forbidden

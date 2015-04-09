@@ -28,6 +28,8 @@
 	    <li role="presentation"><a href="#spending" aria-controls="spending" role="tab" data-toggle="tab">Customer spending report</a></li>
 	    <li role="presentation"><a href="#refunds" aria-controls="refunds" role="tab" data-toggle="tab" >Refunds processed</a></li>
 	    <li role="presentation"><a href="#stock" aria-controls="stock" role="tab" data-toggle="tab" >Stock report</a></li>
+	    <li role="presentation"><a href="#unprocess" aria-controls="stock" role="tab" data-toggle="tab" >Customers and Unprocessed Orders </a></li>
+	    <li role="presentation"><a href="#performance" aria-controls="stock" role="tab" data-toggle="tab" >Staff Performance</a></li>
 	  </ul>
 
   <!-- Tab panes -->
@@ -90,6 +92,7 @@
 		    			<th>Refund ID</th>
 		    			<th>Order Date</th>
 		    			<th>Refund Date</th>
+		    			<th>Order Staff ID</th>
 		    			<th>Order/Refund Amount</th>
 		    			<th>Customer ID</th>
 		    			<th>Customer Name</th>
@@ -99,11 +102,13 @@
 		    		<tr class="info">
 		    			<td>{! $value['order_id']}</td>
 		    			<td>{! $value['refund_refund_id']}</td>
+		    			<td>{! $value['order_datetime']}</td>
 		    			<td>{! $value['refund_date']}</td>
+		    			<td>{! $value['order_staff_id']}</td>
 		    			<td>{! $value['refund_amount']}</td>
 		    			<td>{! $value['user_id']}</td>
 		    			<td>{! $value['user_firstname']} {! $value['user_lastname']}</td>
-		    			<td>{! $value['order_staff_id']}</td>
+		    			<td>{! $value['refund_staff_id']}</td>
 		    		</tr>
 		    		{/foreach}
 		    	</table>
@@ -131,8 +136,61 @@
 		    		{/foreach}
 		    	</table>
 		    </div>
+		    <div role="tabpanel" class="tab-pane active" id="unprocess">
+		    	<h2>Logged in customers and unprocessed orders report</h2>
+		    	<table class="table">
+		    		<tr>
+		    			<th>Order ID</th>
+		    			<th>Customer Name</th>
+		    			<th>Customer ID</th>
+		    			<th>Order Price</th>
+		    			<th>Order Date</th>
+		    			<th>Order Items</th>
+		    			<th>Order Priority</th>
+		    			<th>Order Type</th>
+		    			<th>Order Staff ID</th>
+		    			<th>Order Ready?</th>
+		    		</tr>
+		    		{foreach($today_order as $key => $value)}
+		    		<tr class="info">
+						<td>{! $value['order_id']}</td>
+						<td>{! $value['user_firstname']} {! $value['user_lastname']}</td>
+						<td>{! $value['user_id']}</td>
+						<td>{! $value['order_price']}</td>
+						<td>{! $value['order_datetime']}</td>
+						<td><?php
+							echo implode($value['item_names'], ', '); 
+						?></td>
+						<td>{! $value['order_priority']}</td>
+						<td>{! $value['order_type']}</td>
+						<td>{! $value['order_staff_id']}</td>
+						<td>{! $value['order_ready']}</td>
+		    		</tr>
+		    		{/foreach}
+		    	</table>
+		    </div>
+			<div role="tabpanel" class="tab-pane active" id="performance">
+				<h2>Staff Performance Report</h2>
+				<table class="table">
+					<tr>
+						<th>Staff ID</th>
+						<th>Staff Name</th>
+						<th>Orders Processed</th>
+						<th>Average Prep Time</th>
+						<th>Money Taken</th>
+					</tr>
+					{foreach ($performance as $key => $value)}
+					<tr class="info">
+						<td>{! $value['staff_user_id']}</td>
+						<td>{! $value['staff_name']}</td>
+						<td>{! $value['orders_made']}</td>
+						<td>{! $value['item_total_prep']}</td>
+						<td>£{! $value['order_value']}</td>
+					</tr>
+					{/foreach}
+				</table>
+			</div>
 		</div>
-
 		</div>
 	</div>
 </div>
