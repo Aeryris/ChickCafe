@@ -89,7 +89,7 @@ SOFTWARE.
 
 
                             }
-                            setTimeout(updatePriority, 2000);
+
                         });
                     </script>
                     <div class="panel-footer">
@@ -102,9 +102,9 @@ SOFTWARE.
                                 {! $paypal }
                                 <div>
                                     Pay with
-                                    <button id="checkout-submit-button" class="btn btn-lg btn-primary btn-block enable" type="submit">PayPal</button>
-                                    <a href="/checkout/process_card" class="btn btn-lg btn-primary btn-block a-attr" >Debit Card</a>
-                                    <a href="/checkout/process_card_transfer" class="btn btn-lg btn-primary btn-block a-attr" >Bank Transfer</a>
+                                    <button id="checkout-submit-button" class="btn btn-lg btn-primary btn-block " type="submit">PayPal</button>
+                                    <a href="/checkout/process_card" class="btn btn-lg btn-primary btn-block " >Debit Card</a>
+                                    <a href="/checkout/process_card_transfer" class="btn btn-lg btn-primary btn-block " >Bank Transfer</a>
                                 </div>
                                 </form>
                                 {/if}

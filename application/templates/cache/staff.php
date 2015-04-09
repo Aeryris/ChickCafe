@@ -27,6 +27,7 @@
 	    <li role="presentation" class="active"><a href="#stock" aria-controls="stock" role="tab" data-toggle="tab">Check stock</a></li>
 	    <li role="presentation"><a href="#orders" aria-controls="orders" role="tab" data-toggle="tab">Check orders</a></li>
 	    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" >Check staff profile</a></li>
+	    <li role="presentation"><a href="#performance" aria-controls="profile" role="tab" data-toggle="tab" >Check staff performance</a></li>
 	  </ul>
 
   <!-- Tab panes -->
@@ -49,11 +50,11 @@
 	    			<p>Order ID: <?php echo $value['order_id'] ?></p>
 	    			<input type="hidden" name="order_id" id="order_id" value="<?php echo $value['order_id'] ?>"/>
 	    			<p>Order Date/Time: <?php echo $value['order_datetime'] ?></p>
-	    			<?php foreach ($value['item_names'] as $k => $v): ?>
-	    			<p>Item name: <?php echo $v ?></p>
-	    			<?php endforeach; ?>
-	    			<?php foreach ($value['item_preptimes'] as $k => $v): ?>
-	    			<p>Item preptime: <?php echo $v ?></p>
+	    			<?php foreach ($value['item_names'] as $k1 => $v1): ?>
+	    				<p>Item name: <?php echo $v1 ?></p>
+	    				<?php foreach ($value['item_preptimes'] as $k1 => $v1): ?>
+	    				<p>Item preptime: <?php echo $v1 ?></p>
+	    				<?php endforeach; ?>
 	    			<?php endforeach; ?>
 	    			<!-- <input type="hidden" name="staff_id" id="staff_id" value="<?php echo $profile->user_id ?>"/> -->
 	    			<button class="btn btn-primary" type="submit">Order is Ready</button>
@@ -63,9 +64,16 @@
 		    <div role="tabpanel" class="tab-pane" id="profile">
 		    	<h2>Your Profile</h2>
 		    	<p>Level: <?php echo $profile->role ?></p>
-		    	<p>Your Salary: <?php echo number_format($profile->salary,2) ?></p>
+		    	<p>Your Salary: £<?php echo number_format($profile->salary,2) ?></p>
 		    	<p>Your Number: <?php echo $profile->phoneNumber ?></p>
 		    </div>
+		    <div role="tabpanel" class="tab-pane" id="performance">
+		    	<h2>Staff Performance</h2>
+		    	<p>Total orders taken: <?php echo $performance['orders_made'] ?></p>
+		    	<p>Average prep time: <?php echo $performance['item_total_prep'] ?> minutes per order</p>
+		    	<p>Money made: £<?php echo number_format($performance['order_value'],2) ?></p>
+		    </div>
+		    
 		</div>
 
 		</div>

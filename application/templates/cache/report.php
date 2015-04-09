@@ -1,4 +1,4 @@
-{include file=header.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 
 <div class="container">
@@ -58,22 +58,22 @@
                                         <th>Order Staff ID</th>
                                         <th>Refund ID</th>
                                     </tr>
-                                    {foreach($orders as $key => $value)}
+                                    <?php foreach($orders as $key => $value): ?>
                                     <tr class="info">
-                                        <td>{! $value['order_id']}</td>
-                                        <td>{! $value['user_firstname']} {! $value['user_lastname']}</td>
-                                        <td>{! $value['user_id']}</td>
-                                        <td>{! $value['order_price']}</td>
-                                        <td>{! $value['order_datetime']}</td>
+                                        <td><?php echo $value['order_id'] ?></td>
+                                        <td><?php echo $value['user_firstname'] ?> <?php echo $value['user_lastname'] ?></td>
+                                        <td><?php echo $value['user_id'] ?></td>
+                                        <td><?php echo $value['order_price'] ?></td>
+                                        <td><?php echo $value['order_datetime'] ?></td>
                                         <td><?php
                                             echo implode($value['item_names'], ', ');
                                             ?></td>
-                                        <td>{! $value['order_priority']}</td>
-                                        <td>{! $value['order_type']}</td>
-                                        <td>{! $value['order_staff_id']}</td>
-                                        <td>{! $value['refund_refund_id']}</td>
+                                        <td><?php echo $value['order_priority'] ?></td>
+                                        <td><?php echo $value['order_type'] ?></td>
+                                        <td><?php echo $value['order_staff_id'] ?></td>
+                                        <td><?php echo $value['refund_refund_id'] ?></td>
                                     </tr>
-                                    {/foreach}
+                                    <?php endforeach; ?>
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="spending">
@@ -84,13 +84,13 @@
                                         <th>Customer Name</th>
                                         <th>Total Spent by Customer</th>
                                     </tr>
-                                    {foreach($customer_spending as $key => $value)}
+                                    <?php foreach($customer_spending as $key => $value): ?>
                                     <tr class="info">
-                                        <td>{! $value['user_id']}</td>
-                                        <td>{! $value['user_firstname']} {! $value['user_lastname']}</td>
-                                        <td>{! $value['customer_spending_total']}</td>
+                                        <td><?php echo $value['user_id'] ?></td>
+                                        <td><?php echo $value['user_firstname'] ?> <?php echo $value['user_lastname'] ?></td>
+                                        <td><?php echo $value['customer_spending_total'] ?></td>
                                     </tr>
-                                    {/foreach}
+                                    <?php endforeach; ?>
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="refunds">
@@ -107,19 +107,19 @@
                                         <th>Customer Name</th>
                                         <th>Staff ID</th>
                                     </tr>
-                                    {foreach($refunds as $key => $value)}
+                                    <?php foreach($refunds as $key => $value): ?>
                                     <tr class="info">
-                                        <td>{! $value['order_id']}</td>
-                                        <td>{! $value['refund_refund_id']}</td>
-                                        <td>{! $value['order_datetime']}</td>
-                                        <td>{! $value['refund_date']}</td>
-                                        <td>{! $value['order_staff_id']}</td>
-                                        <td>{! $value['refund_amount']}</td>
-                                        <td>{! $value['user_id']}</td>
-                                        <td>{! $value['user_firstname']} {! $value['user_lastname']}</td>
-                                        <td>{! $value['refund_staff_id']}</td>
+                                        <td><?php echo $value['order_id'] ?></td>
+                                        <td><?php echo $value['refund_refund_id'] ?></td>
+                                        <td><?php echo $value['order_datetime'] ?></td>
+                                        <td><?php echo $value['refund_date'] ?></td>
+                                        <td><?php echo $value['order_staff_id'] ?></td>
+                                        <td><?php echo $value['refund_amount'] ?></td>
+                                        <td><?php echo $value['user_id'] ?></td>
+                                        <td><?php echo $value['user_firstname'] ?> <?php echo $value['user_lastname'] ?></td>
+                                        <td><?php echo $value['refund_staff_id'] ?></td>
                                     </tr>
-                                    {/foreach}
+                                    <?php endforeach; ?>
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="stock">
@@ -133,16 +133,16 @@
                                         <th>Ingredient ID</th>
                                         <th>Ingredient Stock</th>
                                     </tr>
-                                    {foreach($stock as $key => $value)}
+                                    <?php foreach($stock as $key => $value): ?>
                                     <tr class="info">
-                                        <td>{! $value['item_id']}</td>
-                                        <td>{! $value['item_name']}</td>
-                                        <td>{! $value['ingredient_name']}</td>
-                                        <td>{! $value['item_price']}</td>
-                                        <td>{! $value['ingredient_id']}</td>
-                                        <td>{! $value['ingredient_stock']}</td>
+                                        <td><?php echo $value['item_id'] ?></td>
+                                        <td><?php echo $value['item_name'] ?></td>
+                                        <td><?php echo $value['ingredient_name'] ?></td>
+                                        <td><?php echo $value['item_price'] ?></td>
+                                        <td><?php echo $value['ingredient_id'] ?></td>
+                                        <td><?php echo $value['ingredient_stock'] ?></td>
                                     </tr>
-                                    {/foreach}
+                                    <?php endforeach; ?>
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane active" id="unprocess">
@@ -160,22 +160,22 @@
                                         <th>Order Staff ID</th>
                                         <th>Order Ready?</th>
                                     </tr>
-                                    {foreach($today_order as $key => $value)}
+                                    <?php foreach($today_order as $key => $value): ?>
                                     <tr class="info">
-                                        <td>{! $value['order_id']}</td>
-                                        <td>{! $value['user_firstname']} {! $value['user_lastname']}</td>
-                                        <td>{! $value['user_id']}</td>
-                                        <td>{! $value['order_price']}</td>
-                                        <td>{! $value['order_datetime']}</td>
+                                        <td><?php echo $value['order_id'] ?></td>
+                                        <td><?php echo $value['user_firstname'] ?> <?php echo $value['user_lastname'] ?></td>
+                                        <td><?php echo $value['user_id'] ?></td>
+                                        <td><?php echo $value['order_price'] ?></td>
+                                        <td><?php echo $value['order_datetime'] ?></td>
                                         <td><?php
                                             echo implode($value['item_names'], ', ');
                                             ?></td>
-                                        <td>{! $value['order_priority']}</td>
-                                        <td>{! $value['order_type']}</td>
-                                        <td>{! $value['order_staff_id']}</td>
-                                        <td>{! $value['order_ready']}</td>
+                                        <td><?php echo $value['order_priority'] ?></td>
+                                        <td><?php echo $value['order_type'] ?></td>
+                                        <td><?php echo $value['order_staff_id'] ?></td>
+                                        <td><?php echo $value['order_ready'] ?></td>
                                     </tr>
-                                    {/foreach}
+                                    <?php endforeach; ?>
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane active" id="performance">
@@ -188,15 +188,15 @@
                                         <th>Average Prep Time</th>
                                         <th>Money Taken</th>
                                     </tr>
-                                    {foreach ($performance as $key => $value)}
+                                    <?php foreach ($performance as $key => $value): ?>
                                     <tr class="info">
-                                        <td>{! $value['staff_user_id']}</td>
-                                        <td>{! $value['staff_name']}</td>
-                                        <td>{! $value['orders_made']}</td>
-                                        <td>{! $value['item_total_prep']}</td>
-                                        <td>£{! $value['order_value']}</td>
+                                        <td><?php echo $value['staff_user_id'] ?></td>
+                                        <td><?php echo $value['staff_name'] ?></td>
+                                        <td><?php echo $value['orders_made'] ?></td>
+                                        <td><?php echo $value['item_total_prep'] ?></td>
+                                        <td>£<?php echo $value['order_value'] ?></td>
                                     </tr>
-                                    {/foreach}
+                                    <?php endforeach; ?>
                                 </table>
                             </div>
                         </div>
@@ -220,4 +220,4 @@
 
 
 
-{include file=footer.php}
+<?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>

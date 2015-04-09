@@ -33,44 +33,85 @@
 ?>
 {include file=header.php}
 
-<div id="wrap">
-    <div id="main" class="container clear-top">
 
-        <div class="container">
-            <h3>Add food</h3>
-            <h4><a class="btn btn-sm btn-primary" href="/staff/manager">Go back</a></h4>
+<div class="container">
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked admin-menu">
+                <li   ><a class="" href="/user/dashboard">Home</a></li>
+                <li><a class="" href="/menu/all">Menus list</a></li>
+                <li><a class="" href="/ingredients/view">Ingredients list</a></li>
+                <li><a class="" href="/food/view">Foods list</a></li>
+                <li><a class="" href="/order/all">Orders list</a></li>
+                <li><a class="" href="/menu/add">Add menu</a></li>
+                <li  class="active "><a class="btn-primary" href="/ingredients/add">Add Ingredient</a></li>
+                <li><a class="" href="/food/add">Add Food</a></li>
+                <li><a class="" href="/staff/staff">Staff Dashboard</a></li>
+                <li><a class="" href="/customer/index">Customer discounts</a></li>
+                <li><a class="" href="/staff/report">Reports</a></li>
+                <?php if (Acl_Core::allow([ACL::ACL_OWNER])) { ?>
+                    <li><a class="btn btn-lg btn-primary" href="/owner/owner_backup">Backup/Restore Database</a></li>
+                <?php } ?>
+            </ul>
+        </div>
+        <div class="col-md-10 well admin-content" id="home">
 
-            <form action="/ingredients/add" method="post">
 
-                <div class="form-group">
-                    <label for="food_name">Name</label>
-                    <input type="text" value="" class="form-control" name="food_name" />
+
+            <div id="wrap">
+                <div id="main" class="container clear-top">
+
+                    <div class="container">
+                        <h3>Add food</h3>
+                        <h4><a class="btn btn-sm btn-primary" href="/staff/manager">Go back</a></h4>
+
+                        <form action="/ingredients/add" method="post">
+
+                            <div class="form-group">
+                                <label for="food_name">Name</label>
+                                <input type="text" value="" class="form-control" name="food_name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="food_stock">Stock</label>
+                                <input type="text" value="" class="form-control" name="food_stock" />
+                            </div>
+                            <div class="form-group">
+                                <label for="food_available">Available</label>
+                                <input type="text" value="" class="form-control" name="food_available" />
+                            </div>
+
+                            <button type="submit" class="btn btn-lg btn-primary">Add</button>
+
+                        </form>
+
+                        <?php if(isset($error)) echo $error ?>
+
+                    </div>
+
+
                 </div>
-                <div class="form-group">
-                    <label for="food_stock">Stock</label>
-                    <input type="text" value="" class="form-control" name="food_stock" />
-                </div>
-                <div class="form-group">
-                    <label for="food_available">Available</label>
-                    <input type="text" value="" class="form-control" name="food_available" />
-                </div>
 
-                <button type="submit" class="btn btn-lg btn-primary">Add</button>
 
-            </form>
-
-            <?php if(isset($error)) echo $error ?>
+            </div>
 
         </div>
-
-
     </div>
 
+        </div> <!--- admin end -->
 
+    </div>
 </div>
 
-</div>
-</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
 
 {include file=footer.php}
  

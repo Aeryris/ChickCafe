@@ -68,15 +68,18 @@ class Staff_Model extends UserType_Model implements Staff_Interface {
 
     private function loadAttributes(User_Model $oUser)
     {
+
+        //var_dump($oUser);
         $staffID = $oUser->aData['user_id'];
+        //var_dump($staffID);
         try {
-            $sQuery = "SELECT * FROM staff WHERE staff_user_id = :staffID;";
+            $sQuery = "SELECT * FROM staff WHERE staff_user_id = :staffID";
             $oStmt = $this->db->prepare($sQuery);
 
             $oStmt->bindValue(":staffID", $staffID);
 
             $oExecute = $oStmt->execute();
-
+            //var_dump($oStmt->fetch(PDO::FETCH_ASSOC));
             $this->aData = $oStmt->fetch(PDO::FETCH_ASSOC);
 
             $this->pushAttributesToObject();
@@ -92,6 +95,9 @@ class Staff_Model extends UserType_Model implements Staff_Interface {
         $ignored = [
             'staff_user_id'
         ];
+
+        if(empty($this->aData)) return $this;
+
         foreach($this->aData as $key => $value) {
             if(in_array($key, $ignored)) {
                 continue;

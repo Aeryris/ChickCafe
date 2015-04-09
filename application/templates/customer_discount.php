@@ -34,49 +34,90 @@ SOFTWARE.
 {include file=header.php}
 
 
-
-<div class="container-fluid main">
-
 <div class="container">
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked admin-menu">
+                <li   ><a class="" href="/user/dashboard">Home</a></li>
+                <li><a class="" href="/menu/all">Menus list</a></li>
+                <li ><a class="btn-primary" href="/ingredients/view">Ingredients list</a></li>
+                <li><a class="" href="/food/view">Foods list</a></li>
+                <li><a class="" href="/order/all">Orders list</a></li>
+                <li><a class="" href="/menu/add">Add menu</a></li>
+                <li><a class="" href="/ingredients/add">Add Ingredient</a></li>
+                <li><a class="" href="/food/add">Add Food</a></li>
+                <li><a class="" href="/staff/staff">Staff Dashboard</a></li>
+                <li class="active "><a class="btn-primary" href="/customer/index">Customer discounts</a></li>
+                <li><a class="" href="/staff/report">Reports</a></li>
+                <?php if (Acl_Core::allow([ACL::ACL_OWNER])) { ?>
+                    <li><a class="btn btn-lg btn-primary" href="/owner/owner_backup">Backup/Restore Database</a></li>
+                <?php } ?>
+            </ul>
+        </div>
+        <div class="col-md-10 well admin-content" id="home">
 
-    {foreach($customers as $key => $value)}
-    <form action="/customer/index" method="post">
+
+
+            <div class="container-fluid main">
+
+                <div class="container">
+                    <h3>List of customers</h3>
+                    {foreach($customers as $key => $value)}
+                    <form action="/customer/index" method="post">
 
 
 
-    <div class="customer cardView" style="clear: both">
-        <p>Name: {! $value['user_firstname'] } {! $value['user_lastname'] }</p>
-        <p>Email: {! $value['user_email'] } </p>
-        <p>VIP status :
-            <?php
-            if($value['customer_spending_total'] > 1000 && $value['customer_spending_total'] < 2000){
-                echo 'Silver';
-            }else if($value['customer_spending_total'] > 2000 && $value['customer_spending_total'] < 5000){
-                echo 'Gold';
-            }else if($value['customer_spending_total'] > 5000) {
-                echo 'Diamond';
-            }else{
-                echo 'None';
-            }
-            ?>
-        </p>
-        <p>Total spendings : £{! $value['customer_spending_total'] } </p>
-        <p>Discount : {! $value['customer_vip_discount'] }% </p>
+                        <div class="customer cardView" style="clear: both">
+                            <p>Name: {! $value['user_firstname'] } {! $value['user_lastname'] }</p>
+                            <p>Email: {! $value['user_email'] } </p>
+                            <p>VIP status :
+                                <?php
+                                if($value['customer_spending_total'] > 1000 && $value['customer_spending_total'] < 2000){
+                                    echo 'Silver';
+                                }else if($value['customer_spending_total'] > 2000 && $value['customer_spending_total'] < 5000){
+                                    echo 'Gold';
+                                }else if($value['customer_spending_total'] > 5000) {
+                                    echo 'Diamond';
+                                }else{
+                                    echo 'None';
+                                }
+                                ?>
+                            </p>
+                            <p>Total spendings : £{! $value['customer_spending_total'] } </p>
+                            <p>Discount : {! $value['customer_vip_discount'] }% </p>
 
-        <p>Update discount</p>
-        <input type="text" value="{! $value['customer_vip_discount'] }" name="discount" />
+                            <p>Update discount</p>
+                            <input type="text" value="{! $value['customer_vip_discount'] }" name="discount" />
 
-        <input type="hidden" value="{! $value['user_id'] }" name="userid" />
+                            <input type="hidden" value="{! $value['user_id'] }" name="userid" />
 
-        <button class="btn btn-primary" type="submit">Update</button>
+                            <button class="btn btn-primary" type="submit">Update</button>
+
+                        </div>
+                    </form>
+                    {/foreach}
+
+                </div>
+
+
+            </div>
+
+        </div> <!--- admin end -->
 
     </div>
-    </form>
-    {/foreach}
-
 </div>
 
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 
-</div>
+
+
+
 
 {include file=footer.php}

@@ -34,40 +34,80 @@
 
 {include file=header.php}
 
-<div id="wrap">
-    <div id="main" class="container clear-top">
-
-        <h3>Menus</h3>
-        <a href="/menu/add" class="btn btn-lg btn-primary">Add</a>
-        <div class="container">
-            <div class="row-fluid">
-
-                {foreach($all as $key => $value)}
-                <a href="/menu/view/id/{! $value['menu_id'] }">
 
 
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                        <div class="box" style="background: white">
-                            <div class="box-image" style="background: url(/food_images/{! $value['menu_image'] })">
-                            </div>
-                            <div class="info" style="padding: 10px 25px;">
-                                <div class="box-icon">
-                                    <img style="width: 100%; height: 100%;border-radius: 50%;" src="/food_images/{! $value['menu_image'] }">
+<div class="container">
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked admin-menu">
+                <li ><a class="" href="/user/dashboard">Home</a></li>
+                <li  class="active "><a class="btn-primary" href="/menu/all">Menus list</a></li>
+                <li><a class="" href="/ingredients/view">Ingredients list</a></li>
+                <li><a class="" href="/food/view">Foods list</a></li>
+                <li><a class="" href="/order/all">Orders list</a></li>
+                <li><a class="" href="/menu/add">Add menu</a></li>
+                <li><a class="" href="/ingredients/add">Add Ingredient</a></li>
+                <li><a class="" href="/food/add">Add Food</a></li>
+                <li><a class="" href="/staff/staff">Staff Dashboard</a></li>
+                <li><a class="" href="/customer/index">Customer discounts</a></li>
+                <li><a class="" href="/staff/report">Reports</a></li>
+                <?php if (Acl_Core::allow([ACL::ACL_OWNER])) { ?>
+                    <li><a class="btn btn-lg btn-primary" href="/owner/owner_backup">Backup/Restore Database</a></li>
+                <?php } ?>
+            </ul>
+        </div>
+        <div class="col-md-9 well admin-content" id="home">
+
+            <div id="wrap">
+                <div id="main" class="container clear-top">
+
+                    <h3>Menus</h3>
+                    <a href="/menu/add" class="btn btn-lg btn-primary">Add</a>
+                    <div class="container">
+                        <div class="row-fluid">
+
+                            {foreach($all as $key => $value)}
+                            <a href="/menu/view/id/{! $value['menu_id'] }">
+
+
+                                <div class="col-xs-12 col-sm-5 col-md-7 col-lg-8">
+                                    <div class="box" style="background: white">
+                                        <div class="box-image" style="background: url(/food_images/{! $value['menu_image'] })">
+                                        </div>
+                                        <div class="info" style="padding: 10px 25px;">
+                                            <div class="box-icon">
+                                                <img style="width: 100%; height: 100%;border-radius: 50%;" src="/food_images/{! $value['menu_image'] }">
+                                            </div>
+                                            <h4 class="text-center">{! $value['menu_name'] }</h4>
+                                            <p style="color: #000000"><?php  echo  $value['menu_desc'] ?></p>
+                                            <a href="/menu/view/id/{! $value['menu_id'] }" class="btn">View</a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <h4 class="text-center">{! $value['menu_name'] }</h4>
-                                <p style="color: #000000"><?php  echo  $value['menu_desc'] ?></p>
-                                <a href="/menu/view/id/{! $value['menu_id'] }" class="btn">View</a>
-                            </div>
+
+                            </a>
+                            {/foreach}
                         </div>
                     </div>
 
-                </a>
-                {/foreach}
+                </div>
             </div>
-        </div>
+
+        </div> <!--- admin end -->
 
     </div>
 </div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
 
 {include file=footer.php}
  

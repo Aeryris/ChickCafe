@@ -29,9 +29,7 @@ SOFTWARE.
  * @version 1.0
  * @license The MIT License (MIT)
  */
-
 ?>
-
 
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
@@ -44,14 +42,14 @@ SOFTWARE.
             <ul class="nav nav-pills nav-stacked admin-menu">
                 <li   ><a class="" href="/user/dashboard">Home</a></li>
                 <li><a class="" href="/menu/all">Menus list</a></li>
-                <li ><a  href="/ingredients/view">Ingredients list</a></li>
+                <li ><a class="btn-primary" href="/ingredients/view">Ingredients list</a></li>
                 <li><a class="" href="/food/view">Foods list</a></li>
-                <li  class="active "><a class="btn-primary" href="/order/all">Orders list</a></li>
+                <li><a class="" href="/order/all">Orders list</a></li>
                 <li><a class="" href="/menu/add">Add menu</a></li>
                 <li><a class="" href="/ingredients/add">Add Ingredient</a></li>
                 <li><a class="" href="/food/add">Add Food</a></li>
                 <li><a class="" href="/staff/staff">Staff Dashboard</a></li>
-                <li><a class="" href="/customer/index">Customer discounts</a></li>
+                <li class="active "><a class="btn-primary" href="/customer/index">Customer discounts</a></li>
                 <li><a class="" href="/staff/report">Reports</a></li>
                 <?php if (Acl_Core::allow([ACL::ACL_OWNER])) { ?>
                     <li><a class="btn btn-lg btn-primary" href="/owner/owner_backup">Backup/Restore Database</a></li>
@@ -61,66 +59,49 @@ SOFTWARE.
         <div class="col-md-10 well admin-content" id="home">
 
 
-            <div id="wrap">
-                <div id="main" class="container clear-top">
 
-                    <div class="container">
+            <div class="container-fluid main">
 
-                        <h3>All orders</h3>
-
-                        <div class="">
-
-                            <?php //var_dump($oOrdersData) ?>
-
-                            <?php
-
-                            $oUser = new User_Model();
-
-
-                            ?>
-
-
-                            <?php foreach($oOrdersData as $key => $value): ?>
-                            <div class="cardView" style="clear: both">
-
-                                <?php $oUser->attr(['id' => $value['customer_id']]); ?>
-
-                                <span>Name: <?php echo $oUser->aData['user_firstname']; echo ' '; echo $oUser->aData['user_lastname']; ?></span> <br />
-
-                                <span>Priority order: <?php echo $value['order_priority'] ? ' <i style="color: green" class="glyphicon glyphicon-signal"> Yes</i>' : 'No'; ?></span> <br />
-                                <span>Order no: <?php echo $value['order_id'] ?></span> <br />
-                                <span>Order date: <?php echo $value['order_datetime'] ?></span><br />
-                                <span>Price: <?php echo $value['order_price'] ?></span><br />
-                                <span>Order items:</span><br />
-
-                                <div style="padding: 20px 20px 20px 20px">
-                                    <?php foreach($order->details($value['order_id']) as $k => $v): ?>
-
-
-                                    <img style="height: 50px; width: 50px" src="/food_images/<?php echo $v['item_img'] ?>">
-                                    <?php echo $v['item_name'] ?>
+                <div class="container">
+                    <h3>List of customers</h3>
+                    <?php foreach($customers as $key => $value): ?>
+                    <form action="/customer/index" method="post">
 
 
 
-                                    <?php endforeach; ?>
-                                </div>
-                                <br />
-                                <!-- <a class="btn btn-lg btn-primary btn-block" href="/refund/orderid/<?php echo $value['order_id'] ?>">Request refund</a> -->
+                        <div class="customer cardView" style="clear: both">
+                            <p>Name: <?php echo $value['user_firstname'] ?> <?php echo $value['user_lastname'] ?></p>
+                            <p>Email: <?php echo $value['user_email'] ?> </p>
+                            <p>VIP status :
+                                <?php
+                                if($value['customer_spending_total'] > 1000 && $value['customer_spending_total'] < 2000){
+                                    echo 'Silver';
+                                }else if($value['customer_spending_total'] > 2000 && $value['customer_spending_total'] < 5000){
+                                    echo 'Gold';
+                                }else if($value['customer_spending_total'] > 5000) {
+                                    echo 'Diamond';
+                                }else{
+                                    echo 'None';
+                                }
+                                ?>
+                            </p>
+                            <p>Total spendings : £<?php echo $value['customer_spending_total'] ?> </p>
+                            <p>Discount : <?php echo $value['customer_vip_discount'] ?>% </p>
 
-                            </div>
+                            <p>Update discount</p>
+                            <input type="text" value="<?php echo $value['customer_vip_discount'] ?>" name="discount" />
 
+                            <input type="hidden" value="<?php echo $value['user_id'] ?>" name="userid" />
 
-
-                            <?php endforeach; ?>
-
+                            <button class="btn btn-primary" type="submit">Update</button>
 
                         </div>
-
-
-
-                    </div>
+                    </form>
+                    <?php endforeach; ?>
 
                 </div>
+
+
             </div>
 
         </div> <!--- admin end -->
@@ -134,6 +115,7 @@ SOFTWARE.
 <br />
 <br />
 <br />
+
 
 
 
