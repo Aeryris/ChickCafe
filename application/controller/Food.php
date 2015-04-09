@@ -48,10 +48,14 @@ class Food_Controller extends Base_Controller{
         $this->template->oIngredients = $oIngredients;
 
         $this->template->all = $oFoods->all();
-
-        $this->view = 'food_view_new';
+        if(Acl_Core::allow([ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
+            $this->view = 'food_view_new';
+        } else {
+            header('Location: /error403'); //Forbidden
+            exit();
+        }
     }
-
+    // edit food item
     public function edit(){
 
         $itemId = $_GET['id'];
@@ -96,7 +100,7 @@ class Food_Controller extends Base_Controller{
         $this->view = 'food_edit';
 
     }
-
+    // add food item
     public function add(){
 
 

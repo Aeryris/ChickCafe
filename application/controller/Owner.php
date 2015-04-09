@@ -3,8 +3,12 @@
 class Owner_Controller extends Manager_Controller {
 	public function owner() {
 		$this->template->test = "Test var";
-
-		$this->view = "owner_backup";
+		if(Acl_Core::allow([ACL::ACL_OWNER,ACL::ACL_ADMIN])){
+			$this->view = "owner_backup";
+        } else {
+            header('Location: /error403'); //Forbidden
+            exit();
+        }
 	}
 
 	public function e() {
