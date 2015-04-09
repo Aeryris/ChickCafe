@@ -49,7 +49,7 @@ class Food_Controller extends Base_Controller{
 
         $this->template->all = $oFoods->all();
 
-        $this->view = 'food_view';
+        $this->view = 'food_view_new';
     }
 
     public function edit(){

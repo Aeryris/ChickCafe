@@ -124,4 +124,5 @@
     </div>
 </div>
 
+
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>

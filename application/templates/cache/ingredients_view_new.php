@@ -30,32 +30,35 @@
  * @version 1.0
  * @license The MIT License (MIT)
  */
-?>
 
+ ?>
 
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
 
-
+        <h3>Ingredients list</h3>
+        <h4><a class="btn btn-sm btn-primary" href="/staff/manager">Go back</a></h4>
         <div class="container">
-            <div class="row">
-                <?php foreach($oMenu->data() as $key => $value): ?>
-                <a href="/menu/view/id/<?php echo $value['menu_id'] ?>">
+            <div class="row-fluid">
+
+                <?php foreach($all as $key => $value): ?>
+                <a href="/menu/view/id/<?php echo $value['ingredient_id'] ?>">
 
 
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="box" style="background: white">
-                            <div class="box-image" style="background: url(/food_images/<?php echo $value['menu_image'] ?>)">
+                            <div class="box-image" style="background: url(/food_images/<?php echo $value['ingredient_img_src'] ?>)">
                             </div>
                             <div class="info" style="padding: 10px 25px;">
                                 <div class="box-icon">
-                                    <img style="width: 100%; height: 100%;border-radius: 50%;" src="/food_images/<?php echo $value['menu_image'] ?>">
+                                    <img style="width: 100%; height: 100%;border-radius: 50%;" src="/food_images/<?php echo $value['ingredient_img_src'] ?>">
                                 </div>
-                                <h4 class="text-center"><?php echo $value['menu_name'] ?></h4>
-                                <p style="color: #000000"><?php  echo  $value['menu_desc'] ?></p>
-                                <a href="/menu/view/id/<?php echo $value['menu_id'] ?>" class="btn">View</a>
+                                <h4 class="text-center"><?php echo $value['ingredient_name'] ?></h4>
+                                <p style="color: #000000">Stock: <?php  echo  $value['ingredient_stock'] ?></p>
+                                <p style="color: #000000">Available: <?php  echo  $value['ingredient_available'] ?></p>
+                                <a class="btn btn-sm btn-primary" href="/ingredients/edit/id/<?php echo $value['ingredient_id'] ?>">Edit</a>
                             </div>
                         </div>
                     </div>

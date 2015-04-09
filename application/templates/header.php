@@ -47,15 +47,54 @@
     function run(url){
         window.location.assign('/order/view/id/'+url);
     }
+
+    $(function () {
+
+        "use strict";
+
+        var $bgobj = $(".ha-bg-parallax"); // assigning the object
+
+        $(window).on("scroll", function () {
+
+            var yPos = -($(window).scrollTop() / $bgobj.data('speed'));
+
+            // Put together our final background position
+
+            var coords = '100% ' + yPos + 'px';
+
+            // Move the background
+
+            $bgobj.css({ backgroundPosition: coords });
+
+        });
+        $('div.product-chooser').not('.disabled').find('div.product-chooser-item').on('click', function(){
+            $(this).parent().parent().find('div.product-chooser-item').removeClass('selected');
+            $(this).addClass('selected');
+            $(this).find('input[type="radio"]').prop("checked", true);
+
+        });
+
+
+
+    });
+
+    $(document).ready(function(){
+        $(window).bind('scroll', function() {
+            var navHeight = 67; // custom nav height
+            //($(window).scrollTop() > navHeight) ? $('nav').addClass('goToTop') : $('nav').removeClass('goToTop');
+        });
+    });
     </script>
     <style>
 
         .navbar{
             min-height: 67px;
+            margin-bottom: 0px !important;
+            border-bottom: solid #ffb302 3px;
         }
 
         .navbar.navbar, .nav-default.navbar{
-            background-color: #96bbe5;
+            background-color: #000000;
         }
         <?php if(Auth_Core::init()->isAuth()): ?>
         .navbar-nav.navbar-right {
@@ -82,14 +121,14 @@
         #notificationContainer
         {
             background-color: #fff;
-            border: 1px solid rgba(100, 100, 100, .4);
+            border: 1px solid #fff;
             -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
             overflow: visible;
             position: absolute;
             top: 50px;
             margin-left: -174px;
             width: 400px;
-            z-index: 0;
+            z-index: 10;
             display: none;
         }
 
@@ -104,32 +143,37 @@
                border-color: transparent transparent white;
                margin-top: -20px;
                margin-left: 188px;
+               z-index: 1000;
            }
         #notificationTitle
         {
             font-weight: bold;
             padding: 8px;
             font-size: 13px;
-            background-color: #ffffff;
-            position: fixed;
+            background-color: #000;
+
             z-index: 1000;
-            width: 384px;
-            border-bottom: 1px solid #dddddd;
+            width: 100%;
+
         }
         #notificationsBody
         {
             padding: 33px 0px 0px 0px !important;
             min-height:300px;
             color: black;
+
+            max-height: 300px;
+            overflow: auto;
         }
         #notificationFooter
         {
-            background-color: #e9eaed;
+            color: #fff;
+            background-color: #000;
             text-align: center;
             font-weight: bold;
             padding: 8px;
             font-size: 12px;
-            border-top: 1px solid #dddddd;
+
         }
 
         #notification-body-list{
@@ -140,6 +184,7 @@
         #notification-body-list li{
             list-style: none;
             border-bottom: solid 1px #dcdcdc;
+            height: 50px;
         }
 
         #notification_count
@@ -214,7 +259,56 @@
             box-shadow: 10px 10px 53px -21px rgba(0,0,0,0.66);
         }
 
+        body{
+            background: #FFFFFF;
+        }
 
+        a{
+            color: black;
+        }
+
+        a:hover{
+            color: black;
+        }
+
+        .btn-primary:not(.btn-link):not(.btn-flat) {
+            background-color: #ffb302;
+            color: rgba(255,255,255,.84);
+        }
+
+        .btn-primary:not(.btn-link):not(.btn-flat):hover {
+            background-color: #cc8e02;
+            color: rgba(255,255,255,.84);
+        }
+
+        .well:before, .well:after {
+            z-index: -1;
+            position: absolute;
+            content:"";
+            bottom: 15px;
+            left: 20px;
+            width: 50%;
+            top: 80%;
+            max-width: 300px;
+            background: #777;
+            -webkit-box-shadow: 0 15px 10px #777;
+            -moz-box-shadow: 0 15px 10px #777;
+            box-shadow: 0 15px 10px #777;
+            -webkit-transform: rotate(-3deg);
+            -moz-transform: rotate(-3deg);
+            -o-transform: rotate(-3deg);
+            -ms-transform: rotate(-3deg);
+            transform: rotate(-3deg);
+        }
+        .well:after {
+            -webkit-transform: rotate(3deg);
+            -moz-transform: rotate(3deg);
+            -o-transform: rotate(3deg);
+            -ms-transform: rotate(3deg);
+            transform: rotate(3deg);
+            right: 20px;
+            left: auto;
+        }
 
     </style>
 
@@ -224,13 +318,8 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">ChickCafe</a>
+
+            <a class="navbar-brand" href="/"> <i class="fa fa-coffee"></i> ChickCafe</a>
             <?php if(Auth_Core::init()->isAuth()): ?>
             <div class="checkout">
                 <a class="checkout__button pull-right" href="#"><!-- Fallback location -->
@@ -260,6 +349,12 @@
             </div><!-- /checkout -->
 
             <?php endif; ?>
+            <button type="button" style="margin-top: 15px;margin-right: 80px" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -267,18 +362,18 @@
                 <li><a href="/menu"><i class="fa fa-spoon"></i> Menu</a></li>
                 <li><a href="#"><i class="fa fa-info-circle"></i> About Us</a></li>
                 <li><a href="#"><i class="fa fa-at"></i> Contact Us</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
+
+
 
                 <?php if(Auth_Core::init()->isAuth()): ?>
-                <li id="notification_li">
+                <li id="notification_li" style="margin: 0 auto;">
                     <span id="notification_count"></span>
                     <a href="#" style=""><img id="notificationLink" style="width: 100%; " src="http://iconizer.net/files/Facebook/orig/notifications.png"></a>
 
-                    <div id="notificationContainer">
+                    <div id="notificationContainer" >
                         <div id="notificationTitle">Notifications</div>
                         <div id="notificationsBody" class="notifications"></div>
-                        <div id="notificationFooter"><a href="#">See All</a></div>
+                        <div id="notificationFooter"><a style="color: #ffffff" href="#">See All</a></div>
                     </div>
 
                 </li>
@@ -291,7 +386,7 @@
                     ?>
 
                     <li><a href="/user/account"><i class="fa fa-user"></i> Account</a></li>
-                    <li><a href="/user/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    <li style=""><a href="/user/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
                 <?php endif; ?>
 
                 <?php if(!Auth_Core::init()->isAuth()): ?>

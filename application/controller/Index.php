@@ -78,7 +78,7 @@ class Index_Controller extends Base_Controller{
 
         $this->template->dailySpecial = $this->get_latest();
 
-        $this->view = 'index';
+        $this->view = 'index_new';
     }
 
     public function e(){

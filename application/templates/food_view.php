@@ -69,12 +69,8 @@
                     <div class="cardView" style="float: none; background-color: rgba(0, 172, 255, 0.34)">
                     {foreach($oIngredientsList as $k => $v)}
                     <li class="ingredient">
-
                         {! $v['ingredient_name'] } [ {! $v['ingredient_quantity'] } ]
-
                     </li>
-
-
                     {/foreach}
                         </div>
                 </ul>

@@ -40,24 +40,29 @@
 
 
         <div class="container">
+            <div class="row">
+                {foreach($oMenu->data() as $key => $value)}
+                <a href="/menu/view/id/{! $value['menu_id'] }">
 
-            <h3>Current menus</h3>
-                <div class="current-menus">
-            {foreach($oMenu->data() as $key => $value)}
-                    <a href="menu/view/id/{! $value['menu_id'] }">
-                    <div style="color: #000000" class="cardView">
-                        <div style="width: 150px; height: 150px; float: left" class="menu_image">
 
-                            <img style="height: 100%; width: 100%;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" src="/food_images/{! $value['menu_image'] }">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="box" style="background: white">
+                            <div class="box-image" style="background: url(/food_images/{! $value['menu_image'] })">
+                            </div>
+                            <div class="info" style="padding: 10px 25px;">
+                                <div class="box-icon">
+                                    <img style="width: 100%; height: 100%;border-radius: 50%;" src="/food_images/{! $value['menu_image'] }">
+                                </div>
+                                <h4 class="text-center">{! $value['menu_name'] }</h4>
+                                <p style="color: #000000"><?php  echo  $value['menu_desc'] ?></p>
+                                <a href="/menu/view/id/{! $value['menu_id'] }" class="btn">View</a>
+                            </div>
                         </div>
-                        <div class="food_data" style="float: left; margin-left: 10px">
-                <span><b>Name:</b> {! $value['menu_name'] }</span> <br />
-                <span><b>Start time:</b> {! $value['menu_time_start'] }</span> <br />
-                <span><b>End time:</b> {! $value['menu_time_end'] }</span> <br />
-                    </div></div>
-                        </a>
-            {/foreach}
-                </div>
+                    </div>
+
+                </a>
+                {/foreach}
+            </div>
         </div>
 
     </div>

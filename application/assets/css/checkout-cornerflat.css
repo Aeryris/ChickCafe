@@ -1,14 +1,16 @@
 .checkout {
 	position: absolute;
+
 	top: 0;
 	right: 0;
-	z-index: 10;
+	z-index: 1000;
 	display: block;
 	width: 67px;
 	height: 67px;
 	text-align: center;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+    background: #000000;
 }
 
 .checkout__button {
@@ -70,7 +72,7 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: #96bbe5;
+	background: #000000;
 	-webkit-transform: translate3d(100%, -100%, 0) translate3d(-67px, 67px, 0);
 	transform: translate3d(100%, -100%, 0) translate3d(-67px, 67px, 0);
 	-webkit-transition: -webkit-transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
@@ -137,7 +139,7 @@
 }
 
 .icon:hover {
-	color: #426a98;
+	color: #fff;
 }
 
 .checkout__summary {
@@ -200,7 +202,7 @@
 
 .checkout__summary thead th,
 .checkout__summary tfoot th {
-	color: #517cad;
+	color: #fff;
 	line-height: 2.5;
 }
 
@@ -224,7 +226,7 @@
 }
 
 .checkout__summary tbody td span {
-	color: #cfe6ff;
+	color: #fff;
 }
 
 .checkout__summary th:last-child,
@@ -238,8 +240,8 @@
 	padding: 0.5em 2em;
 	border: none;
 	border-radius: 1px;
-	background: #517cad;
-	color: #fff;
+	background: #fff;
+	color: #000;
 	font-weight: 700;
 	opacity: 0;
 	-webkit-transform: translate3d(50px, 0, 0);
@@ -247,19 +249,20 @@
 }
 
 .checkout__option:hover {
-	background: #426a98;
+	background: #d7d7d7;
+    color: #000;
 }
 
 .checkout__option--silent {
 	background: none;
-	color: #517cad;
+	color: #fff;
 	font-weight: 500;
 	font-size: 0.75em;
 }
 
 .checkout__option--silent:hover {
 	background: none;
-	color: #426a98;
+	color: #FFB302;
 }
 
 .checkout__option:focus {

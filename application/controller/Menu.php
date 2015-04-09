@@ -59,7 +59,7 @@ class Menu_Controller extends Base_Controller{
             //$this->template->displayItem = $this->displayItem;
             $this->template->menuItems = $oMenuItems;
 
-            $this->view = 'menu_view';
+            $this->view = 'menu_view_new';
 
         }catch(Exception $e){
 
@@ -89,7 +89,7 @@ class Menu_Controller extends Base_Controller{
 
         $this->template->all = $oMenu->all();
 
-        $this->view = 'menu_all';
+        $this->view = 'menu_all_new';
     }
 
     public function add(){

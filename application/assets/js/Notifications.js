@@ -170,7 +170,7 @@ function displayNotificationsList(){
                 data.result.user.forEach(function(n){
                     var style = '';
                     if(n.notification_read == 0) style = ' style="background: rgba(52, 52, 52, 0.24);" '
-                    $('#notification-body-list').append('<li '+style+' >'+ n.notification_msg+' <span style="color:#000066; font-size: small">-'+n.notification_date+'</span></li>');
+                    $('#notification-body-list').append('<li '+style+' >'+ n.notification_msg+' <span style=" float: right; color:#000066; font-size: small; margin-top: 30px;">-'+n.notification_date+'</span></li>');
                 });
 
                 var html = [];

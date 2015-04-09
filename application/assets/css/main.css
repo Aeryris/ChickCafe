@@ -72,3 +72,218 @@ html, body {
     border-top-right-radius: 0;
 }
 
+.ha-bg-parallax {
+
+    background: url(/application/assets/images/header.jpg) 50% -195px no-repeat fixed;
+
+    -moz-background-size: cover;
+
+    -o-background-size: cover;
+
+    -webkit-background-size: cover;
+
+    background-size: cover;
+
+    height: 500px;
+
+    margin: 0 auto;
+
+    width: 100%;
+
+    display: table;
+
+    vertical-align: middle;
+    padding: 0px 0px 0px 0px;
+
+}
+
+.overlay{
+
+    background-color: rgba(0,0,0,0.5); /*dim the background*/
+}
+
+.goToTop {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height:67px;
+    z-index: 1;
+}
+
+
+.ha-bg-parallax .ha-parallax-body {
+
+    display: table-cell;
+
+    vertical-align: middle;
+
+}
+
+
+
+.ha-bg-parallax .ha-content-whitecolor {
+
+    font-size: 17px;
+
+    color: #ffffff;
+
+    width: 45%;
+
+    margin: auto;
+
+}
+
+
+
+.ha-bg-parallax .ha-diamond-divider-md {
+
+    margin: 15px 0px;
+
+}
+
+
+
+.ha-bg-parallax .ha-heading-parallax {
+
+    font-style: italic;
+
+    font-weight: bold;
+
+    text-transform: none;
+
+    color: #ffffff;
+
+    padding-bottom: 0px;
+
+}
+
+
+div.clear
+{
+    clear: both;
+}
+
+div.product-chooser{
+
+}
+
+div.product-chooser.disabled div.product-chooser-item
+{
+    zoom: 1;
+    filter: alpha(opacity=60);
+    opacity: 0.6;
+    cursor: default;
+}
+
+div.product-chooser div.product-chooser-item{
+    padding: 11px;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid #efefef;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10x;
+}
+
+div.product-chooser div.product-chooser-item.selected{
+    border: 4px solid #428bca;
+    background: #efefef;
+    padding: 8px;
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+div.product-chooser div.product-chooser-item img{
+    padding: 0;
+}
+
+div.product-chooser div.product-chooser-item span.title{
+    display: block;
+    margin: 10px 0 5px 0;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+div.product-chooser div.product-chooser-item span.description{
+    font-size: 12px;
+}
+
+div.product-chooser div.product-chooser-item input{
+    position: absolute;
+    left: 0;
+    top: 0;
+    visibility:hidden;
+}
+
+.main{
+    padding:0px;
+    margin-bottom: 150px;
+}
+
+@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+
+
+.box {
+    border-radius: 3px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+
+    text-align: right;
+    display: block;
+    margin-top: 60px;
+
+
+}
+
+.box-image{
+    height: 100px;
+    width: 100%;
+    padding: 0px;
+    margin: 0 auto;
+
+}
+
+.box-icon {
+    background-color: #57a544;
+    border-radius: 50%;
+    display: table;
+    height: 100px;
+    margin: 0 auto;
+    width: 100px;
+    margin-top: -67px;
+}
+.box-icon span {
+    color: #fff;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.info h4 {
+    font-size: 26px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.info > p {
+    color: #717171;
+    font-size: 16px;
+    padding-top: 10px;
+    text-align: justify;
+}
+.info > a {
+    background-color: #03a9f4;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    color: #fff;
+    transition: all 0.5s ease 0s;
+}
+.info > a:hover {
+    background-color: #0288d1;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.12);
+    color: #fff;
+    transition: all 0.5s ease 0s;
+}
+
+
+
+
+

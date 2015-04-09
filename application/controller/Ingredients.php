@@ -41,7 +41,7 @@ class Ingredients_Controller extends Base_Controller implements Base_Controller_
         $oIngredients = new Ingredients_Model();
         $this->template->all = $oIngredients->all();
 
-        $this->view = 'ingredients_view';
+        $this->view = 'ingredients_view_new';
     }
 
     public function edit(){

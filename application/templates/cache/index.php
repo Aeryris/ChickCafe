@@ -11,12 +11,13 @@
 
     </div>
 
-    <p class="lead">Today's daily special is...</p>
+    <?php foreach($dailySpecial as $key => $value): ?>
+    <p class="lead" style="color:gray;">Today's daily special is... <?php echo $value['item_name'] ?></p>
+    <?php endforeach; ?>
 
 
     <div class="center-block" id="view_menu" style="height: 400px; overflow: auto">
         <div style="display: none" class="btn-group" role="group" aria-label="...">
-
             <?php foreach($menuTypes as $key => $value): ?>
             <a href="menu/view/id/<?php echo $value['menu_id'] ?>" type="button" class="btn btn-default btn-lg"><?php echo $value['menu_type_name'] ?> </a>
             <?php endforeach; ?>
@@ -45,7 +46,6 @@
 </div>
 
 <div class="container">
-
 
 
 

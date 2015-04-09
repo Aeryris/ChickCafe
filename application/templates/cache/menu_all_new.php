@@ -32,20 +32,21 @@
  */
 ?>
 
-
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
 <div id="wrap">
     <div id="main" class="container clear-top">
 
-
+        <h3>Menus</h3>
+        <a href="/menu/add" class="btn btn-lg btn-primary">Add</a>
         <div class="container">
-            <div class="row">
-                <?php foreach($oMenu->data() as $key => $value): ?>
+            <div class="row-fluid">
+
+                <?php foreach($all as $key => $value): ?>
                 <a href="/menu/view/id/<?php echo $value['menu_id'] ?>">
 
 
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
                         <div class="box" style="background: white">
                             <div class="box-image" style="background: url(/food_images/<?php echo $value['menu_image'] ?>)">
                             </div>
@@ -69,3 +70,4 @@
 </div>
 
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ footer.php')); ?>
+ 
