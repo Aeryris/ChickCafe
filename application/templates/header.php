@@ -360,7 +360,7 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/"><i class="fa fa-home"></i> Home</a></li>
                 <li><a href="/menu"><i class="fa fa-spoon"></i> Menu</a></li>
-                <li><a href="#"><i class="fa fa-info-circle"></i> About Us</a></li>
+                <li><a href="/aboutus"><i class="fa fa-info-circle"></i> About Us</a></li>
                 <li><a href="#"><i class="fa fa-at"></i> Contact Us</a></li>
 
 
