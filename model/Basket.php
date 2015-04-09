@@ -526,6 +526,7 @@ class Basket_Model extends Foundation_Model implements Basket_Interface{
 
             $aBasketData = $oStmt->fetchAll(PDO::FETCH_ASSOC);
 
+
         }catch(Basket_Exception $e){
             throw new Basket_Exception($e);
         }

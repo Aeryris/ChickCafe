@@ -33,8 +33,6 @@ SOFTWARE.
 ?>
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
 
-
-
 <div class="container-fluid main">
 
     <div class="container">
@@ -60,17 +58,43 @@ SOFTWARE.
 
 
                     </div>
+
+                    <script>
+                        $(document).ready(function(){
+                            $('a.a-attr').attr('disabled', true);
+                            function updatePriority(){
+
+
+                            <?php if(isset($_SESSION['addOrderPriority']) && $_SESSION['addOrderPriority'] == 'true'): ?>
+                            var price = $('.checkout-total-sum').text();
+                            price = parseFloat(price);
+                            var priorityPrice = price * (5 / 100);
+
+
+                            console.log('Price: ' + price);
+                            console.log('Priority Price: ' + priorityPrice);
+                            $('.checkout-total-sum').text(parseFloat(price + priorityPrice).toFixed(2));
+                                $('.updating').hide();
+                                $('button').prop('disabled', false);
+
+                                $('a.a-attr').attr('disabled', false);
+
+                            <?php endif; ?>
+                            }
+                            setTimeout(updatePriority, 2000);
+                        });
+                    </script>
                     <div class="panel-footer">
                         <div class="row text-center">
                             <div class="col-xs-9">
-                                <h4 class="text-right">Total £<strong class="checkout-total-sum"></strong></h4>
+                                <h4 class="text-right"><span class="updating">Updating...</span>Total £<strong class="checkout-total-sum"></strong></h4>
                             </div>
                             <div class="col-xs-3">
                                 <?php if(!empty($basketItems)): ?>
                                 <?php echo $paypal ?>
                                 <div>
-                                    <button id="checkout-submit-button" class="btn btn-lg btn-primary btn-block" type="submit">Pay with PayPal</button>
-                                    <a href="/checkout/process_card" class="btn btn-lg btn-primary btn-block" >Pay with Debit Card</a>
+                                    <button disabled="disabled" id="checkout-submit-button" class="btn btn-lg btn-primary btn-block enable" type="submit">Pay with PayPal</button>
+                                    <a href="/checkout/process_card" class="btn btn-lg btn-primary btn-block a-attr" >Pay with Debit Card</a>
                                 </div>
                                 </form>
                                 <?php endif; ?>

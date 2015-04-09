@@ -74,6 +74,7 @@
                 <div style="float: right">
 
 
+
                     {if(!empty($basketItems))}
                     {! $paypal }
                     <div>
@@ -97,4 +98,6 @@
 </div>
 
 {include file=footer.php}
+
+
  

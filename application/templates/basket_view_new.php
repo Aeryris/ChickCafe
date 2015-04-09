@@ -59,9 +59,76 @@ SOFTWARE.
 
 
                     </div>
+                    <hr>
+                    <style>
+                        .btn.active {
+                            display: none;
+                        }
+
+                        .btn span:nth-of-type(1)  {
+                            display: none;
+                        }
+                        .btn span:last-child  {
+                            display: block;
+                        }
+
+                        .btn.active  span:nth-of-type(1)  {
+                            display: block;
+                        }
+                        .btn.active span:last-child  {
+                            display: none;
+                        }
+                    </style>
+                    <script>
+
+                        $(document).ready(function(){
+
+                            $('.opt').on('click', function(){
+                                console.log($(this).find('input').attr('id'));
+
+                                var price = $('.checkout-total-sum-original').text();
+                                price = parseFloat(price);
+                                var priorityPrice = price * (5 / 100);
+
+
+                                console.log('Price: ' + price);
+                                console.log('Priority Price: ' + priorityPrice);
+                                $.post('/session/set', { addOrderPriority: false });
+
+                                if($(this).find('input').attr('id') == 'on'){
+
+                                    $.post('/session/set', { addOrderPriority: true });
+
+
+
+                                    $('.checkout-total-sum').text(parseFloat(price + priorityPrice).toFixed(2));
+                                }else{
+                                    $.post('/session/set', { addOrderPriority: false });
+                                    $('.checkout-total-sum').text(parseFloat(price).toFixed(2));
+                                }
+                            });
+
+
+                        });
+
+                    </script>
+                    <div class="panel-footer">
+                        <p>You can pay 5% more, to get your order processed with higher priority</p>
+                        <div class="priority" data-toggle="buttons">
+                            <label class="btn btn-lg btn-success active opt">
+                                <input type="radio" name="options" id="off" autocomplete="off" checked>
+                                <i class="fa fa-check"></i> Yes
+                            </label>
+                            <label class="btn btn-lg btn-danger opt">
+                                <input type="radio" name="options" id="on" autocomplete="off">
+                                <i class="fa fa-warning"></i> No
+                            </label>
+                        </div>
+                    </div>
                     <div class="panel-footer">
                         <div class="row text-center">
                             <div class="col-xs-9">
+                                <strong style="display: none" class="checkout-total-sum-original"></strong>
                                 <h4 class="text-right">Total £<strong class="checkout-total-sum"></strong></h4>
                             </div>
                             <div class="col-xs-3">

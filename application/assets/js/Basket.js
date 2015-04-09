@@ -186,6 +186,8 @@ var BasketPrototype = {
                     }
 
                     $('.checkout-total-sum').text(parseFloat(priceSum).toFixed(2));
+                    $('.checkout-total-sum-original').text(parseFloat(priceSum).toFixed(2));
+
                     $('.checkout-total-preparation').text(preparationTime);
                     $('.panel-body').html(html);
                     //$('.checkout__total').text("£"+parseFloat(priceSum).toFixed(2));
@@ -233,6 +235,8 @@ var BasketPrototype = {
                     $('.checkout-total-sum').text(parseFloat(priceSum).toFixed(2));
                     $('.checkout-total-preparation').text(preparationTime);
                     $('.panel-body').html(html);
+
+
 
                 }).fail(function (msg) {
                     console.log( msg );

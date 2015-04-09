@@ -63,6 +63,8 @@ class Checkout_Controller extends Base_Controller{
 
             $oNotification = new Notification_Model();
             $oNotification->setMsgToUserId($oUser->aData['user_id'], 'You have placed an order <a class="order-link" href="/order/view/id/'.$orderId.'">(view)</a>');
+            header('Location: /checkout/processing');
+            exit();
         }
 
 
