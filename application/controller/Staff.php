@@ -2,6 +2,7 @@
 
 class Staff_Controller extends Base_Controller{
 
+    // approve ingredient stock
     public function get_ingredient_stock() {
         $this->db->beginTransaction();
         $sQuery = "SELECT *
@@ -11,7 +12,7 @@ class Staff_Controller extends Base_Controller{
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
-
+    // approve item stock
     public function get_item_stock() {
         $sQuery = "SELECT *
                     FROM item";
@@ -20,7 +21,7 @@ class Staff_Controller extends Base_Controller{
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
-
+    // get all orders
     public function get_orders() {
         $sQuery = "SELECT *
                     FROM orders o
@@ -73,11 +74,12 @@ class Staff_Controller extends Base_Controller{
             return $finalOrders;
         }   
     }
-
+    // sets an order to ready and sends a notif to customer
     public function ready_order() {
         try {
             $oID = Field::post('order_id')->required();
             $sID = User_Model::user()['user_id'];
+            // var_dump($sID);
             if ($oID != null && $sID != null) {
                 $this->db->beginTransaction();
                 $sQuery = "UPDATE orders SET order_ready_datetime = NOW( ) ,
@@ -88,24 +90,39 @@ class Staff_Controller extends Base_Controller{
                 $oStmt->bindValue(':staff_id', $sID, PDO::PARAM_INT);
                 $oStmt->execute();
                 $this->db->commit();
+                $this->db->beginTransaction();
+                $sQuery = "SELECT user_id FROM user u 
+                            INNER JOIN customer_order co ON co.customer_id = u.user_id
+                            INNER JOIN orders o ON co.order_id = :order_id LIMIT 1";
+                $oStmt = $this->db->prepare($sQuery);
+                $oStmt->bindValue(':order_id', $oID->value(), PDO::PARAM_INT);
+                // var_dump($oStmt);
+                $oStmt->execute();
+                // echo "do i execute a query?";
+                $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+                $uID = $data[0]['user_id'];
+                // var_dump($uID);
+                // die();
+                $oNotification = new Notification_Model();
+                $oNotification->setMsgToUserId($uID, 'Your order is now ready! 
+                    Show your <a class="order-link" href="/order/view/id/'.$oID->value().'">(view) to a staff memeber to collect it!');
+                $this->view='manager';
             }
-            header("Location: /staff/staff");
         } catch (Exception $e) {
-            echo "haha";
+            echo $e->message();
             die();
         }
     }
-
+    // generate order report
     public function get_order_report() {
-        $sQuery = "SELECT *
-                    FROM orders o
+        $sQuery = "SELECT * FROM orders o
                     INNER JOIN customer_order co ON o.order_id = co.order_id
                     JOIN customer cu ON co.customer_id = cu.customer_user_id
                     INNER JOIN user u ON cu.customer_user_id = u.user_id
                     INNER JOIN order_items oi ON oi.order_id = o.order_id
                     INNER JOIN item i ON oi.item_id = i.item_id
-                    WHERE o.order_id = co.order_id
-                    ORDER BY o.order_datetime ASC"; 
+                    WHERE o.order_id = co.order_id AND order_ready ='T'
+                    ORDER BY o.order_datetime ASC "; 
         $oStmt = $this->db->prepare($sQuery);
         $oStmt->execute();
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -146,7 +163,7 @@ class Staff_Controller extends Base_Controller{
         }
         return $finalOrders;
     }
-
+    // generate customer spending report
     public function get_customer_spending_report() {
         $sQuery = "SELECT *
                     FROM customer cu
@@ -159,7 +176,7 @@ class Staff_Controller extends Base_Controller{
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }       
-
+    // generate refund report
     public function get_refund_report() {
         $sQuery = "SELECT *
                     FROM refund re
@@ -173,7 +190,7 @@ class Staff_Controller extends Base_Controller{
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
-
+    // generate stock report
     public function get_stock_report() {
         $sQuery = "SELECT *
                     FROM item i
@@ -186,7 +203,7 @@ class Staff_Controller extends Base_Controller{
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
-
+    // generate todays list of orders
     public function get_today_order() {
         $sQuery = "SELECT *
                     FROM orders o
@@ -237,7 +254,58 @@ class Staff_Controller extends Base_Controller{
         }
         return $finalOrders;   
     }
-
+    // generate processed orders that can be refunded 
+    public function get_today_order_refund() {
+        $sQuery = "SELECT *
+                    FROM orders o
+                    INNER JOIN customer_order co ON o.order_id = co.order_id
+                    JOIN customer cu ON co.customer_id = cu.customer_user_id
+                    INNER JOIN user u ON cu.customer_user_id = u.user_id
+                    INNER JOIN order_items oi ON oi.order_id = o.order_id
+                    INNER JOIN item i ON oi.item_id = i.item_id
+                    WHERE o.order_id = co.order_id AND DATE(o.order_datetime) = CURDATE() AND order_ready = 'T';
+                    ORDER BY o.order_datetime ASC"; 
+        $oStmt = $this->db->prepare($sQuery);
+        $oStmt->execute();
+        $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+        $orders = [];
+        foreach($data as $key => $value) {
+            $orders[$value['order_id']][] = $value;
+        }
+        foreach($orders as $orderID => $dataSet) {
+            $items = [];
+            $original = $dataSet;
+            foreach($dataSet as $key => $value) {
+                $theItem = [
+                    'item_id' => $value['item_id'],
+                    'item_name' => $value['item_name'],
+                    'item_description' => $value['item_description'],
+                    'item_stock' => $value['item_stock'],
+                    'item_available' => $value['item_available'],
+                    'item_price' => $value['item_price'],
+                    'item_preptime' => $value['item_preptime'],
+                    'item_img' => $value['item_img']
+                ];
+                $orders[$orderID][0]['items'][] = $theItem;
+                $orders[$orderID][0]['item_names'][] = $value['item_name'];
+                unset(
+                    $orders[$orderID][0]['item_id'],
+                    $orders[$orderID][0]['item_name'],
+                    $orders[$orderID][0]['item_description'],
+                    $orders[$orderID][0]['item_stock'],
+                    $orders[$orderID][0]['item_available'],
+                    $orders[$orderID][0]['item_price'],
+                    $orders[$orderID][0]['item_preptime'],
+                    $orders[$orderID][0]['item_img']
+                );
+            }
+        }
+        foreach($orders as $orderID => $set) {
+            $finalOrders[] = $set[0];
+        }
+        return $finalOrders;   
+    }
+    // generate orders that aren't ready yet
     public function get_unprocessed_order() {
         $sQuery = "SELECT *
                     FROM orders o
@@ -247,7 +315,7 @@ class Staff_Controller extends Base_Controller{
                     INNER JOIN order_items oi ON oi.order_id = o.order_id
                     INNER JOIN item i ON oi.item_id = i.item_id
                     WHERE o.order_id = co.order_id AND DATE(o.order_datetime) = CURDATE() AND o.order_ready = 'F'
-                    ORDER BY o.order_datetime ASC"; 
+                    ORDER BY o.order_datetime AND o.order_priority DESC"; 
         $oStmt = $this->db->prepare($sQuery);
         $oStmt->execute();
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -277,7 +345,7 @@ class Staff_Controller extends Base_Controller{
         }
         return $finalOrders;   
     }
-
+    // single staff performance report
     public function single_staff_performance_report() {
         $sID = User_Model::user()['user_id'];
         $sQuery = "SELECT * FROM staff s
@@ -291,7 +359,7 @@ class Staff_Controller extends Base_Controller{
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
         return $data; 
     }
-
+    // do calculations for staff performance report
     public function single_staff_calc() {
         $staffPerf = $this->single_staff_performance_report();
         $data = null;
@@ -318,10 +386,8 @@ class Staff_Controller extends Base_Controller{
                     $itemprep = $itemprep + $value['item_preptime'];
                 }  
                 $item_count = $item_count + 1;
-                if ($value['order_id'] != $lastOrderId){
-                        $ordersmade += 1;
-                        $ordervalue += $value['order_price'];
-                }
+                $ordersmade += 1;
+                $ordervalue += $value['order_price'];
                 $calc = [
                     'item_total_prep' => $itemprep,
                     'order_value' => $ordervalue,
@@ -332,7 +398,7 @@ class Staff_Controller extends Base_Controller{
         return $data;
         }
     }
-
+    // staff performance report
     public function staff_performance_report() {
         $sQuery = "SELECT *
                     FROM staff s
@@ -342,7 +408,7 @@ class Staff_Controller extends Base_Controller{
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
-
+    // generate calc for staff performance report
     public function all_staff_calc() {
         $staffPerf = $this->staff_performance_report();
         $results = []; // Array to store all results
@@ -396,10 +462,9 @@ class Staff_Controller extends Base_Controller{
 		// Return all results
 		return $results;
     }
-
+    // approve a refund for an order
     public function approve_refund() {
         $oID = Field::post('order_id')->required();
-        $sDate = Field::post('order_datetime')->required();
         $sAmount = Field::post('order_price')->required();
         if ($oID != null) {
             try {
@@ -408,11 +473,10 @@ class Staff_Controller extends Base_Controller{
             // create entry in refund table
             $this->db->beginTransaction();
             $sQuery = 'INSERT INTO refund (refund_order, refund_date, refund_amount, refund_staff_id)
-            VALUES (:order_id, :date, :amount, :staff_id)';
+            VALUES (:order_id, NOW(), :amount, :staff_id)';
 
             $oStmt = $this->db->prepare($sQuery);
             $oStmt->bindValue(':order_id', $oID, PDO::PARAM_INT);
-            $oStmt->bindValue(':date', $sDate->value(), PDO::PARAM_STR);
             $oStmt->bindValue(':amount', $sAmount->value(), PDO::PARAM_INT);
             $oStmt->bindValue(':staff_id', $sID, PDO::PARAM_INT);
             $oExecute = $oStmt->execute();
@@ -436,7 +500,7 @@ class Staff_Controller extends Base_Controller{
             $oStmt->execute();
             $this->db->commit();
             echo "committed";
-            // header("Location: /staff/manager");            
+            $this->view='manager';          
             } catch (PDOException $e) {
                 // header("Location: /staff/manager");
                 var_dump($e);
@@ -446,7 +510,7 @@ class Staff_Controller extends Base_Controller{
         header("Location: /staff/manager");
         exit();
     }
-
+    // create a staff member
     public function create_staff() {
         if(Input_Core::getPost()){
             $sEmail = Field::post('email')->required()->validation('/@/i');
@@ -488,7 +552,7 @@ class Staff_Controller extends Base_Controller{
 
         $this->view = 'manager';
     }
-
+    // get all staff
     public function get_all_staff() {
         $sQuery = 'SELECT *
             FROM staff s
@@ -499,7 +563,7 @@ class Staff_Controller extends Base_Controller{
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
-
+    // get a single staff member and return db get as json
     public function get_single_staff() {
         $sID = Field::post('staff_id')->required();
         $sID = $sID->value();
@@ -511,9 +575,9 @@ class Staff_Controller extends Base_Controller{
 
         $oExecute = $oStmt->execute();
         $data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
-            
+        echo json_encode($data);
     }
-
+    // modify staff
     public function modify_staff() {
         $sID = Field::post('staff_id')->required();
         if ($sID != null) {
@@ -537,7 +601,7 @@ class Staff_Controller extends Base_Controller{
             header("Location:/staff/manager");
         } 
     }
-
+    // lock staff out of their account by setting their password field to blank
     public function delete_staff() {
     $sID = Field::post('staff_id')->required();
         if ($sID != null) {
@@ -547,10 +611,12 @@ class Staff_Controller extends Base_Controller{
 
             $this->db->beginTransaction();
             $sQuery = 'UPDATE staff SET staff_role = :role
+                                        staff_salary = :salary
                                         WHERE staff_user_id = :id';
 
             $oStmt = $this->db->prepare($sQuery);
             $oStmt->bindParam(':role', $sRole, PDO::PARAM_STR);
+            $oStmt->bindParam(':salary', $sSalary, PDO::PARAM_INT);
             $oStmt->bindParam(':id', $sID->value(), PDO::PARAM_INT);
 
             $oExecute = $oStmt->execute();
@@ -582,12 +648,12 @@ class Staff_Controller extends Base_Controller{
         return $data;
         // $this->view='manager';
     }
-
+    // get all items
     public function get_all_items() {
         $items = new Food_Model();
         return $items->all();
     }
-
+    // get all menus
     public function get_all_menus() {
         $menus = Menu_Model::menu()->all();
         return $menus;
@@ -606,10 +672,10 @@ class Staff_Controller extends Base_Controller{
             var_dump($iID[0]);
             var_dump($mID[0]);
             $oDS = new DailySpecial_Model();
-            echo "model made";
+            // echo "model made";
             $oDS->setDailySpecial($iID,$mID);
-            echo "success"; 
-            header("Location: /staff/manager");
+            // echo "success"; 
+            $this->view='manager';
         } catch (PDOException $e) {
             var_dump($e);
             exit();
@@ -629,7 +695,7 @@ class Staff_Controller extends Base_Controller{
         return $oStaff;
     }
 
-        // staff page
+    // staff page
     public function staff(){
         Auth_Core::init()->isAuth(true);
         if(Acl_Core::allow([ACL::ACL_STAFF,ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
@@ -669,9 +735,8 @@ class Staff_Controller extends Base_Controller{
             $this->template->get_ds = $this->get_daily_special();
             $this->template->get_i = $this->get_all_items();
             $this->template->get_m = $this->get_all_menus();
-            $this->template->create_staff = $this->create_staff();
             $this->template->get_staff = $this->get_all_staff();
-            $this->template->refund = $this->get_today_order();
+            $this->template->refund = $this->get_today_order_refund();
             $this->view = 'manager';
         } else {
             header('Location: /error403'); //Forbidden

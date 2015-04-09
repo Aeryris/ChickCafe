@@ -1,5 +1,5 @@
 {include file=header.php}
-
+<!-- Staff Dashboard -->
 <script type="text/javascript">
 	$('#staff_tab a').click(function (e) {
 	  e.preventDefault()
@@ -35,14 +35,30 @@
 
 		    <div role="tabpanel" class="tab-pane active" id="stock">
 		    	<h2>Item and Ingredient Stock</h2>
+		    	<table class="table">
+		    		<tr>
+		    			<th>Ingredient Name</th>
+		    			<th>Stock Remaining</th>
+		    		</tr>
 					{foreach($stock as $key => $value)}
-						<span class="menu-item-name"><b>Ingredient Name:</b> {! $value['ingredient_name'] }</span> <br />
-						<span class="menu-item-stock"><b>Stock Remaining:</b> {! $value['ingredient_available'] }/{! $value['ingredient_stock'] }</span> <br />
+					<tr>
+						<td>{! $value['ingredient_name'] }</td>
+						<td>{! $value['ingredient_available'] }/{! $value['ingredient_stock'] }</td>
+					</tr>
 					{/foreach}
+				</table>
+				<table class="table">
+					<tr>
+						<th>Item Name</th>
+						<th>Stock Remaining</th>
+					</tr>
 					{foreach($item_stock as $key => $value)}
-						<span class="menu-item-name"><b>Item Name:</b> {! $value['item_name'] }</span> <br />
-						<span class="menu-item-stock"><b>Stock Remaining:</b> {! $value['item_available'] }/{! $value['item_stock'] }</span> <br />
+					<tr>
+						<td>{! $value['item_name'] }</td>
+						<td>{! $value['item_available'] }/{! $value['item_stock'] }</td>
+					</tr>
 					{/foreach}
+				</table>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="orders">
 		    	{foreach($orders as $key => $value)}
@@ -52,10 +68,10 @@
 	    			<p>Order Date/Time: {! $value['order_datetime']}</p>
 	    			{foreach ($value['item_names'] as $k1 => $v1)}
 	    				<p>Item name: {! $v1}</p>
-	    				{foreach ($value['item_preptimes'] as $k1 => $v1)}
-	    				<p>Item preptime: {! $v1}</p>
-	    				{/foreach}
 	    			{/foreach}
+    				{foreach ($value['item_preptimes'] as $k1 => $v1)}
+    				<p>Item preptime: {! $v1}</p>
+    				{/foreach}
 	    			<!-- <input type="hidden" name="staff_id" id="staff_id" value="{! $profile->user_id}"/> -->
 	    			<button class="btn btn-primary" type="submit">Order is Ready</button>
 	    			</form>
