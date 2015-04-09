@@ -61,7 +61,7 @@ class Basket_Controller extends Base_Controller implements Basket_Controller_Int
 
 
         $this->template->basketItems = $aBasketData = Basket_Model::basket()->view();
-        $this->view = 'basket_view';
+        $this->view = 'basket_view_new';
     }
 
     /**

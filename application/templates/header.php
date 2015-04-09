@@ -26,6 +26,9 @@
     <script>window.jQuery || document.write('<script src="/application/assets/js/jquery-1.11.2.min.js"><\/script>')</script>
     <script src="/application/assets/js/jquery.datetimepicker.js"></script>
     <link rel="stylesheet" href="/application/assets/js/jquery.datetimepicker.css">
+
+
+    <script type="text/javascript" src = "/application/assets/js/jquery.cre-animate.min.js"></script>
     <script>
     $(document).ready(function(){
         $('#menu_start_time').datetimepicker({
@@ -128,7 +131,7 @@
             top: 50px;
             margin-left: -174px;
             width: 400px;
-            z-index: 10;
+            z-index: 9999;
             display: none;
         }
 

@@ -145,7 +145,7 @@ class Checkout_Controller extends Base_Controller{
 
 
 
-        $this->view = 'checkout';
+        $this->view = 'checkout_new';
     }
 
 

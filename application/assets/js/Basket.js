@@ -105,7 +105,7 @@ var BasketPrototype = {
 
             for(var item in data.basket){
                 //console.log(item);
-                html.push('<tr><td>'+data.basket[item].item_name+'<span>'+data.basket[item].item_description+'</span></td><td>'+data.basket[item].basket_items_quantity+'</td><td>'+data.basket[item].item_price+'</td></tr>');
+                html.push('<tr><td>'+data.basket[item].item_name+' - <span style="font-size: 9px;">  '+data.basket[item].item_description+'</span></td><td>'+data.basket[item].basket_items_quantity+'</td><td>'+data.basket[item].item_price+'</td></tr>');
                 priceWithQuantity = parseFloat(data.basket[item].item_price) * parseFloat(data.basket[item].basket_items_quantity);
 
                 priceSum += parseFloat(priceWithQuantity);
@@ -169,7 +169,10 @@ var BasketPrototype = {
 
                     for(var item in data.basket){
                         //console.log(item);
-                        html.push('<tr><td><div style="width: 150px; height: 150px; float: left" class="food_image"><img style="height: 100%; width: 100%;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" src="/food_images/'+data.basket[item].item_img+'"> </div> '+data.basket[item].item_name+'<span>'+data.basket[item].item_description+'</span></td><td>'+data.basket[item].basket_items_quantity+'</td><td>'+data.basket[item].item_preptime+'</td><td>'+data.basket[item].item_price+'</td><td class="quantity-basket-item-value"><input type="text" name="quantity" value="'+data.basket[item].basket_items_quantity+'" /> <button id="'+data.basket[item].item_id+'" class="update-basket-item-quantity btn btn-material-deep-purple">Update</button> </td><td><button id="'+data.basket[item].item_id+'" class="remove-basket-item-quantity btn btn-material-deep-purple">Remove</button></td></tr>');
+
+
+
+                        html.push('<div class="row"><div class="col-xs-2"><img class="img-responsive" src="/food_images/'+data.basket[item].item_img+'"></div> <div class="col-xs-4"> <h4 class="product-name"><strong>'+data.basket[item].item_name+'</strong></h4><h4><small>'+data.basket[item].item_description+'</small></h4> </div> <div class="col-xs-6"> <div class="col-xs-4 text-right"> <h6><strong> '+data.basket[item].item_price+' <span class="text-muted">x</span></strong></h6> </div> <div class="col-xs-2 quantity-basket-item-value"> <input type="text" name="quantity" class="form-control input-sm" value="'+data.basket[item].basket_items_quantity+'" /> </div> <div class="col-xs-4" style="margin-top: -15px;"> <button id="'+data.basket[item].item_id+'" class="update-basket-item-quantity btn"><i class="fa fa-refresh"></i></button> <button id="'+data.basket[item].item_id+'" class="remove-basket-item-quantity btn">   <span class="glyphicon glyphicon-trash"> </span>  </button>  </div> </div> </div><hr>');
 
                         priceWithQuantity = parseFloat(data.basket[item].item_price) * parseFloat(data.basket[item].basket_items_quantity);
                         priceSum += parseFloat(priceWithQuantity);
@@ -184,7 +187,7 @@ var BasketPrototype = {
 
                     $('.checkout-total-sum').text(parseFloat(priceSum).toFixed(2));
                     $('.checkout-total-preparation').text(preparationTime);
-                    $('.basket-view-summary').html(html);
+                    $('.panel-body').html(html);
                     //$('.checkout__total').text("£"+parseFloat(priceSum).toFixed(2));
 
 
@@ -217,7 +220,8 @@ var BasketPrototype = {
 
                     for(var item in data.basket){
                         //console.log(item);
-                        html.push('<tr><td>'+data.basket[item].item_name+'<span>'+data.basket[item].item_description+'</span></td><td>'+data.basket[item].basket_items_quantity+'</td><td>'+data.basket[item].item_preptime+'</td><td>'+data.basket[item].item_price+'</td></tr>');
+                        //html.push('<tr><td>'+data.basket[item].item_name+'<span>'+data.basket[item].item_description+'</span></td><td>'+data.basket[item].basket_items_quantity+'</td><td>'+data.basket[item].item_preptime+'</td><td>'+data.basket[item].item_price+'</td></tr>');
+                        html.push('<div class="row"><div class="col-xs-2"><img class="img-responsive" src="/food_images/'+data.basket[item].item_img+'"></div> <div class="col-xs-4"> <h4 class="product-name"><strong>'+data.basket[item].item_name+'</strong></h4><h4><small>'+data.basket[item].item_description+'</small></h4> </div> <div class="col-xs-6"> <div class="col-xs-4 text-right"> <h6><strong> '+data.basket[item].item_price+' <span class="text-muted">x</span></strong></h6> </div> <div class="col-xs-2 quantity-basket-item-value"> <input type="text" name="quantity" class="form-control input-sm" value="'+data.basket[item].basket_items_quantity+'" /> </div> <div class="col-xs-4" style="margin-top: -15px;"> <button id="'+data.basket[item].item_id+'" class="update-basket-item-quantity btn"><i class="fa fa-refresh"></i></button> <button id="'+data.basket[item].item_id+'" class="remove-basket-item-quantity btn">   <span class="glyphicon glyphicon-trash"> </span>  </button>  </div> </div> </div><hr>');
 
                         priceWithQuantity = parseFloat(data.basket[item].item_price) * parseFloat(data.basket[item].basket_items_quantity);
                         priceSum += parseFloat(priceWithQuantity);
@@ -228,7 +232,7 @@ var BasketPrototype = {
 
                     $('.checkout-total-sum').text(parseFloat(priceSum).toFixed(2));
                     $('.checkout-total-preparation').text(preparationTime);
-                    $('.checkout-view-summary').html(html);
+                    $('.panel-body').html(html);
 
                 }).fail(function (msg) {
                     console.log( msg );

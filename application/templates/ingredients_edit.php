@@ -39,7 +39,7 @@
     <div id="main" class="container clear-top">
 
         <div class="container">
-            <h3>Editing foodname</h3>
+            <h3>Editing {! $ing[0]['ingredient_name'] }</h3>
             <div class="cardView">
             <h4><a class="btn btn-sm btn-primary" href="/ingredients/view">Go back</a></h4>
 

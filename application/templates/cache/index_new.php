@@ -73,13 +73,13 @@
 
 
 
-        <div class="container">
-            <div class="row">
+        <div class="container>
+            <div class="row "  >
             <?php foreach($oMenu->data() as $key => $value): ?>
             <a href="/menu/view/id/<?php echo $value['menu_id'] ?>">
 
 
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
                     <div class="box" style="background: white">
                         <div class="box-image" style="background: url(/food_images/<?php echo $value['menu_image'] ?>)">
                         </div>

@@ -137,8 +137,7 @@ $(document).ready(function(){
 
     $(document).on('click', '.update-basket-item-quantity',  function(){
 
-        console.log($(this).parent('.current-menus'));
-        var quantity = $(this).parent().find('input').val();
+        var quantity = $(this).parent().parent().find('input').val();
 
         var item_id = $(this).attr('id');
 
