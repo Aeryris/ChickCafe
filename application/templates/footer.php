@@ -1,7 +1,12 @@
 <footer class="footer">
+
   <div class="container">
+
     <p class="text-muted"> Codename Cookie</p>
   </div>
+    <a href="http://www.w3.org/html/logo/">
+        <img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-semantics.png" width="165" height="64" alt="HTML5 Powered with CSS3 / Styling, and Semantics" title="HTML5 Powered with CSS3 / Styling, and Semantics">
+    </a>
 </footer>
 
 
@@ -163,7 +168,6 @@
 
 <script src="/application/assets/js/jquery.timepicker.js"></script>
 
-<link type="text/css" href="/application/assets/css/jquery.timepicker.css" />
 <script>
 
     $(function() {

@@ -36,6 +36,7 @@
 class Order_Controller extends Base_Controller{
 
     public function view(){
+        Auth_Core::init()->isAuth(true);
 
         $oOrders = new Order_Model();
 
@@ -56,9 +57,23 @@ class Order_Controller extends Base_Controller{
         $this->view = 'order_view';
     }
 
+    public function all(){
+
+        Auth_Core::init()->isAuth(true);
+
+        $oOrders = new Order_Model();
+
+        $orderData = $oOrders->allByPriority()->data;
+        $this->template->order = $oOrders;
+        $this->template->oOrdersData = $orderData;
+
+        $this->view = 'order_all';
+    }
+
 
 
     public function refund(){
+        Auth_Core::init()->isAuth(true);
 
         $iOrderId = Input_Core::get('id');
 

@@ -5,12 +5,14 @@
         <a class="btn btn-lg btn-primary" href="/menu/all">All Menus list</a>
         <a class="btn btn-lg btn-primary" href="/ingredients/view">Ingredients list</a>
         <a class="btn btn-lg btn-primary" href="/food/view">Foods list</a>
+        <a class="btn btn-lg btn-primary" href="/order/all">Orders list</a>
         <br />
         <a class="btn btn-lg btn-primary" href="/menu/add">Add menu</a>
         <a class="btn btn-lg btn-primary" href="/menu/add">Add Ingredient</a>
         <a class="btn btn-lg btn-primary" href="/food/add">Add Food</a>
         <br />
         <a class="btn btn-lg btn-primary" href="/staff/staff">Staff Dashboard</a>
+        <a class="btn btn-lg btn-primary" href="/staff/reports">Reports</a>
         <?php if (Acl_Core::allow([ACL::ACL_OWNER])) { ?>
     		<a class="btn btn-lg btn-primary" href="/owner/owner_backup">Backup/Restore Database</a>
     	<?php } ?>
@@ -18,7 +20,7 @@
 		</br>
 	  <!-- Nav tabs -->
 	  <ul class="nav nav-pills" id="staff_tab" role="tablist">
-         <li role="presentation active"><a href="#add_daily_special" aria-controls="create_daily_special" role="tab" data-toggle="tab" >Create Daily Special</a></li>
+         <li role="presentation" class="active"><a href="#add_daily_special" aria-controls="create_daily_special" role="tab" data-toggle="tab" >Create Daily Special</a></li>
             <li role="presentation"><a href="#refund" aria-controls="refund" role="tab" data-toggle="tab" >Approve Refunds</a></li>
             <li role="presentation"><a href="#create_staff" aria-controls="create_staff" role="tab" data-toggle="tab" >Create Staff</a></li>
             <li role="presentation"><a href="#modify_staff" aria-controls="modify_staff" role="tab" data-toggle="tab" >Modify Staff</a></li>
@@ -27,13 +29,13 @@
 
   <!-- Tab panes -->
 		<div class="tab-content">
-            <div role="tabpanel" class="tab-pane" id="add_menu">
+            <!-- <div role="tabpanel" class="tab-pane" id="add_menu">
 	               <iframe src="/menu/add">
 
 
                		</iframe>
             </div>
-
+ -->
 		    <div role="tabpanel" class="tab-pane" id="add_daily_special">
 	    		<h2>Create new daily specials</h2>
 	    		<p>The most recent one is used as the daily special for the day. 

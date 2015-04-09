@@ -45,6 +45,14 @@ class Checkout_Controller extends Base_Controller{
             $totalPrice += ($value['item_price'] * $value['basket_items_quantity']);
         }
 
+        $priority = 0;
+        if(isset($_SESSION['addOrderPriority']) && $_SESSION['addOrderPriority'] == 'true'){
+            $priority = $totalPrice * (5 / 100);
+        }
+
+        $totalPrice += $priority;
+
+
 
 
         if($_POST){

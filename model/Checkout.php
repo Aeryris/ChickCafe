@@ -51,10 +51,18 @@ class Checkout_Model extends Foundation_Model{
     public function checkoutCard($iUserId, $aCardDetails){
         try{
 
-            $sOrderQuery = 'INSERT INTO orders(order_datetime, order_price) VALUES(NOW(), :fullprice)';
+            $sOrderQuery = 'INSERT INTO orders(order_datetime, order_price, order_priority) VALUES(NOW(), :fullprice, :priority)';
             $oStmtOrder = $this->db->prepare($sOrderQuery);
 
             $oStmtOrder->bindValue(':fullprice', $aCardDetails['full-price']);
+
+            $priority = 0;
+
+            if(isset($_SESSION['addOrderPriority']) && $_SESSION['addOrderPriority'] == 'true'){
+                $priority = 1;
+            }
+            $oStmtOrder->bindValue(':priority', $priority);
+
 
             $oStmtOrder->execute();
 

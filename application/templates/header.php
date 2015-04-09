@@ -6,7 +6,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>ChickCafe</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="/application/assets/js/jquery.datetimepicker.css">
 
 
+    <link rel="stylesheet" type="text/css" href="/application/assets/css/jquery.timepicker.css" />
     <script type="text/javascript" src = "/application/assets/js/jquery.cre-animate.min.js"></script>
     <script>
     $(document).ready(function(){
@@ -371,7 +372,7 @@
                 <?php if(Auth_Core::init()->isAuth()): ?>
                 <li id="notification_li" style="margin: 0 auto;">
                     <span id="notification_count"></span>
-                    <a href="#" style=""><img id="notificationLink" style="width: 100%; " src="http://iconizer.net/files/Facebook/orig/notifications.png"></a>
+                    <a href="#" style=""><img alt="Basket" id="notificationLink" style="width: 100%; " src="http://iconizer.net/files/Facebook/orig/notifications.png"></a>
 
                     <div id="notificationContainer" >
                         <div id="notificationTitle">Notifications</div>

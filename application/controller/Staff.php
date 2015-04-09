@@ -425,8 +425,8 @@ class Staff_Controller extends Base_Controller{
     }
 
     public function get_all_items() {
-        $items = Food_Model::all();
-        return $items;
+        $items = new Food_Model();
+        return $items->all();
     }
 
     public function get_all_menus() {

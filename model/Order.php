@@ -74,6 +74,32 @@ class Order_Model extends Foundation_Model implements  Order_Interface{
         return $this;
     }
 
+    public function allByPriority(){
+        try{
+
+            // $sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id JOIN order_items AS oi ON o.order_id = oi.order_id JOIN item AS i ON oi.item_id = i.item_id  WHERE co.customer_id = :cust_id';
+
+            $sQuery = 'SELECT * FROM customer_order AS co JOIN orders as o ON co.order_id = o.order_id ORDER BY order_priority DESC ,  order_datetime DESC';
+
+            $oStmt = $this->db->prepare($sQuery);
+
+            $oUser = new User_Model();
+            $oUser->attr(['email' => $_SESSION['user']]);
+
+
+
+            $oStmt->execute();
+
+            $this->data = $oStmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+        }catch(Exception $e){
+
+        }
+
+        return $this;
+    }
+
     public function details($iOrderId){
         try{
 

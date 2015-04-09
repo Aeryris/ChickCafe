@@ -73,10 +73,10 @@
 
 
 
-        <div class="container>
-            <div class="row "  >
+        <div class="container">
+            <div class="row">
             {foreach($oMenu->data() as $key => $value)}
-            <a href="/menu/view/id/{! $value['menu_id'] }">
+
 
 
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
@@ -85,7 +85,7 @@
                         </div>
                         <div class="info" style="padding: 10px 25px;">
                             <div class="box-icon">
-                                <img style="width: 100%; height: 100%;border-radius: 50%;" src="/food_images/{! $value['menu_image'] }">
+                                <img alt="{! $value['menu_desc'] }" style="width: 100%; height: 100%;border-radius: 50%;" src="/food_images/{! $value['menu_image'] }">
                             </div>
                             <h4 class="text-center">{! $value['menu_name'] }</h4>
                             <p style="color: #000000"><?php  echo  $value['menu_desc'] ?></p>
@@ -94,7 +94,7 @@
                     </div>
                 </div>
 
-            </a>
+
             {/foreach}
             </div>
         </div>
