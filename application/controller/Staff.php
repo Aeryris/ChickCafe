@@ -245,17 +245,21 @@ class Staff_Controller extends Base_Controller{
         if ($oID != null) {
             try {
             $oID = intval($oID->value());
+            $sID = User_Model::user()['user_id'];
             // create entry in refund table
             $this->db->beginTransaction();
-            $sQuery = 'INSERT INTO refund (refund_order, refund_date, refund_amount)
-            VALUES (:order_id, :date, :amount)';
+            $sQuery = 'INSERT INTO refund (refund_order, refund_date, refund_amount, refund_staff_id)
+            VALUES (:order_id, :date, :amount, :staff_id)';
 
             $oStmt = $this->db->prepare($sQuery);
             $oStmt->bindValue(':order_id', $oID, PDO::PARAM_INT);
             $oStmt->bindValue(':date', $sDate->value(), PDO::PARAM_STR);
             $oStmt->bindValue(':amount', $sAmount->value(), PDO::PARAM_INT);
+            $oStmt->bindValue(':staff_id', $sID, PDO::PARAM_INT);
             $oExecute = $oStmt->execute();
             $this->db->commit();
+            echo "1 work";
+            // die();
             // add link to customer order using refund ID
             $data = new Refund_Model(); 
             $data = $data->get_id($oID);
@@ -273,9 +277,10 @@ class Staff_Controller extends Base_Controller{
             $oStmt->execute();
             $this->db->commit();
             echo "committed";
-            header("Location: /staff/manager");            
+            // header("Location: /staff/manager");            
             } catch (PDOException $e) {
-                header("Location: /staff/manager");
+                // header("Location: /staff/manager");
+                var_dump($e);
                 exit();
             }
         }
@@ -420,7 +425,7 @@ class Staff_Controller extends Base_Controller{
     }
 
     public function get_all_items() {
-        $items = new Food_Model();
+        $items = Food_Model::all();
         return $items;
     }
 
