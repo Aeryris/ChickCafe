@@ -56,8 +56,10 @@
 <?php endif; ?>
 
 <script>
+
     <?php
-        $oUser = new User_Model();
+    if(Auth_Core::init()->isAuth()){
+    $oUser = new User_Model();
         $oUser->attr(['email' => $_SESSION['user']]);
 
         $iUserId = $oUser->aData['user_id'];
@@ -68,6 +70,8 @@
         }else{
             echo 'getStaffNotifications();';
         }
+    }
+
     ?>
     $(document).ready(function(){
         $(".confirm").confirm(/** {
@@ -113,7 +117,10 @@
         {
             return false;
         });
+
+        <?php if(Auth_Core::init()->isAuth()): ?>
         setInterval(displayNotificationsList, 1000);
+        <?php endif; ?>
 
     });
 </script>
@@ -141,7 +148,7 @@
 
     function checkAuth(){
 
-        var isAuth = <?php echo (isset($_SESSION['ak']) && $_SESSION['ak'] == sha1(md5($_SESSION['user']))) ?>
+        var isAuth = <?php echo (isset($_SESSION['ak']) && $_SESSION['ak'] == sha1(md5($_SESSION['user']))); if(!isset($_SESSION['ak'])) echo 'null';  ?>;
 
         //console.log(window.location);
 

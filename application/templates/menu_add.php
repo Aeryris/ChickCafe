@@ -43,7 +43,7 @@
             <ul class="nav nav-pills nav-stacked admin-menu">
                 <li   ><a class="" href="/user/dashboard">Home</a></li>
                 <li><a class="" href="/menu/all">Menus list</a></li>
-                <li ><a class="btn-primary" href="/ingredients/view">Ingredients list</a></li>
+                <li ><a class="" href="/ingredients/view">Ingredients list</a></li>
                 <li><a class="" href="/food/view">Foods list</a></li>
                 <li><a class="" href="/order/all">Orders list</a></li>
                 <li class="active "><a class="btn-primary" href="/menu/add">Add menu</a></li>
@@ -53,7 +53,8 @@
                 <li><a class="" href="/customer/index">Customer discounts</a></li>
                 <li><a class="" href="/staff/report">Reports</a></li>
                 <?php if (Acl_Core::allow([ACL::ACL_OWNER])) { ?>
-                    <li><a class="btn btn-lg btn-primary" href="/owner/owner_backup">Backup/Restore Database</a></li>
+                    <li><a class="" href="/owner/owner_backup">Backup Database</a></li>
+                    <li><a class="" href="/owner/restore">Restore Database</a></li>
                 <?php } ?>
             </ul>
         </div>

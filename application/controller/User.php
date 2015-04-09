@@ -208,8 +208,8 @@ class User_Controller extends Base_Controller{
             //$templateName
         }else if($oUser->aData['user_type'] == 'O'){
 
-            header('Location: /owner/owner');
-            exit();
+           // header('Location: /owner/owner');
+           // exit();
 
         }elseif($oUser->aData['user_type'] == 'M'){
 
