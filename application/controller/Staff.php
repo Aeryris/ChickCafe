@@ -105,7 +105,7 @@ class Staff_Controller extends Base_Controller{
                 // die();
                 $oNotification = new Notification_Model();
                 $oNotification->setMsgToUserId($uID, 'Your order is now ready! 
-                    Show your <a class="order-link" href="/order/view/id/'.$oID->value().'">(view) to a staff memeber to collect it!');
+                    Show your <a class="order-link" href="/order/view/id/'.$oID->value().'">(order receipt) to a staff memeber to collect it!');
                 $this->view='manager';
             }
         } catch (Exception $e) {
