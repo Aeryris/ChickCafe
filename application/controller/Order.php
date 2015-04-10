@@ -34,7 +34,7 @@
 
 
 class Order_Controller extends Base_Controller{
-
+    // view orders
     public function view(){
         Auth_Core::init()->isAuth(true);
 
@@ -56,7 +56,7 @@ class Order_Controller extends Base_Controller{
 
         $this->view = 'order_view';
     }
-
+    // all orders
     public function all(){
 
         Auth_Core::init()->isAuth(true);
@@ -69,14 +69,28 @@ class Order_Controller extends Base_Controller{
 
         $this->view = 'order_all';
     }
+    // late orders
+    public function late() {
 
+        Auth_Core::init()->isAuth(true);
 
+        $oOrders = new Order_Model();
+        $lateOrderData = $oOrders->allByUnprocessed()->data;
 
+        $lateOrderCount = 0;
+
+        $this->template->order = $oOrders;
+        $this->template->lateOrderData = $lateOrderData;
+        $this->template->lateOrderCount = $lateOrderCount;
+
+        $this->view = 'order_late';
+
+    }
+    // refund get?
     public function refund(){
         Auth_Core::init()->isAuth(true);
 
         $iOrderId = Input_Core::get('id');
-
 
     }
 
