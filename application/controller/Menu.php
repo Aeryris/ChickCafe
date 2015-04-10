@@ -153,8 +153,12 @@ class Menu_Controller extends Base_Controller{
 
         $this->template->types = $oMenu->getMenuTypes();
 
-
-        $this->view = 'menu_add';
+        if(Acl_Core::allow([ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
+            $this->view = 'menu_add';
+        } else {
+            header('Location: /error403'); //Forbidden
+            exit();
+        }
     }
 
     public function addFood(){
@@ -227,8 +231,12 @@ class Menu_Controller extends Base_Controller{
 
 
 
-
-        $this->view = 'menu_edit';
+        if(Acl_Core::allow([ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
+            $this->view = 'menu_edit';
+        } else {
+            header('Location: /error403'); //Forbidden
+            exit();
+        }
     }
 
     public function imageUpload(){

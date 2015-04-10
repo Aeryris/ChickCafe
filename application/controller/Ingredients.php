@@ -43,17 +43,23 @@ class Ingredients_Controller extends Base_Controller implements Base_Controller_
 
         $this->view = 'ingredients_view_new';
     }
-
+    
+    // edit ingredients
     public function edit(){
 
             $ingredientId = $_GET['id'];
 
         $oIngredients = new Ingredients_Model();
         $this->template->ing = $oIngredients->ingredient($ingredientId);
-
-        $this->view = 'ingredients_edit';
+        if(Acl_Core::allow([ACL::ACL_MANAGER,ACL::ACL_OWNER,ACL::ACL_ADMIN])){
+            $this->view = 'ingredients_edit';
+        } else {
+            header('Location: /error403'); //Forbidden
+            exit();
+        }
     }
 
+    // reorder stock
     public function order(){
 
 
@@ -74,11 +80,11 @@ class Ingredients_Controller extends Base_Controller implements Base_Controller_
         $this->template->ing = $oIngredients->ingredient($ingredientId);
 
 
-
         $this->view = 'ingredients_edit';
 
     }
 
+    // add ingredients
     public function add(){
 
         $oFood = new Ingredients_Model();
