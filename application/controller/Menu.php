@@ -102,6 +102,7 @@ class Menu_Controller extends Base_Controller{
             $sStartTime = $_POST['menu_start_time'];
             $sEndTime = $_POST['menu_end_time'];
             $sMenuType = $_POST['menu_type'];
+            $sMenuDesc = $_POST['menu_desc'];
 
             if($_FILES['food_image']['name'])
             {
@@ -129,6 +130,7 @@ class Menu_Controller extends Base_Controller{
                             ->add()->setName($sName)
                             ->setStartTime($sStartTime)
                             ->setEndTime($sEndTime)
+                            ->setDesc($sMenuDesc)
                             ->setImage($_POST['image'])
                             ->save();
                     }

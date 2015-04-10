@@ -25,7 +25,7 @@
 	  <!-- Nav tabs -->
 	  <ul class="nav nav-pills" id="staff_tab" role="tablist">
 	    <li role="presentation" class="active"><a href="#stock" aria-controls="stock" role="tab" data-toggle="tab">Check stock</a></li>
-	    <li role="presentation"><a href="#orders" aria-controls="orders" role="tab" data-toggle="tab">Check orders</a></li>
+	    <li role="presentation"><a href="" aria-controls="orders" role="tab" data-toggle="tab">Check orders</a></li>
 	    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" >Check staff profile</a></li>
 	    <li role="presentation"><a href="#performance" aria-controls="profile" role="tab" data-toggle="tab" >Check staff performance</a></li>
 	  </ul>

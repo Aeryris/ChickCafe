@@ -76,6 +76,10 @@
                                 <input type="text" value="" class="form-control" name="menu_name" />
                             </div>
                             <div class="form-group">
+                                <label for="menu_desc">Description</label>
+                                <input type="text" value="" class="form-control" name="menu_desc" />
+                            </div>
+                            <div class="form-group">
                                 <label for="menu_start_time">Start time</label>
                                 <input type="text" value="" class="form-control timepicker" name="menu_start_time" id="menu_start_time" />
                             </div>

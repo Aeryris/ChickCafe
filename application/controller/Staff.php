@@ -300,6 +300,7 @@ class Staff_Controller extends Base_Controller{
                 );
             }
         }
+        $finalOrders = array();
         foreach($orders as $orderID => $set) {
             $finalOrders[] = $set[0];
         }
@@ -340,6 +341,7 @@ class Staff_Controller extends Base_Controller{
                 );
             }
         }
+        $finalOrders = array();
         foreach($orders as $orderID => $set) {
             $finalOrders[] = $set[0];
         }

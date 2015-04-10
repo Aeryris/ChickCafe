@@ -55,6 +55,7 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
     public $name;
     public $startTime;
     public $endTime;
+    public $desc;
 
     public $image;
 
@@ -166,6 +167,11 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
         return $this;
     }
 
+    public function setDesc($sDesc){
+        $this->desc = $sDesc;
+        return $this;
+    }
+
     public function save(){
 
         if($this->bIsNew){
@@ -186,7 +192,7 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
             $this->db->beginTransaction();
 
 
-            $sQuery = 'INSERT INTO menu(menu_name, menu_time_start, menu_time_end, menu_image) VALUES(:name, :start, :end, :image)';
+            $sQuery = 'INSERT INTO menu(menu_name, menu_desc, menu_time_start, menu_time_end, menu_image) VALUES(:name, :descr, :start, :end, :image)';
 
             $oStmt = $this->db->prepare($sQuery);
 
@@ -194,6 +200,7 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
             $oStmt->bindValue(':start', $this->startTime, PDO::PARAM_STR);
             $oStmt->bindValue(':end', $this->endTime, PDO::PARAM_STR);
             $oStmt->bindValue(':image', $this->image, PDO::PARAM_STR);
+            $oStmt->bindValue(':descr', $this->desc, PDO::PARAM_STR);
 
             $bExecuted = $oStmt->execute();
 
@@ -211,7 +218,7 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
             $this->db->beginTransaction();
 
 
-            $sQuery = 'UPDATE menu SET menu_name = :name, menu_time_start = :start, menu_time_end = :end WHERE menu_id = :id)';
+            $sQuery = 'UPDATE menu SET menu_name = :name, menu_time_start = :start, menu_time_end = :end, menu_desc = :descr WHERE menu_id = :id)';
 
 
             $oStmt = $this->db->prepare($sQuery);
@@ -220,6 +227,7 @@ class Menu_Model extends Foundation_Model implements Menu_Interface {
             $oStmt->bindValue(':start', $this->startTime, PDO::PARAM_STR);
             $oStmt->bindValue(':end', $this->endTime, PDO::PARAM_STR);
             $oStmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+            $oStmt->bindValue(':descr', $this->desc, PDO::PARAM_STR);
 
             $bExecuted = $oStmt->execute();
 

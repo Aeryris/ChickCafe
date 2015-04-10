@@ -105,6 +105,10 @@ SOFTWARE.
 
                                     {/foreach}
                                 </div>
+                                <form method="post" value="{! $value['order_id']}" method="post" action="/staff/ready_order">
+                                    <input type="hidden" name="order_id" id="order_id" value="{! $value['order_id']}"/>
+                                    <?php if($value['order_ready'] != 'T'){ echo '<button class="btn btn-primary" type="submit">Order is Ready</button> '; } else { echo '<h3>Ready</h3>';}?>
+                                </form>
                                 <br />
                                 <!-- <a class="btn btn-lg btn-primary btn-block" href="/refund/orderid/{! $value['order_id'] }">Request refund</a> -->
 

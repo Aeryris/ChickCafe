@@ -51,12 +51,15 @@ class User_Controller extends Base_Controller{
             if($oLoginForm->validate()){
                 $oUser = new User_Model();
                 $oUser->attr(['email' => $sEmail->value(), 'password' => $oUser->passwordSecure($sPassword->value())]);
-
+                //var_dump($oUser);
+                //var_dump($_SESSION);
                 if($oUser->exists()){
                     Auth_Core::init()->auth($sEmail->value());
+                    //var_dump($_SESSION);
                     header('Location: /');
                     exit();
                 }
+
             }
             $this->template->errors = $oLoginForm->sErrors;
         }

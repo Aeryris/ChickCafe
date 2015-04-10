@@ -1,5 +1,5 @@
 <?php include(str_replace(' ','','/Users/bartek/Documents/Development/Web/University/ChickCafe/application/templates/ header.php')); ?>
-
+<!-- Staff Dashboard -->
 <script type="text/javascript">
 	$('#staff_tab a').click(function (e) {
 	  e.preventDefault()
@@ -35,14 +35,30 @@
 
 		    <div role="tabpanel" class="tab-pane active" id="stock">
 		    	<h2>Item and Ingredient Stock</h2>
+		    	<table class="table">
+		    		<tr>
+		    			<th>Ingredient Name</th>
+		    			<th>Stock Remaining</th>
+		    		</tr>
 					<?php foreach($stock as $key => $value): ?>
-						<span class="menu-item-name"><b>Ingredient Name:</b> <?php echo $value['ingredient_name'] ?></span> <br />
-						<span class="menu-item-stock"><b>Stock Remaining:</b> <?php echo $value['ingredient_available'] ?>/<?php echo $value['ingredient_stock'] ?></span> <br />
+					<tr>
+						<td><?php echo $value['ingredient_name'] ?></td>
+						<td><?php echo $value['ingredient_available'] ?>/<?php echo $value['ingredient_stock'] ?></td>
+					</tr>
 					<?php endforeach; ?>
+				</table>
+				<table class="table">
+					<tr>
+						<th>Item Name</th>
+						<th>Stock Remaining</th>
+					</tr>
 					<?php foreach($item_stock as $key => $value): ?>
-						<span class="menu-item-name"><b>Item Name:</b> <?php echo $value['item_name'] ?></span> <br />
-						<span class="menu-item-stock"><b>Stock Remaining:</b> <?php echo $value['item_available'] ?>/<?php echo $value['item_stock'] ?></span> <br />
+					<tr>
+						<td><?php echo $value['item_name'] ?></td>
+						<td><?php echo $value['item_available'] ?>/<?php echo $value['item_stock'] ?></td>
+					</tr>
 					<?php endforeach; ?>
+				</table>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="orders">
 		    	<?php foreach($orders as $key => $value): ?>
@@ -52,10 +68,10 @@
 	    			<p>Order Date/Time: <?php echo $value['order_datetime'] ?></p>
 	    			<?php foreach ($value['item_names'] as $k1 => $v1): ?>
 	    				<p>Item name: <?php echo $v1 ?></p>
-	    				<?php foreach ($value['item_preptimes'] as $k1 => $v1): ?>
-	    				<p>Item preptime: <?php echo $v1 ?></p>
-	    				<?php endforeach; ?>
 	    			<?php endforeach; ?>
+    				<?php foreach ($value['item_preptimes'] as $k1 => $v1): ?>
+    				<p>Item preptime: <?php echo $v1 ?></p>
+    				<?php endforeach; ?>
 	    			<!-- <input type="hidden" name="staff_id" id="staff_id" value="<?php echo $profile->user_id ?>"/> -->
 	    			<button class="btn btn-primary" type="submit">Order is Ready</button>
 	    			</form>
